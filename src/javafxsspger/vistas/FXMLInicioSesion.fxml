@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLInicioSesionController">
+   <children>
+      <Label layoutX="70.0" layoutY="51.0" text="Inicio Sesión">
+         <font>
+            <Font name="SansSerif Regular" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="160.0" text="Usuario:">
+         <font>
+            <Font name="SansSerif Regular" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="210.0" text="Contraseña:">
+         <font>
+            <Font name="SansSerif Regular" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtFieldUsuario" layoutX="209.0" layoutY="160.0" prefHeight="30.0" prefWidth="207.0" promptText="Usuario">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtFieldContrasena" layoutX="239.0" layoutY="210.0" prefHeight="30.0" prefWidth="207.0" promptText="Contraseña">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextField>
+      <Button layoutX="568.0" layoutY="290.0" mnemonicParsing="false" onAction="#clicIngresar" text="Ingresar">
+         <font>
+            <Font name="SansSerif Regular" size="17.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblCamposVacios" layoutX="104.0" layoutY="282.0" text="Por favor, ingrese todos los campos" textFill="#b50000" visible="false">
+         <font>
+            <Font name="SansSerif Italic" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

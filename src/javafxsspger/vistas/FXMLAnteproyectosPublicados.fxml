@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="426.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLAnteproyectosPublicadosController">
+   <children>
+      <Label layoutX="85.0" layoutY="36.0" text="Anteproyectos Publicados">
+         <font>
+            <Font name="SansSerif Bold" size="27.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="475.0" layoutY="33.0" mnemonicParsing="false" onAction="#clicAnteproyectosPropiosPublicados" prefHeight="29.0" prefWidth="205.0" style="-fx-background-color: black;" text="Anteproyectos Propios Publicados" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="436.0" layoutY="74.0" mnemonicParsing="false" onAction="#clicAnteproyectosPorCorregir" prefHeight="29.0" prefWidth="163.0" style="-fx-background-color: black;" text="Anteproyectos Por Corregir" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="608.0" layoutY="74.0" mnemonicParsing="false" onAction="#clicCrearAnteproyecto" prefHeight="29.0" prefWidth="128.0" style="-fx-background-color: black;" text="Crear Anteproyecto" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Button>
+      <TextField fx:id="txtFieldBuscador" layoutX="57.0" layoutY="87.0" prefHeight="32.0" prefWidth="332.0" promptText="Buscador">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextField>
+      <ScrollPane layoutX="24.0" layoutY="134.0" prefHeight="262.0" prefWidth="705.0">
+         <content>
+            <VBox fx:id="vBoxListaAnteproyectosPublicados" prefHeight="273.0" prefWidth="703.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

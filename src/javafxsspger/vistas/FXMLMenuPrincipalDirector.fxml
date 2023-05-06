@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLMenuPrincipalDirectorController">
+   <children>
+      <Label fx:id="lblTitulo" layoutX="46.0" layoutY="31.0" text="Menú Principal">
+         <font>
+            <Font name="SansSerif Bold" size="31.0" />
+         </font>
+      </Label>
+      <Label layoutX="575.0" layoutY="24.0" text="Para directores">
+         <font>
+            <Font name="SansSerif Regular" size="21.0" />
+         </font>
+      </Label>
+      <Button layoutX="80.0" layoutY="124.0" mnemonicParsing="false" onAction="#clicAnteproyectosDesarrollo" prefHeight="36.0" prefWidth="276.0" style="-fx-background-color: black;" text="Anteproyectos en Desarrollo" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="148.0" layoutY="247.0" mnemonicParsing="false" onAction="#clicActividades" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: black;" text="Actividades" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="80.0" layoutY="182.0" mnemonicParsing="false" onAction="#clicCronogramaActividades" prefHeight="36.0" prefWidth="276.0" style="-fx-background-color: black;" text="Cronograma de Actividades" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="135.0" layoutY="305.0" mnemonicParsing="false" onAction="#clicAnteproyectos" prefHeight="36.0" prefWidth="193.0" style="-fx-background-color: black;" text="Anteproyectos" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="540.0" layoutY="332.0" mnemonicParsing="false" onAction="#clicAsignarEstudiante" prefHeight="68.0" prefWidth="167.0" style="-fx-background-color: black;" text="Asignar estudiantes a un anteproyecto" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="135.0" layoutY="366.0" mnemonicParsing="false" onAction="#clicAvances" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: black;" text="Avances" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

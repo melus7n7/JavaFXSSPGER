@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLDetallesAnteproyectoController">
+   <children>
+      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="32.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="95.0" layoutY="35.0" text="Detalle Anteproyecto">
+         <font>
+            <Font name="SansSerif Bold" size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="49.0" layoutY="93.0" text="Nombre del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNombreAnteproyecto" layoutX="229.0" layoutY="77.0" prefHeight="46.0" prefWidth="310.0" text="Mucho Texto" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="49.0" layoutY="138.0" text="Descripción del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDescripcionAnteproyecto" layoutX="238.0" layoutY="123.0" prefHeight="46.0" prefWidth="310.0" text="Mucho Texto" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="181.0" text="Nombre del director:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNombreDirector" layoutX="198.0" layoutY="181.0" prefHeight="15.0" prefWidth="246.0" text="Mucho Texto" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="53.0" layoutY="218.0" text="Cuerpo Académico:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCuerpoAcademico" layoutX="188.0" layoutY="218.0" prefHeight="15.0" prefWidth="246.0" text="Mucho Texto" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="251.0" text="Área disciplinar:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAreaDisciplinar" layoutX="169.0" layoutY="251.0" prefHeight="15.0" prefWidth="246.0" text="Mucho Texto" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="90.0" layoutY="312.0" text="id">
+         <font>
+            <Font name="SansSerif Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblIDANTEPROYECTO" layoutX="136.0" layoutY="312.0" prefHeight="15.0" prefWidth="246.0" text="Mucho Texto" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
