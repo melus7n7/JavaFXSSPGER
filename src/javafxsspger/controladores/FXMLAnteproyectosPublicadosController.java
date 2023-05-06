@@ -16,22 +16,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.modelo.pojo.Director;
+import javafxsspger.utils.Utilidades;
 
 
 public class FXMLAnteproyectosPublicadosController implements Initializable {
 
     @FXML
     private VBox vBoxListaAnteproyectosPublicados;
-    @FXML
-    private TextField txtFieldBuscador;
     
-    private static Director usuarioLogin;
+    private static Director usuarioDirector;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -115,6 +115,14 @@ public class FXMLAnteproyectosPublicadosController implements Initializable {
 
     @FXML
     private void clicCrearAnteproyecto(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicRegresarMenuPrincipal(MouseEvent event) {
+        Stage escenarioBase = (Stage)vBoxListaAnteproyectosPublicados.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalDirector.fxml"));
+        escenarioBase.setTitle("Menú principal");
+        escenarioBase.show();
     }
     
 }

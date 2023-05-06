@@ -15,7 +15,7 @@
             <Font name="SansSerif Bold" size="27.0" />
          </font>
       </Label>
-      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="26.0" layoutY="31.0" onMouseClicked="#clicRegresarMenuPrincipal" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
          <image>
             <Image url="@../recursos/flecha.png" />
          </image>
@@ -35,14 +35,9 @@
             <Font name="SansSerif Regular" size="12.0" />
          </font>
       </Button>
-      <TextField fx:id="txtFieldBuscador" layoutX="57.0" layoutY="87.0" prefHeight="32.0" prefWidth="332.0" promptText="Buscador">
-         <font>
-            <Font name="SansSerif Regular" size="14.0" />
-         </font>
-      </TextField>
-      <ScrollPane layoutX="24.0" layoutY="134.0" prefHeight="262.0" prefWidth="705.0">
+      <ScrollPane layoutX="24.0" layoutY="116.0" prefHeight="280.0" prefWidth="705.0">
          <content>
-            <VBox fx:id="vBoxListaAnteproyectosPublicados" prefHeight="273.0" prefWidth="703.0" />
+            <VBox fx:id="vBoxListaAnteproyectosPublicados" prefHeight="280.0" prefWidth="703.0" />
          </content>
       </ScrollPane>
    </children>

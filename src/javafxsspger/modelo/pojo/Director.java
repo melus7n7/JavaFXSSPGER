@@ -16,7 +16,6 @@ public class Director extends Usuario{
     }
     
     public Director (){
-        
     }
 
     public int getIdDirector() {

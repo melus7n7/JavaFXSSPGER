@@ -63,7 +63,7 @@ public class FXMLInicioSesionController implements Initializable {
                     escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalDirector.fxml"));
                     break;
                 default:
-                    escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalDirector.fxml"));
+                    System.out.print ("ERROR");
         }
         escenarioBase.setTitle("Home");
         escenarioBase.show();

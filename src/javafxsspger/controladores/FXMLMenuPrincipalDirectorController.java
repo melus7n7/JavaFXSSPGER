@@ -12,21 +12,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafxsspger.modelo.pojo.Director;
 import javafxsspger.modelo.pojo.Usuario;
 import javafxsspger.utils.Utilidades;
 
 public class FXMLMenuPrincipalDirectorController implements Initializable {
-
+    
+    private static Director usuarioDirector;
+    
     @FXML
     private Label lblTitulo;
-    private static Usuario usuarioDirector;
+    @FXML
+    private Label lblNombreDirector;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setUsuarioDirector();
+        lblNombreDirector.setText("Hola director " + usuarioDirector.getNombre());
     }    
 
     @FXML
@@ -58,14 +61,20 @@ public class FXMLMenuPrincipalDirectorController implements Initializable {
     private void clicAvances(ActionEvent event) {
     }
     
-    private static Usuario getUsuarioDirector (){
+    private static Director getUsuarioDirector (){
         return usuarioDirector;
     }
     
     private static void setUsuarioDirector (){
-        //Causa si se ocupa director
         //Haga una consulta a la base de datos para recuperar los datos del director específicamente
-        usuarioDirector =  FXMLInicioSesionController.getUsuarioLogin();
+        //Con el Usuario se obtienen sus demás datos de la base de datos
+        //Director director = DirectorDAO.obtenerDirector(FXMLInicioSesionController.getUsuarioLogin(););
+        Usuario usuarioLogin =  FXMLInicioSesionController.getUsuarioLogin();
+        usuarioDirector = new Director (1, "Nombre", usuarioLogin.getTipoUsuario());
+    }
+
+    @FXML
+    private void clicGenerarReporte(ActionEvent event) {
     }
     
 }
