@@ -60,7 +60,7 @@ public class FXMLInicioSesionController implements Initializable {
         
         switch (usuarioLogin.getTipoUsuario()){
                 case Constantes.DIRECTOR:
-                    escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalDirector.fxml"));
+                    escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAcademico.fxml"));
                     break;
                 default:
                     System.out.print ("ERROR");

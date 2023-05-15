@@ -6,6 +6,8 @@
 */
 package javafxsspger.modelo.pojo;
 
+import java.util.ArrayList;
+
 public class Anteproyecto {
     
     private int idAnteproyecto;
@@ -15,23 +17,19 @@ public class Anteproyecto {
     private String cuerpoAcademico;
     private String areaDisciplinar;
     private String fechaPublicacion;
+    private int noEstudiantesMaximo;
+    private int codigoRespuesta;
+    private ArrayList<Academico> codirectores;
 
     public Anteproyecto() {
     }
 
-    public Anteproyecto(int idAnteproyecto, String titulo, String descripcion, String nombreDirector, String cuerpoAcademico, String areaDisciplinar) {
-        this.idAnteproyecto = idAnteproyecto;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.nombreDirector = nombreDirector;
-        this.cuerpoAcademico = cuerpoAcademico;
-        this.areaDisciplinar = areaDisciplinar;
-    }
-    
-    
-
     public String getTitulo() {
         return titulo;
+    }
+
+    public int getCodigoRespuesta() {
+        return codigoRespuesta;
     }
 
     public String getDescripcion() {
@@ -48,6 +46,10 @@ public class Anteproyecto {
 
     public String getAreaDisciplinar() {
         return areaDisciplinar;
+    }
+
+    public int getNoEstudiantesMaximo() {
+        return noEstudiantesMaximo;
     }
 
     public void setTitulo(String titulo) {
@@ -85,7 +87,32 @@ public class Anteproyecto {
     public void setFechaPublicacion(String fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
+
+    public void setCodigoRespuesta(int codigoRespuesta) {
+        this.codigoRespuesta = codigoRespuesta;
+    }
+
+    public void setNoEstudiantesMaximo(int noEstudiantesMaximo) {
+        this.noEstudiantesMaximo = noEstudiantesMaximo;
+    }
+
+    public ArrayList<Academico> getCodirectores() {
+        return codirectores;
+    }
+
+    public void setCodirectores(ArrayList<Academico> codirectores) {
+        this.codirectores = codirectores;
+    }
     
-    
+    public String getNombreCodirectores (){
+        String nombres = "";
+        for(int i = 0; i < codirectores.size(); i++){
+            nombres += codirectores.get(i).getNombre();
+            if(i != (codirectores.size() - 1)){
+                nombres += ", ";
+            }
+        }
+        return nombres;
+    }
     
 }

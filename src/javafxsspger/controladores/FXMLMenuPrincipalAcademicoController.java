@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 05/05/2023
+*Fecha de modificación: 14/05/2023
 *Descripción: Controlador de la vista del menú principal del director
 */
 package javafxsspger.controladores;
@@ -13,13 +13,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafxsspger.modelo.pojo.Director;
+import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Usuario;
 import javafxsspger.utils.Utilidades;
 
-public class FXMLMenuPrincipalDirectorController implements Initializable {
+public class FXMLMenuPrincipalAcademicoController implements Initializable {
     
-    private static Director usuarioDirector;
+    private static Academico usuarioDirector;
     
     @FXML
     private Label lblTitulo;
@@ -48,8 +48,8 @@ public class FXMLMenuPrincipalDirectorController implements Initializable {
     private void clicAnteproyectos(ActionEvent event) {
         //Display Anteproyectos Publicados
         Stage escenarioBase = (Stage) lblTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAnteproyectosPublicados.fxml"));
-        escenarioBase.setTitle("Anteproyectos Publicados");
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAnteproyectos.fxml"));
+        escenarioBase.setTitle("Anteproyectos");
         escenarioBase.show();
     }
 
@@ -61,7 +61,7 @@ public class FXMLMenuPrincipalDirectorController implements Initializable {
     private void clicAvances(ActionEvent event) {
     }
     
-    private static Director getUsuarioDirector (){
+    private static Academico getUsuarioDirector (){
         return usuarioDirector;
     }
     
@@ -70,7 +70,7 @@ public class FXMLMenuPrincipalDirectorController implements Initializable {
         //Con el Usuario se obtienen sus demás datos de la base de datos
         //Director director = DirectorDAO.obtenerDirector(FXMLInicioSesionController.getUsuarioLogin(););
         Usuario usuarioLogin =  FXMLInicioSesionController.getUsuarioLogin();
-        usuarioDirector = new Director (1, "Nombre", usuarioLogin.getTipoUsuario());
+        usuarioDirector = new Academico (1, "Nombre", usuarioLogin.getTipoUsuario());
     }
 
     @FXML

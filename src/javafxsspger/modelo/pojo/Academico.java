@@ -6,28 +6,28 @@
 */
 package javafxsspger.modelo.pojo;
 
-public class Director extends Usuario{
+public class Academico extends Usuario{
     
-    private int idDirector;
+    private int idAcademico;
     private String noPersonal;
 
-    public Director(int idUsuario, String nombre, int tipoUsuario) {
+    public Academico(int idUsuario, String nombre, int tipoUsuario) {
         super(idUsuario, nombre, tipoUsuario);
     }
     
-    public Director (){
+    public Academico (){
     }
 
-    public int getIdDirector() {
-        return idDirector;
+    public int getIdAcademico() {
+        return idAcademico;
     }
 
     public String getNoPersonal() {
         return noPersonal;
     }
 
-    public void setIdDirector(int idDirector) {
-        this.idDirector = idDirector;
+    public void setIdAcademico(int idAcademico) {
+        this.idAcademico = idAcademico;
     }
 
     public void setNoPersonal(String noPersonal) {
