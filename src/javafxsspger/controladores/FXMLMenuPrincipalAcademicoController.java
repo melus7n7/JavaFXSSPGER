@@ -19,7 +19,7 @@ import javafxsspger.utils.Utilidades;
 
 public class FXMLMenuPrincipalAcademicoController implements Initializable {
     
-    private static Academico usuarioDirector;
+    private Academico usuarioAcademico;
     
     @FXML
     private Label lblTitulo;
@@ -28,8 +28,6 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setUsuarioDirector();
-        lblNombreDirector.setText("Hola director " + usuarioDirector.getNombre());
     }    
 
     @FXML
@@ -61,20 +59,12 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     private void clicAvances(ActionEvent event) {
     }
     
-    private static Academico getUsuarioDirector (){
-        return usuarioDirector;
-    }
-    
-    private static void setUsuarioDirector (){
-        //Haga una consulta a la base de datos para recuperar los datos del director específicamente
-        //Con el Usuario se obtienen sus demás datos de la base de datos
-        //Director director = DirectorDAO.obtenerDirector(FXMLInicioSesionController.getUsuarioLogin(););
-        Usuario usuarioLogin =  FXMLInicioSesionController.getUsuarioLogin();
-        usuarioDirector = new Academico (1, "Nombre", usuarioLogin.getTipoUsuario());
-    }
-
     @FXML
     private void clicGenerarReporte(ActionEvent event) {
     }
     
+    public void inicializarInformacion(Usuario usuarioLogin){
+        usuarioAcademico = new Academico(usuarioLogin.getIdUsuario(), usuarioLogin.getNombre(), usuarioLogin.getIdTipoUsuario());
+        lblNombreDirector.setText("Hola académico " + usuarioAcademico.getNombre());
+    }
 }

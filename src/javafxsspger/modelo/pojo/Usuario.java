@@ -11,12 +11,16 @@ public class Usuario {
     
     protected int idUsuario;
     protected String nombre;
-    protected int tipoUsuario;
+    protected int idTipoUsuario;
+    protected int codigoRespuesta;
+    protected String nombreTipoUsuario;
+    protected String usuario;
+    protected String contrasena;
 
     public Usuario(int idUsuario, String nombre, int tipoUsuario) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
-        this.tipoUsuario = tipoUsuario;
+        this.idTipoUsuario = tipoUsuario;
     }
     
     public Usuario(){
@@ -31,9 +35,26 @@ public class Usuario {
         return nombre;
     }
 
-    public int getTipoUsuario() {
-        return tipoUsuario;
+    public int getIdTipoUsuario() {
+        return idTipoUsuario;
     }
+
+    public int getCodigoRespuesta() {
+        return codigoRespuesta;
+    }
+
+    public String getNombreTipoUsuario() {
+        return nombreTipoUsuario;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+    
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
@@ -43,9 +64,26 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public void setTipoUsuario(int tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setIdTipoUsuario(int idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
     }
+
+    public void setCodigoRespuesta(int codigoRespuesta) {
+        this.codigoRespuesta = codigoRespuesta;
+    }
+
+    public void setNombreTipoUsuario(String nombreTipoUsuario) {
+        this.nombreTipoUsuario = nombreTipoUsuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+    
     
     
 }

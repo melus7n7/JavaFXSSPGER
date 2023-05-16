@@ -11,6 +11,6 @@ public class Constantes {
     public static final int OPERACION_EXITOSA = 200;
     public static final int ERROR_CONEXION = 500;
     public static final int ERROR_CONSULTA = 501;
-    public static final int ADMINISTRADOR = 10000;
-    public static final int DIRECTOR = 20000;
+    public static final int ADMINISTRADOR = 1;
+    public static final int ACADEMICO = 2;
 }

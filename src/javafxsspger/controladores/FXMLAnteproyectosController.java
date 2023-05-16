@@ -36,7 +36,6 @@ public class FXMLAnteproyectosController implements Initializable {
     @FXML
     private VBox vBoxListaAnteproyectosPublicados;
     
-    private ObservableList<Pane> listaElementosAnteproyectos;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -45,7 +44,6 @@ public class FXMLAnteproyectosController implements Initializable {
     }
     
     private void cargarElementos(){
-        listaElementosAnteproyectos = FXCollections.observableArrayList();
         AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPublicados();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
@@ -71,12 +69,11 @@ public class FXMLAnteproyectosController implements Initializable {
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
                 elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i));
-                listaElementosAnteproyectos.addAll(pane);
+                vBoxListaAnteproyectosPublicados.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
-        vBoxListaAnteproyectosPublicados.getChildren().addAll(listaElementosAnteproyectos);
     }
 
     @FXML
