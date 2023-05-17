@@ -17,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -27,6 +29,7 @@ import javafxsspger.modelo.dao.AnteproyectoDAO;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.modelo.pojo.AnteproyectoRespuesta;
 import javafxsspger.modelo.pojo.Academico;
+import javafxsspger.modelo.pojo.Usuario;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
@@ -36,6 +39,7 @@ public class FXMLAnteproyectosController implements Initializable {
     @FXML
     private VBox vBoxListaAnteproyectosPublicados;
     
+    private Academico usuarioAcademico;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -91,9 +95,22 @@ public class FXMLAnteproyectosController implements Initializable {
     @FXML
     private void clicRegresarMenuPrincipal(MouseEvent event) {
         Stage escenarioBase = (Stage)vBoxListaAnteproyectosPublicados.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAcademico.fxml"));
-        escenarioBase.setTitle("Menú principal");
-        escenarioBase.show();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAcademico.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLMenuPrincipalAcademicoController menuPrincipalAcademico = accesoControlador.getController();
+            menuPrincipalAcademico.inicializarInformacion(usuarioAcademico);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menu Principal");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void inicializarInformacion(Academico usuarioAcademico){
+        this.usuarioAcademico = usuarioAcademico;
     }
     
 }

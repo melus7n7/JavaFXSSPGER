@@ -6,13 +6,18 @@
 */
 package javafxsspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Usuario;
 import javafxsspger.utils.Utilidades;
@@ -44,11 +49,19 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
 
     @FXML
     private void clicAnteproyectos(ActionEvent event) {
-        //Display Anteproyectos Publicados
         Stage escenarioBase = (Stage) lblTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAnteproyectos.fxml"));
-        escenarioBase.setTitle("Anteproyectos");
-        escenarioBase.show();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectos.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAnteproyectosController anteproyectos = accesoControlador.getController();
+            anteproyectos.inicializarInformacion(usuarioAcademico);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Anteproyectos");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
