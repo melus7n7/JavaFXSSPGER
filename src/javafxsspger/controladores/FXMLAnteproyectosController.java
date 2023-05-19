@@ -99,7 +99,7 @@ public class FXMLAnteproyectosController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAcademico.fxml"));
             Parent vista = accesoControlador.load();
             FXMLMenuPrincipalAcademicoController menuPrincipalAcademico = accesoControlador.getController();
-            menuPrincipalAcademico.inicializarInformacion(usuarioAcademico);
+            menuPrincipalAcademico.inicializarInformacionConAcademico(usuarioAcademico);
             
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Menu Principal");

@@ -10,6 +10,7 @@ public class Academico extends Usuario{
     
     private int idAcademico;
     private String noPersonal;
+    private int idCuerpoAcademico;
 
     public Academico(int idUsuario, String nombre, int tipoUsuario) {
         super(idUsuario, nombre, tipoUsuario);
@@ -26,12 +27,21 @@ public class Academico extends Usuario{
         return noPersonal;
     }
 
+    public int getIdCuerpoAcademico() {
+        return idCuerpoAcademico;
+    }
+    
+
     public void setIdAcademico(int idAcademico) {
         this.idAcademico = idAcademico;
     }
 
     public void setNoPersonal(String noPersonal) {
         this.noPersonal = noPersonal;
+    }
+
+    public void setIdCuerpoAcademico(int idCuerpoAcademico) {
+        this.idCuerpoAcademico = idCuerpoAcademico;
     }
 
     

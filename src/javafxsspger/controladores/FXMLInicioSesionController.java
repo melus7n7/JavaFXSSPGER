@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -34,9 +35,9 @@ public class FXMLInicioSesionController implements Initializable {
     @FXML
     private TextField txtFieldUsuario;
     @FXML
-    private TextField txtFieldContrasena;
-    @FXML
     private Label lblCamposVacios;
+    @FXML
+    private PasswordField pssFieldContrasena;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,7 +48,7 @@ public class FXMLInicioSesionController implements Initializable {
     private void clicIngresar(ActionEvent event) {
         lblCamposVacios.setVisible(false);
         String usuario = txtFieldUsuario.getText();
-        String password = txtFieldContrasena.getText();
+        String password = pssFieldContrasena.getText();
         if(usuario.isEmpty() || password.isEmpty()){
             lblCamposVacios.setVisible(true);
         }else{
@@ -88,6 +89,10 @@ public class FXMLInicioSesionController implements Initializable {
         switch (usuarioLogin.getIdTipoUsuario()){
                 case Constantes.ACADEMICO:
                     irPantallaAcademico(usuarioLogin);
+                    break;
+                case Constantes.ESTUDIANTE:
+                    break;
+                case Constantes.ADMINISTRADOR:
                     break;
                 default:
                     System.out.print ("ERROR");

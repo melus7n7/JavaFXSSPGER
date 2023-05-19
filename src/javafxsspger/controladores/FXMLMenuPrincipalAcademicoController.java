@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.modelo.dao.AcademicoDAO;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Usuario;
 import javafxsspger.utils.Utilidades;
@@ -77,7 +78,16 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     }
     
     public void inicializarInformacion(Usuario usuarioLogin){
-        usuarioAcademico = new Academico(usuarioLogin.getIdUsuario(), usuarioLogin.getNombre(), usuarioLogin.getIdTipoUsuario());
+        Academico respuesta = AcademicoDAO.obtenerDetallesAcademico(usuarioLogin.getIdUsuario());
+        respuesta.setIdUsuario(usuarioLogin.getIdUsuario());
+        respuesta.setNombre(usuarioLogin.getNombre());
+        respuesta.setIdTipoUsuario(usuarioLogin.getIdTipoUsuario());
+        this.usuarioAcademico = respuesta;
         lblNombreDirector.setText("Hola académico " + usuarioAcademico.getNombre());
+    }
+    
+    public void inicializarInformacionConAcademico(Academico usuarioAcademico){
+        this.usuarioAcademico = usuarioAcademico;
+        lblNombreDirector.setText("Hola académico " + this.usuarioAcademico.getNombre());
     }
 }
