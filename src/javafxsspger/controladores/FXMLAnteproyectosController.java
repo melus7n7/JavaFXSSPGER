@@ -101,7 +101,7 @@ public class FXMLAnteproyectosController implements Initializable {
             menuPrincipalAcademico.inicializarInformacionConAcademico(usuarioAcademico);
             
             escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Menu Principal");
+            escenarioBase.setTitle("Menú Principal");
             escenarioBase.show();
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -35,11 +35,7 @@
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-<<<<<<< Updated upstream
-      <Label fx:id="lblDescripcionAnteproyecto" layoutX="43.0" layoutY="146.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="71.0" prefWidth="673.0" style="-fx-border-color: black;" text="Mucho Texto" wrapText="true">
-=======
-      <Label fx:id="lblDescripcionAnteproyecto" layoutX="57.0" layoutY="252.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="71.0" prefWidth="990.0" style="-fx-border-color: black;" text="Descripcion" wrapText="true">
->>>>>>> Stashed changes
+      <Label fx:id="lblDescripcionAnteproyecto" layoutX="66.0" layoutY="243.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="71.0" prefWidth="990.0" style="-fx-border-color: black;" text="Descripcion" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>

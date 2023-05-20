@@ -19,7 +19,7 @@ public class JavaFXSSPGER extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("vistas/FXMLInicioSesion.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("vistas/FXMLAnteproyectos.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("vistas/FXMLMenuPrincipal.fxml"));
         
         Scene scene = new Scene(root);
         
