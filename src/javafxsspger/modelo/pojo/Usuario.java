@@ -11,11 +11,14 @@ public class Usuario {
     
     protected int idUsuario;
     protected String nombre;
+    protected String apellidoPaterno;
+    protected String apellidoMaterno;
     protected int idTipoUsuario;
     protected int codigoRespuesta;
     protected String nombreTipoUsuario;
     protected String usuario;
     protected String contrasena;
+    protected String nombreCompleto;
 
     public Usuario(int idUsuario, String nombre, int tipoUsuario) {
         this.idUsuario = idUsuario;
@@ -54,8 +57,19 @@ public class Usuario {
     public String getContrasena() {
         return contrasena;
     }
-    
 
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public String getNombreCompleto() {
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
+    
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
@@ -82,6 +96,18 @@ public class Usuario {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
     
     

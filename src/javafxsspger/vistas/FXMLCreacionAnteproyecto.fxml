@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLCreacionAnteproyectoController">
+   <children>
+      <Label layoutX="132.0" layoutY="14.0" text="Creación Anteproyecto">
+         <font>
+            <Font name="Trebuchet MS" size="50.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="69.0" fitWidth="67.0" layoutX="52.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="52.0" layoutY="87.0" text="Nombre del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="47.0" layoutY="186.0" text="Descripción del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="625.0" layoutY="314.0" prefHeight="79.0" prefWidth="235.0" text="Número de estudiantes máximos:" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtFieldEstudiantesMaximos" alignment="CENTER" layoutX="860.0" layoutY="329.0" prefHeight="50.0" prefWidth="173.0">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font></TextField>
+      <Label layoutX="697.0" layoutY="405.0" text="Documento de anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="321.0" text="Tipo de anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbBoxTipoAnteproyecto" layoutX="249.0" layoutY="314.0" prefHeight="33.0" prefWidth="359.0" promptText="Trabajos prácticos" />
+      <Label layoutX="46.0" layoutY="364.0" text="LGAC:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbBoxLGAC" layoutX="117.0" layoutY="358.0" prefHeight="33.0" prefWidth="491.0" />
+      <Button fx:id="btnGuardarCambios" layoutX="701.0" layoutY="570.0" mnemonicParsing="false" onAction="#clicGuardarCambios" prefHeight="50.0" prefWidth="268.0" style="-fx-background-color: black;" text="Enviar para su aprobación" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="723.0" layoutY="526.0" mnemonicParsing="false" onAction="#clicAdjuntarCambios" prefHeight="27.0" prefWidth="224.0" style="-fx-background-color: DIMGRAY;" text="Adjuntar Documento" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblNombreDocumento" alignment="CENTER" layoutX="636.0" layoutY="434.0" prefHeight="79.0" prefWidth="398.0" style="-fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAreaNombreAnteproyecto" layoutX="37.0" layoutY="114.0" prefHeight="58.0" prefWidth="993.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="txtAreaDescripcionAnteproyecto" layoutX="37.0" layoutY="216.0" prefHeight="86.0" prefWidth="993.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="247.0" layoutY="405.0" text="Codirectores:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="44.0" layoutY="431.0" prefHeight="189.0" prefWidth="565.0">
+         <content>
+            <VBox prefHeight="188.0" prefWidth="555.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
