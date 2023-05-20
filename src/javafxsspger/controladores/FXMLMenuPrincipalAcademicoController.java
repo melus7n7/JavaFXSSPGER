@@ -79,6 +79,8 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
         Academico respuesta = AcademicoDAO.obtenerDetallesAcademico(usuarioLogin.getIdUsuario());
         respuesta.setIdUsuario(usuarioLogin.getIdUsuario());
         respuesta.setNombre(usuarioLogin.getNombre());
+        respuesta.setApellidoPaterno(usuarioLogin.getApellidoPaterno());
+        respuesta.setApellidoMaterno(usuarioLogin.getApellidoMaterno());
         respuesta.setIdTipoUsuario(usuarioLogin.getIdTipoUsuario());
         this.usuarioAcademico = respuesta;
         lblNombreAcademico.setText("Hola académico " + usuarioAcademico.getNombre());

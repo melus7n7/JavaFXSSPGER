@@ -23,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
@@ -89,6 +90,19 @@ public class FXMLAnteproyectosController implements Initializable {
 
     @FXML
     private void clicCrearAnteproyecto(ActionEvent event) {
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCreacionAnteproyectoController creacionAnteproyecto = accesoControlador.getController();
+            creacionAnteproyecto.inicializarCodirectores(usuarioAcademico);
+            
+            Stage escenarioBase = new Stage();
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Creación Anteproyecto");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

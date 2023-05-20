@@ -21,7 +21,8 @@ public class UsuarioDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "Select usuario.idUsuario, usuario.nombreUsuario, usuario.idTipoUsuario, " +
+                String consulta = "Select usuario.idUsuario, usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno, " +
+                    "usuario.idTipoUsuario, " +
                     "TipoUsuario.nombreTipoUsuario, " +
                     "usuario.usuario, usuario.contrasena " +
                     "From usuario " +
@@ -35,6 +36,8 @@ public class UsuarioDAO {
                 if(resultado.next()){
                     usuarioVerificado.setIdUsuario(resultado.getInt("idUsuario"));
                     usuarioVerificado.setNombre(resultado.getString("nombreUsuario"));
+                    usuarioVerificado.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    usuarioVerificado.setApellidoMaterno(resultado.getString("apellidoMaterno"));
                     usuarioVerificado.setIdTipoUsuario(resultado.getInt("idTipoUsuario"));
                     usuarioVerificado.setNombreTipoUsuario(resultado.getString("nombreTipoUsuario"));
                     usuarioVerificado.setUsuario(resultado.getString("usuario"));
