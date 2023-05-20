@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 14/05/2023
-*Fecha de modificación: 16/05/2023
+*Fecha de modificación: 19/05/2023
 *Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los usuarios
 */
 
@@ -21,7 +21,7 @@ public class UsuarioDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "Select usuario.idUsuario, usuario.nombre, usuario.idTipoUsuario, " +
+                String consulta = "Select usuario.idUsuario, usuario.nombreUsuario, usuario.idTipoUsuario, " +
                     "TipoUsuario.nombreTipoUsuario, " +
                     "usuario.usuario, usuario.contrasena " +
                     "From usuario " +
@@ -34,7 +34,7 @@ public class UsuarioDAO {
                 usuarioVerificado.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 if(resultado.next()){
                     usuarioVerificado.setIdUsuario(resultado.getInt("idUsuario"));
-                    usuarioVerificado.setNombre(resultado.getString("nombre"));
+                    usuarioVerificado.setNombre(resultado.getString("nombreUsuario"));
                     usuarioVerificado.setIdTipoUsuario(resultado.getInt("idTipoUsuario"));
                     usuarioVerificado.setNombreTipoUsuario(resultado.getString("nombreTipoUsuario"));
                     usuarioVerificado.setUsuario(resultado.getString("usuario"));
