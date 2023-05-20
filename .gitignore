@@ -1,14 +1,5 @@
-**/nbproject/private/
-**/nbproject/Makefile-*.mk
-**/nbproject/Package-*.bash
+nbproject/private/
 build/
-nbbuild/
 dist/
-nbdist/
-.nb-gradle/
 .class
-dist/JavaFXSSPGER.html
-dist/JavaFXSSPGER.html
-dist/JavaFXSSPGER.jar
-dist/JavaFXSSPGER.jnlp
-nbproject/private/private.xml
+
