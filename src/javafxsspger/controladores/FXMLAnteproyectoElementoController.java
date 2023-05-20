@@ -46,7 +46,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
         lblNombreAnteproyecto.setText(anteproyectoElemento.getTitulo());
         lblNombreDirector.setText(anteproyectoElemento.getNombreDirector());
-        lblFechaPublicacion.setText(anteproyectoElemento.getFechaPublicacion());
+        lblFechaPublicacion.setText(anteproyectoElemento.getFechaAprobacion());
         idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
     }
 

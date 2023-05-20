@@ -8,6 +8,7 @@ package javafxsspger.controladores;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -33,13 +34,17 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     @FXML
     private Label lblCuerpoAcademico;
     @FXML
-    private Label lblAreaDisciplinar;
-    @FXML
-    private Label lblIDANTEPROYECTO;
-    @FXML
     private Label lblNoEstudiantesMaximo;
     @FXML
     private Label lblCodirectores;
+    @FXML
+    private Label lblFechaAprobacion;
+    @FXML
+    private Label lblNombreDocumento;
+    @FXML
+    private Label lblTipoAnteproyecto;
+    @FXML
+    private Label lblLGAC;
     
     
     @Override
@@ -49,7 +54,6 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     
     public void inicializarInformacion (int idAnteproyectoDetalles){
         this.idAnteproyectoDetalle = idAnteproyectoDetalles;
-        lblIDANTEPROYECTO.setText(idAnteproyectoDetalles+"");
         cargarElemento();
     }
         
@@ -75,17 +79,23 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         lblNombreAnteproyecto.setText(anteproyectoRespuesta.getTitulo());
         lblDescripcionAnteproyecto.setText(anteproyectoRespuesta.getDescripcion());
         lblNombreDirector.setText(anteproyectoRespuesta.getNombreDirector());
-        lblCuerpoAcademico.setText(anteproyectoRespuesta.getCuerpoAcademico());
-        lblAreaDisciplinar.setText(anteproyectoRespuesta.getAreaDisciplinar());
-        lblNoEstudiantesMaximo.setText(""+anteproyectoRespuesta.getNoEstudiantesMaximo());
-        lblIDANTEPROYECTO.setText(""+idAnteproyectoDetalle);
         lblCodirectores.setText(anteproyectoRespuesta.getNombreCodirectores());
+        lblCuerpoAcademico.setText(anteproyectoRespuesta.getNombreCuerpoAcademico());
+        lblLGAC.setText(anteproyectoRespuesta.getNombreLGAC());
+        lblTipoAnteproyecto.setText(anteproyectoRespuesta.getTipoAnteproyecto());
+        lblNoEstudiantesMaximo.setText(""+anteproyectoRespuesta.getNoEstudiantesMaximo());
+        lblNombreDocumento.setText("Documento jiji");
+        lblFechaAprobacion.setText(anteproyectoRespuesta.getFechaAprobacion());
     }
 
     @FXML
     private void clicRegresarAnteproyectos(MouseEvent event) {
         Stage escenarioBase = (Stage) lblNombreAnteproyecto.getScene().getWindow();
         escenarioBase.close();
+    }
+
+    @FXML
+    private void clicDescargarDocumento(ActionEvent event) {
     }
     
 }
