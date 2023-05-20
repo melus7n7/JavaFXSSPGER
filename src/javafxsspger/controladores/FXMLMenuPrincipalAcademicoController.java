@@ -48,7 +48,7 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
 
     @FXML
     private void clicAnteproyectos(ActionEvent event) {
-        Stage escenarioBase = (Stage)lblNombreAcademico.getScene().getWindow();
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
         try {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectos.fxml"));
             Parent vista = accesoControlador.load();
@@ -80,7 +80,6 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
         respuesta.setIdUsuario(usuarioLogin.getIdUsuario());
         respuesta.setNombre(usuarioLogin.getNombre());
         respuesta.setIdTipoUsuario(usuarioLogin.getIdTipoUsuario());
-        usuarioAcademico = new Academico();
         this.usuarioAcademico = respuesta;
         lblNombreAcademico.setText("Hola académico " + usuarioAcademico.getNombre());
     }

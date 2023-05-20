@@ -45,7 +45,7 @@
             <Font name="SansSerif Regular" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="lblNombreDirector" alignment="CENTER" layoutX="733.0" layoutY="33.0" prefHeight="50.0" prefWidth="310.0" text="Hola XXX" wrapText="true">
+      <Label fx:id="lblNombreAcademico" alignment="CENTER" layoutX="733.0" layoutY="33.0" prefHeight="50.0" prefWidth="310.0" text="Hola XXX" wrapText="true">
          <font>
             <Font name="SansSerif Italic" size="20.0" />
          </font>
