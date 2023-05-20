@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 05/05/2023
+*Fecha de modificación: 20/05/2023
 *Descripción: POJO del director
 */
 package javafxsspger.modelo.pojo;

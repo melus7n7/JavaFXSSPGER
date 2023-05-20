@@ -116,8 +116,7 @@ public class FXMLAnteproyectosController implements Initializable {
             
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Menú Principal");
-            escenarioBase.initModality(Modality.APPLICATION_MODAL);
-            escenarioBase.showAndWait();
+            escenarioBase.show();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

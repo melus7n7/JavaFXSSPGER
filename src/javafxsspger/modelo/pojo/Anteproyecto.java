@@ -174,7 +174,7 @@ public class Anteproyecto {
     public String getNombreCodirectores (){
         String nombres = "";
         for(int i = 0; i < codirectores.size(); i++){
-            nombres += codirectores.get(i).getNombre();
+            nombres += codirectores.get(i).getNombreCompleto();
             if(i != (codirectores.size() - 1)){
                 nombres += ", ";
             }
