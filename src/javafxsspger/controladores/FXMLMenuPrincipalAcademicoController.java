@@ -32,9 +32,6 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
         lblNombreDirector.setText("Hola director " + usuarioDirector.getNombre());
     }    
 
-    @FXML
-    private void clicAnteproyectosDesarrollo(ActionEvent event) {
-    }
 
     @FXML
     private void clicActividades(ActionEvent event) {
@@ -77,4 +74,24 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     private void clicGenerarReporte(ActionEvent event) {
     }
     
+<<<<<<< Updated upstream
+=======
+    public void inicializarInformacion(Usuario usuarioLogin){
+        Academico respuesta = AcademicoDAO.obtenerDetallesAcademico(usuarioLogin.getIdUsuario());
+        respuesta.setIdUsuario(usuarioLogin.getIdUsuario());
+        respuesta.setNombre(usuarioLogin.getNombre());
+        respuesta.setIdTipoUsuario(usuarioLogin.getIdTipoUsuario());
+        this.usuarioAcademico = respuesta;
+        lblNombreDirector.setText("Hola académico " + usuarioAcademico.getNombre());
+    }
+    
+    public void inicializarInformacionConAcademico(Academico usuarioAcademico){
+        this.usuarioAcademico = usuarioAcademico;
+        lblNombreDirector.setText("Hola académico " + this.usuarioAcademico.getNombre());
+    }
+
+    @FXML
+    private void clicTrabajosRecepcionales(ActionEvent event) {
+    }
+>>>>>>> Stashed changes
 }

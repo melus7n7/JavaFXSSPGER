@@ -40,7 +40,6 @@ public class FXMLAnteproyectosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //PENDIENTE: Obtención de los Anteproyectos por medio del DAO
         cargarElementos();
     }
     
