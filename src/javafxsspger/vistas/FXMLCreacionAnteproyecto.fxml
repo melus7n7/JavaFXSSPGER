@@ -49,7 +49,7 @@
             <Font name="SansSerif Bold Italic" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbBoxTipoAnteproyecto" layoutX="249.0" layoutY="314.0" prefHeight="33.0" prefWidth="359.0" promptText="Trabajos prácticos" />
+      <ComboBox fx:id="cmbBoxTipoAnteproyecto" layoutX="249.0" layoutY="314.0" prefHeight="33.0" prefWidth="359.0" />
       <Label layoutX="46.0" layoutY="364.0" text="LGAC:">
          <font>
             <Font name="SansSerif Bold Italic" size="18.0" />
@@ -61,7 +61,7 @@
             <Font name="SansSerif Regular" size="20.0" />
          </font>
       </Button>
-      <Button layoutX="723.0" layoutY="526.0" mnemonicParsing="false" onAction="#clicAdjuntarCambios" prefHeight="27.0" prefWidth="224.0" style="-fx-background-color: DIMGRAY;" text="Adjuntar Documento" textFill="WHITE">
+      <Button layoutX="723.0" layoutY="526.0" mnemonicParsing="false" onAction="#clicAdjuntarDocumento" prefHeight="27.0" prefWidth="224.0" style="-fx-background-color: DIMGRAY;" text="Adjuntar Documento" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>

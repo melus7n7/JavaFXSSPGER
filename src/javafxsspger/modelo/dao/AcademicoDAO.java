@@ -54,7 +54,7 @@ public class AcademicoDAO {
                     "Usuario.apellidoPaterno, Usuario.apellidoMaterno " +
                     "FROM Academico " +
                     "INNER JOIN Usuario ON Usuario.idUsuario = Academico.idUsuario " +
-                    "WHERE Academico.idAcademico != ?;";
+                    "WHERE Academico.idAcademico != ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, academicoCreador.getIdAcademico());
                 ResultSet resultado = prepararSentencia.executeQuery();

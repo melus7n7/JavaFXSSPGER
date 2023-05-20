@@ -7,11 +7,13 @@
 package javafxsspger.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.modelo.pojo.TipoAnteproyecto;
 
 
 public class Utilidades {
@@ -35,5 +37,24 @@ public class Utilidades {
         }
         return escena;
        
+   }
+    
+   public static ArrayList <TipoAnteproyecto> obtenerTiposAnteproyecto (){
+       ArrayList <TipoAnteproyecto> tiposAnteproyecto = new ArrayList();
+       TipoAnteproyecto tipo1 = new TipoAnteproyecto(1, "Tesis");
+       TipoAnteproyecto tipo2 = new TipoAnteproyecto(2, "Tesina");
+       TipoAnteproyecto tipo3 = new TipoAnteproyecto(3, "Monografía");
+       TipoAnteproyecto tipo4 = new TipoAnteproyecto(4, "Reporte técnico");
+       TipoAnteproyecto tipo5 = new TipoAnteproyecto(5, "Memoria");
+       TipoAnteproyecto tipo6 = new TipoAnteproyecto(6, "Trabajos prácticos");
+       
+       tiposAnteproyecto.add(tipo1);
+       tiposAnteproyecto.add(tipo2);
+       tiposAnteproyecto.add(tipo3);
+       tiposAnteproyecto.add(tipo4);
+       tiposAnteproyecto.add(tipo5);
+       tiposAnteproyecto.add(tipo6);
+       
+       return tiposAnteproyecto;
    }
 }
