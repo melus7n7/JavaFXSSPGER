@@ -8,6 +8,9 @@ package javafxsspger.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -87,7 +90,7 @@ public class FXMLCreacionActividadController implements Initializable {
     
     private void validarCamposRegistro(){
         if(txtAreaTituloActividad.getText().isEmpty() || txtAreaDescripcionActividad.getText().isEmpty() || dtPickerFechaInicio.getValue()==null || dtPickerFechaFin.getValue()==null ){
-            Utilidades.mostrarDialogoSimple("Campos invalidos","No puede haber campos vacios, Completelos para continuar", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Campos invalidos","Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.ERROR);
         }else{
             String titulo = txtAreaTituloActividad.getText();
             String descripcion = txtAreaDescripcionActividad.getText();
@@ -95,22 +98,37 @@ public class FXMLCreacionActividadController implements Initializable {
             String fechaFinal = dtPickerFechaFin.getValue().toString();
             //int idEstudiante=estudiante.getIdEstudiante();
             //int idTrabajoRecepcional=estudiante.getIdTrabajoRecepcional();
-            Actividad actividadValidada = new Actividad();
-            actividadValidada.setTitulo(titulo);
-            actividadValidada.setDescripcion(descripcion);
-            actividadValidada.setFechaInicio(fechaInicio);
-            actividadValidada.setFechaFinal(fechaFinal);
-            actividadValidada.setIdEstudiante(1); //MODIFICAR
-            actividadValidada.setIdTrabajoRecepcional(1); //MODIFICAR
-            /*
-            if(esEdicion){  
-                //actividadValidada.getIdActividad(actividadEdicion.getIdActividad());
-                actualizarActividad(actividadValidada);
-            }else{
-                registrarActividad(actividadValidada);
+            try{
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-dd-MM");
+                Date fechaI = null;
+                fechaI = formatoFecha.parse(fechaInicio);
+                Date fechaF = null;
+                fechaF = formatoFecha.parse(fechaFinal);
+                
+                Actividad actividadValidada = new Actividad();
+                actividadValidada.setTitulo(titulo);
+                actividadValidada.setDescripcion(descripcion);
+                actividadValidada.setFechaInicio(fechaInicio);
+                actividadValidada.setFechaFinal(fechaFinal);
+                actividadValidada.setIdEstudiante(1); //MODIFICAR
+                actividadValidada.setIdTrabajoRecepcional(1); //MODIFICAR
+                
+                if (fechaI.compareTo(fechaF) > 0 || fechaI.compareTo(fechaF)==fechaF.compareTo(fechaI)) {
+                    Utilidades.mostrarDialogoSimple("Fechas Invalidas", "La fecha ingresada no es válida. Ingrese una nueva fecha.", Alert.AlertType.WARNING);
+                }else {
+                    /*
+                    if(esEdicion){  
+                        //actividadValidada.getIdActividad(actividadEdicion.getIdActividad());
+                        actualizarActividad(actividadValidada);
+                    }else{
+                        registrarActividad(actividadValidada);
+                    }
+                    */
+                    registrarActividad(actividadValidada);
+                }
+            }catch(ParseException e){
+                System.out.println("Error al convertir la fecha.");
             }
-            */
-            registrarActividad(actividadValidada);
         }
     }
     
@@ -118,7 +136,7 @@ public class FXMLCreacionActividadController implements Initializable {
         int codigoRespuesta = guardarActividad(actividadNueva);                
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-            Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Sin conexion", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde.", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
             Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);

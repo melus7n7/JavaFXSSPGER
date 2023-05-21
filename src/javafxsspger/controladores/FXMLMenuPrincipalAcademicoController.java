@@ -42,13 +42,14 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     private void clicActividades(ActionEvent event) {
         Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
         try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadesEstudiante.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadesAcademico.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLActividadesEstudianteController actividades = accesoControlador.getController();
+            FXMLActividadesAcademicoController actividades = accesoControlador.getController();
+            
             actividades.inicializarInformacion(usuarioAcademico);
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Actividades");
-            escenarioBase.show();;
+            escenarioBase.show();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
