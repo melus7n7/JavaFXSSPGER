@@ -1,7 +1,7 @@
 /*
-*Autor: Martínez Aguilar Sulem
+*Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 14/05/2023
+*Fecha de modificación: 20/05/2023
 *Descripción: Controlador de la vista del menú principal del director
 */
 package javafxsspger.controladores;
@@ -40,6 +40,19 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
 
     @FXML
     private void clicActividades(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadesAcademico.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLActividadesAcademicoController actividades = accesoControlador.getController();
+            
+            actividades.inicializarInformacion(usuarioAcademico);
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Actividades");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
