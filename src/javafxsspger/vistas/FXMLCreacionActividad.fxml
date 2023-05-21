@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLCreacionActividadController">
+   <children>
+      <ImageView fitHeight="69.0" fitWidth="67.0" layoutX="62.0" layoutY="20.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#clicRegresarActividades" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblTitulo" layoutX="142.0" layoutY="24.0" text="Creación de Actividad">
+         <font>
+            <Font name="Trebuchet MS" size="50.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAreaDescripcionActividad" layoutX="47.0" layoutY="221.0" prefHeight="222.0" prefWidth="993.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="txtAreaTituloActividad" layoutX="47.0" layoutY="124.0" prefHeight="44.0" prefWidth="993.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="57.0" layoutY="191.0" text="Descripción:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="62.0" layoutY="97.0" text="Titulo de Actividad">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dtPickerFechaInicio" layoutX="62.0" layoutY="510.0" prefHeight="33.0" prefWidth="193.0" />
+      <Label layoutX="397.0" layoutY="467.0" text="Fecha Fin:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="467.0" text="Fecha inicio:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dtPickerFechaFin" layoutX="397.0" layoutY="510.0" prefHeight="33.0" prefWidth="193.0" />
+      <Button layoutX="797.0" layoutY="579.0" mnemonicParsing="false" onAction="#clicGuardarActividad" prefHeight="50.0" prefWidth="234.0" style="-fx-background-color: black;" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
