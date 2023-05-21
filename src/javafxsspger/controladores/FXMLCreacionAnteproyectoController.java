@@ -10,8 +10,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -26,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -33,9 +37,12 @@ import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionCodirector;
 import javafxsspger.modelo.dao.AcademicoDAO;
+import javafxsspger.modelo.dao.AnteproyectoDAO;
+import javafxsspger.modelo.dao.EncargadosAnteproyectoDAO;
 import javafxsspger.modelo.dao.LGACDAO;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.AcademicoRespuesta;
+import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.modelo.pojo.LGAC;
 import javafxsspger.modelo.pojo.LGACRespuesta;
 import javafxsspger.modelo.pojo.TipoAnteproyecto;
@@ -50,6 +57,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
     private ObservableList<LGAC> lgacs;
     private ObservableList<TipoAnteproyecto> tiposAnteproyecto;
     private File archivoElegido;
+    private Academico academicoCreacion;
     
     @FXML
     private TextField txtFieldEstudiantesMaximos;
@@ -95,6 +103,11 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         validarCamposRegistro();
     }
     
+    @FXML
+    private void clicRegresar(MouseEvent event) {
+        cerrarVentana();
+    }
+    
     @Override
     public void notificarAñadirCodirector(Academico codirector) {
         codirectoresAnteproyecto.add(codirector);
@@ -105,7 +118,12 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         codirectoresAnteproyecto.remove(codirector);
     }
     
-    public void inicializarCodirectores (Academico academicoCreacion){
+    public void inicializarPantalla (Academico academicoCreacion){
+        this.academicoCreacion = academicoCreacion;
+        inicializarCodirectores();
+    }
+    
+    public void inicializarCodirectores (){
         AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesCodirectores(academicoCreacion);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
@@ -167,9 +185,72 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         String titulo = txtAreaNombreAnteproyecto.getText();
         String descripcion = txtAreaDescripcionAnteproyecto.getText();
         String noEstudiantesMaximo = txtFieldEstudiantesMaximos.getText();
+        LGAC lgac = cmbBoxLGAC.getSelectionModel().getSelectedItem();
+        TipoAnteproyecto tipo = cmbBoxTipoAnteproyecto.getSelectionModel().getSelectedItem();
+        
+        //Proceso de validación
+        
+        Anteproyecto anteproyectoValidado = new Anteproyecto();
+        anteproyectoValidado.setTitulo(titulo);
+        anteproyectoValidado.setDescripcion(descripcion);
+        anteproyectoValidado.setNoEstudiantesMaximo(Integer.parseInt(noEstudiantesMaximo));
+        anteproyectoValidado.setIdLGAC(lgac.getIdLGAC());
+        anteproyectoValidado.setIdTipoAnteproyecto(tipo.getIdTipoAnteproyecto());
+        anteproyectoValidado.setIdEstado(Constantes.PENDIENTE);
+        if(archivoElegido != null){
+            try {
+                anteproyectoValidado.setDocumento(Files.readAllBytes(archivoElegido.toPath()));
+                anteproyectoValidado.setNombreDocumento(archivoElegido.getName());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            registrarAnteproyecto(anteproyectoValidado);
+        }else{
+            Utilidades.mostrarDialogoSimple("Error", "Debe seleccionar un archivo", Alert.AlertType.ERROR);
+        }
         
     }
+    
+    public void registrarAnteproyecto(Anteproyecto anteproyectoNuevo){
+        Anteproyecto anteproyectoRespuesta = AnteproyectoDAO.guardarAnteproyecto(anteproyectoNuevo);
+        switch(anteproyectoRespuesta.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error de conexión", 
+                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                            "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    registrarDirectores(anteproyectoRespuesta);
+                break;
+        }
+    }
+    
+    private void registrarDirectores (Anteproyecto anteproyectoRespuesta){
+        this.academicoCreacion.setIdAnteproyecto(anteproyectoRespuesta.getIdAnteproyecto());
+        int codigoRespuesta = EncargadosAnteproyectoDAO.guardarEncargados(academicoCreacion, codirectoresAnteproyecto);
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error de conexión", 
+                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                            "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    Utilidades.mostrarDialogoSimple("Anteproyecto Registrado", 
+                            "Se envió correctamente el anteproyecto", Alert.AlertType.INFORMATION);
+                    cerrarVentana();
+                break;
+        }
+    }
+    
+    private void cerrarVentana(){
+        Stage escenarioBase = (Stage) lblNombreDocumento.getScene().getWindow();
+        escenarioBase.close();
+    }
 
-    
-    
 }

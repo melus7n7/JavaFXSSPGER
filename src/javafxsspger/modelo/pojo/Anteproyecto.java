@@ -25,8 +25,10 @@ public class Anteproyecto {
     private String tipoAnteproyecto;
     private int idLGAC;
     private String nombreLGAC;
- 
+    private int idEstado;
+    
     private String nombreDirector;
+    private int idDirector;
     
     private int codigoRespuesta;
     private ArrayList<Academico> codirectores;
@@ -36,6 +38,10 @@ public class Anteproyecto {
     //Getters
     public String getTitulo() {
         return titulo;
+    }
+
+    public int getIdDirector() {
+        return idDirector;
     }
 
     public int getCodigoRespuesta() {
@@ -100,6 +106,10 @@ public class Anteproyecto {
 
     public String getFechaAprobacion() {
         return fechaAprobacion;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
     }
     
     //Setters
@@ -169,6 +179,14 @@ public class Anteproyecto {
 
     public void setNombreLGAC(String nombreLGAC) {
         this.nombreLGAC = nombreLGAC;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public void setIdDirector(int idDirector) {
+        this.idDirector = idDirector;
     }
     
     public String getNombreCodirectores (){
