@@ -1,8 +1,8 @@
 /*
-*Autor:   
+*Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 21/05/2023
 *Fecha de modificación: 21/05/2023
-*Descripción: POJO que contiene varios Tranajos Recepcionales
+*Descripción: POJO que contiene varios Trabajos Recepcionales
 */
 package javafxsspger.modelo.pojo;
 
