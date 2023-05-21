@@ -142,8 +142,8 @@ public class AnteproyectoDAO {
         if(conexionBD!=null){
             try{
                 String sentencia = "insert into anteproyecto (titulo, descripcion, fechaCreacion, noEstudiantesMaximos, noEstudiantesAsignados, " +
-                    "idEstado, idTipoAnteproyecto, idLGAC, documento, nombreDocumento) " +
-                    "values (?, ? , CURDATE(), ? , 0, 1 , ?, ?, ?, ?)";
+                    "idEstado, idTipoAnteproyecto, idLGAC, documento, nombreDocumento, idCuerpoAcademico) " +
+                    "values (?, ? , CURDATE(), ? , 0, 1 , ?, ?, ?, ?, ?)";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setString (1, anteproyectoNuevo.getTitulo());
                 prepararSentencia.setString(2, anteproyectoNuevo.getDescripcion());
@@ -152,6 +152,7 @@ public class AnteproyectoDAO {
                 prepararSentencia.setInt(5, anteproyectoNuevo.getIdLGAC());
                 prepararSentencia.setBytes(6, anteproyectoNuevo.getDocumento());
                 prepararSentencia.setString(7, anteproyectoNuevo.getNombreDocumento());
+                prepararSentencia.setInt(8, anteproyectoNuevo.getIdCuerpoAcademico());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 anteproyectoRespuesta.setCodigoRespuesta ((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);
                 

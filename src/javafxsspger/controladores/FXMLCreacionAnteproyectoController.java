@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -38,22 +40,25 @@ import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionCodirector;
 import javafxsspger.modelo.dao.AcademicoDAO;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
+import javafxsspger.modelo.dao.CuerpoAcademicoDAO;
 import javafxsspger.modelo.dao.EncargadosAnteproyectoDAO;
 import javafxsspger.modelo.dao.LGACDAO;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.AcademicoRespuesta;
 import javafxsspger.modelo.pojo.Anteproyecto;
+import javafxsspger.modelo.pojo.CuerpoAcademico;
+import javafxsspger.modelo.pojo.CuerpoAcademicoRespuesta;
 import javafxsspger.modelo.pojo.LGAC;
 import javafxsspger.modelo.pojo.LGACRespuesta;
 import javafxsspger.modelo.pojo.TipoAnteproyecto;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
-import javax.imageio.ImageIO;
 
 
 public class FXMLCreacionAnteproyectoController implements Initializable, INotificacionCodirector {
 
     private ArrayList <Academico> codirectoresAnteproyecto;
+    private ObservableList<CuerpoAcademico> cuerposAcademicos;
     private ObservableList<LGAC> lgacs;
     private ObservableList<TipoAnteproyecto> tiposAnteproyecto;
     private File archivoElegido;
@@ -65,6 +70,8 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
     private ComboBox<TipoAnteproyecto> cmbBoxTipoAnteproyecto;
     @FXML
     private ComboBox<LGAC> cmbBoxLGAC;
+    @FXML
+    private ComboBox<CuerpoAcademico> cmbBoxCuerpoAcademico;
     @FXML
     private Button btnGuardarCambios;
     @FXML
@@ -80,8 +87,15 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         codirectoresAnteproyecto = new ArrayList();
-        inicializarLGAC();
+        inicializarCuerposAcademico();
         inicializarDatos();
+        cmbBoxCuerpoAcademico.valueProperty().addListener(new ChangeListener<CuerpoAcademico>() {
+            @Override
+            public void changed(ObservableValue<? extends CuerpoAcademico> observable, CuerpoAcademico oldValue, CuerpoAcademico newValue) {
+                if (newValue != null)
+                    inicializarLGAC(newValue.getIdCuerpoAcademico());
+            }
+        });
     }
     
     @FXML
@@ -123,6 +137,26 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         inicializarCodirectores();
     }
     
+    public void inicializarCuerposAcademico(){
+        cuerposAcademicos = FXCollections.observableArrayList();
+        CuerpoAcademicoRespuesta respuestaBD = CuerpoAcademicoDAO.recuperarCuerposAcademicos();
+        switch(respuestaBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    cuerposAcademicos.addAll(respuestaBD.getCuerposAcademicos());
+                    cmbBoxCuerpoAcademico.setItems(cuerposAcademicos);
+                break;
+        }
+    }
+    
     public void inicializarCodirectores (){
         AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesCodirectores(academicoCreacion);
         switch(respuestaBD.getCodigoRespuesta()){
@@ -162,9 +196,9 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         cmbBoxTipoAnteproyecto.setItems(tiposAnteproyecto);
     }
     
-    public void inicializarLGAC(){
+    public void inicializarLGAC(int idCuerpoAcademico){
         lgacs = FXCollections.observableArrayList();
-        LGACRespuesta lgacRespuesta = LGACDAO.recuperarLGAC();
+        LGACRespuesta lgacRespuesta = LGACDAO.recuperarLGAC(idCuerpoAcademico);
         switch(lgacRespuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error de conexión", 
@@ -187,6 +221,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         String noEstudiantesMaximo = txtFieldEstudiantesMaximos.getText();
         LGAC lgac = cmbBoxLGAC.getSelectionModel().getSelectedItem();
         TipoAnteproyecto tipo = cmbBoxTipoAnteproyecto.getSelectionModel().getSelectedItem();
+        CuerpoAcademico cuerpoAcademico = cmbBoxCuerpoAcademico.getSelectionModel().getSelectedItem();
         
         //Proceso de validación
         
@@ -196,6 +231,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         anteproyectoValidado.setNoEstudiantesMaximo(Integer.parseInt(noEstudiantesMaximo));
         anteproyectoValidado.setIdLGAC(lgac.getIdLGAC());
         anteproyectoValidado.setIdTipoAnteproyecto(tipo.getIdTipoAnteproyecto());
+        anteproyectoValidado.setIdCuerpoAcademico(cuerpoAcademico.getIdCuerpoAcademico());
         anteproyectoValidado.setIdEstado(Constantes.PENDIENTE);
         if(archivoElegido != null){
             try {
