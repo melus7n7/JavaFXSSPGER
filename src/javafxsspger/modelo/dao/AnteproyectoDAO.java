@@ -32,7 +32,8 @@ public class AnteproyectoDAO {
                         "INNER JOIN academico ON encargadosanteproyecto.idAcademico = encargadosanteproyecto.idAcademico " +
                         "INNER JOIN usuario ON academico.idUsuario = usuario.idUsuario " +
                         "WHERE encargadosanteproyecto.esDirector = '1' AND encargadosanteproyecto.idAcademico = academico.idAcademico AND anteproyecto.noEstudiantesAsignados <= 0 " +
-                        "AND anteproyecto.idEstado = 2";
+                        "AND anteproyecto.idEstado = 2 " +
+                        "ORDER BY usuario.nombreUsuario ASC ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList <Anteproyecto> anteproyectosConsulta = new ArrayList();
