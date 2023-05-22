@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 14/05/2023
-*Fecha de modificación: 19/05/2023
+*Fecha de modificación: 20/05/2023
 *Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los anteproyectos
 */
 
@@ -129,6 +129,46 @@ public class AnteproyectoDAO {
             }catch(SQLException ex){
                 anteproyectoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
                 ex.printStackTrace();
+            }
+        }else{
+            anteproyectoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return anteproyectoRespuesta;
+    }
+    
+    public static Anteproyecto guardarAnteproyecto (Anteproyecto anteproyectoNuevo){
+        Anteproyecto anteproyectoRespuesta = new Anteproyecto();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "insert into anteproyecto (titulo, descripcion, fechaCreacion, noEstudiantesMaximos, noEstudiantesAsignados, " +
+                    "idEstado, idTipoAnteproyecto, idLGAC, documento, nombreDocumento, idCuerpoAcademico) " +
+                    "values (?, ? , CURDATE(), ? , 0, 1 , ?, ?, ?, ?, ?)";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString (1, anteproyectoNuevo.getTitulo());
+                prepararSentencia.setString(2, anteproyectoNuevo.getDescripcion());
+                prepararSentencia.setInt(3, anteproyectoNuevo.getNoEstudiantesMaximo());
+                prepararSentencia.setInt(4, anteproyectoNuevo.getIdTipoAnteproyecto());
+                prepararSentencia.setInt(5, anteproyectoNuevo.getIdLGAC());
+                prepararSentencia.setBytes(6, anteproyectoNuevo.getDocumento());
+                prepararSentencia.setString(7, anteproyectoNuevo.getNombreDocumento());
+                prepararSentencia.setInt(8, anteproyectoNuevo.getIdCuerpoAcademico());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                anteproyectoRespuesta.setCodigoRespuesta ((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);
+                
+                String consulta = "SELECT idAnteproyecto FROM Anteproyecto " +
+                    "WHERE titulo = ?";
+                PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
+                prepararConsulta.setString(1, anteproyectoNuevo.getTitulo());
+                ResultSet resultado = prepararConsulta.executeQuery();
+                if(resultado.next()){
+                    anteproyectoRespuesta.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                }
+                
+                conexionBD.close();
+            }catch (SQLException e){
+                anteproyectoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
             }
         }else{
             anteproyectoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);

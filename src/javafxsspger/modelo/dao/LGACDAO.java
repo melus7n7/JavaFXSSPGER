@@ -18,13 +18,14 @@ import javafxsspger.utils.Constantes;
 
 public class LGACDAO {
     
-    public static LGACRespuesta recuperarLGAC(){
+    public static LGACRespuesta recuperarLGAC(int idCuerpoAcademico){
         LGACRespuesta lgacRespuesta = new LGACRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT idLGAC, nombre FROM LGAC";
+                String consulta = "SELECT idLGAC, nombre FROM LGAC Where idCuerpoAcademico = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList <LGAC> lgacs = new ArrayList();
                 while(resultado.next()){

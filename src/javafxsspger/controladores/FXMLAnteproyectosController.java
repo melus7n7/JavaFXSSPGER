@@ -94,7 +94,7 @@ public class FXMLAnteproyectosController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLCreacionAnteproyectoController creacionAnteproyecto = accesoControlador.getController();
-            creacionAnteproyecto.inicializarCodirectores(usuarioAcademico);
+            creacionAnteproyecto.inicializarPantalla(usuarioAcademico);
             
             Stage escenarioBase = new Stage();
             escenarioBase.setScene(new Scene (vista));

@@ -11,6 +11,7 @@ public class Academico extends Usuario{
     private int idAcademico;
     private String noPersonal;
     private int idCuerpoAcademico;
+    private int idAnteproyecto;
 
     public Academico(int idUsuario, String nombre, int tipoUsuario) {
         super(idUsuario, nombre, tipoUsuario);
@@ -30,6 +31,10 @@ public class Academico extends Usuario{
     public int getIdCuerpoAcademico() {
         return idCuerpoAcademico;
     }
+
+    public int getIdAnteproyecto() {
+        return idAnteproyecto;
+    }
     
 
     public void setIdAcademico(int idAcademico) {
@@ -42,6 +47,10 @@ public class Academico extends Usuario{
 
     public void setIdCuerpoAcademico(int idCuerpoAcademico) {
         this.idCuerpoAcademico = idCuerpoAcademico;
+    }
+
+    public void setIdAnteproyecto(int idAnteproyecto) {
+        this.idAnteproyecto = idAnteproyecto;
     }
 
     
