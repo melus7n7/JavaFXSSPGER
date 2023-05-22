@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 20/05/2023
-*Fecha de modificación: 20/05/2023
+*Fecha de modificación: 21/05/2023
 *Descripción: Controlador de la vista de la creación y edición de los anteproyectos
 */
 package javafxsspger.controladores;
@@ -216,8 +216,8 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
     }
 
     public void validarCamposRegistro(){
-        String titulo = txtAreaNombreAnteproyecto.getText();
-        String descripcion = txtAreaDescripcionAnteproyecto.getText();
+        String titulo = txtAreaNombreAnteproyecto.getText().replaceAll("\n", System.getProperty("line.separator"));
+        String descripcion = txtAreaDescripcionAnteproyecto.getText().replaceAll("\n", System.getProperty("line.separator"));
         String noEstudiantesMaximo = txtFieldEstudiantesMaximos.getText();
         LGAC lgac = cmbBoxLGAC.getSelectionModel().getSelectedItem();
         TipoAnteproyecto tipo = cmbBoxTipoAnteproyecto.getSelectionModel().getSelectedItem();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,122 +9,125 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLDetallesAnteproyectoController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLDetallesAnteproyectoController">
    <children>
-      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="75.0" layoutY="51.0" onMouseClicked="#clicRegresarAnteproyectos" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+      <ImageView fitHeight="79.0" fitWidth="81.0" layoutX="57.0" layoutY="6.0" onMouseClicked="#clicRegresarAnteproyectos" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
          <image>
             <Image url="@../recursos/flecha.png" />
          </image>
       </ImageView>
-      <Label layoutX="149.0" layoutY="45.0" text="Detalle Anteproyecto">
+      <Label layoutX="153.0" layoutY="17.0" text="Detalle Anteproyecto">
          <font>
             <Font name="Trebuchet MS Bold" size="50.0" />
          </font>
       </Label>
-      <Label layoutX="43.0" layoutY="122.0" text="Nombre del anteproyecto:">
+      <Label layoutX="43.0" layoutY="81.0" text="Nombre del anteproyecto:">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblNombreAnteproyecto" layoutX="57.0" layoutY="153.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="990.0" style="-fx-border-color: black;" text="Nombre" wrapText="true">
+      <Label fx:id="lblNombreAnteproyecto" alignment="TOP_LEFT" layoutX="55.0" layoutY="108.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="61.0" prefWidth="990.0" style="-fx-background-color: white; -fx-padding: 5;" text="Nombre" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="43.0" layoutY="220.0" text="Descripción del anteproyecto:">
+      <Label layoutX="43.0" layoutY="174.0" text="Descripción del anteproyecto:">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblDescripcionAnteproyecto" layoutX="66.0" layoutY="243.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="71.0" prefWidth="990.0" style="-fx-border-color: black;" text="Descripcion" wrapText="true">
-         <font>
-            <Font name="SansSerif Regular" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="43.0" layoutY="338.0" text="Nombre del director:">
+      <Label layoutX="43.0" layoutY="307.0" text="Nombre del director:">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblNombreDirector" layoutX="256.0" layoutY="338.0" prefHeight="25.0" prefWidth="559.0" style="-fx-border-color: black;" text="Director" wrapText="true">
+      <Label fx:id="lblNombreDirector" layoutX="257.0" layoutY="304.0" prefHeight="31.0" prefWidth="788.0" style="-fx-padding: 5; -fx-background-color: white;" text="Director" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="47.0" layoutY="451.0" text="Cuerpo Académico:">
+      <Label layoutX="43.0" layoutY="429.0" text="Cuerpo Académico:">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblCuerpoAcademico" layoutX="253.0" layoutY="451.0" prefHeight="23.0" prefWidth="422.0" style="-fx-border-color: black;" text="Cuerpo Academico" wrapText="true">
+      <Label fx:id="lblCuerpoAcademico" layoutX="243.0" layoutY="426.0" prefHeight="31.0" prefWidth="805.0" style="-fx-padding: 5; -fx-background-color: white;" text="Cuerpo Academico" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="47.0" layoutY="559.0" prefHeight="34.0" prefWidth="294.0" text="Número estudiantes maximo:" textAlignment="CENTER" wrapText="true">
+      <Label layoutX="43.0" layoutY="567.0" prefHeight="34.0" prefWidth="294.0" text="Número estudiantes maximo:" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblNoEstudiantesMaximo" contentDisplay="CENTER" layoutX="341.0" layoutY="559.0" prefHeight="34.0" prefWidth="286.0" style="-fx-border-color: black;" text="noEstudiantes" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="lblNoEstudiantesMaximo" contentDisplay="CENTER" layoutX="337.0" layoutY="569.0" prefHeight="30.0" prefWidth="379.0" style="-fx-padding: 5; -fx-background-color: white;" text="noEstudiantes" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="42.0" layoutY="387.0" text="Nombre codirectores: ">
+      <Label alignment="CENTER" layoutX="66.0" layoutY="354.0" prefHeight="50.0" prefWidth="152.0" text="Nombre codirectores: " textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblCodirectores" layoutX="263.0" layoutY="368.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="673.0" style="-fx-border-color: black;" text="Codirectores" wrapText="true">
+      <Label fx:id="lblCodirectores" layoutX="257.0" layoutY="348.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="788.0" style="-fx-padding: 5; -fx-background-color: white;" text="Codirectores" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="722.0" layoutY="62.0" text="Fecha Aprobación:">
+      <Label layoutX="721.0" layoutY="35.0" text="Fecha Aprobación:">
          <font>
             <Font name="SansSerif Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblFechaAprobacion" layoutX="902.0" layoutY="63.0" prefHeight="23.0" prefWidth="161.0" style="-fx-border-color: black;" text="Fecha Aprobacion" wrapText="true">
+      <Label fx:id="lblFechaAprobacion" layoutX="895.0" layoutY="30.0" prefHeight="23.0" prefWidth="161.0" style="-fx-padding: 5; -fx-background-color: white;" text="Fecha Aprobacion" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="742.0" layoutY="462.0" text="Documento del Anteproyecto:">
+      <Label layoutX="749.0" layoutY="475.0" text="Documento del Anteproyecto:">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblNombreDocumento" layoutX="803.0" layoutY="502.0" prefHeight="23.0" prefWidth="175.0" style="-fx-border-color: black;" text="Nombre Documento" wrapText="true">
+      <Label fx:id="lblNombreDocumento" alignment="CENTER" layoutX="737.0" layoutY="502.0" prefHeight="70.0" prefWidth="311.0" style="-fx-background-color: white;" text="Nombre Documento" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="808.0" layoutY="559.0" mnemonicParsing="false" onAction="#clicDescargarDocumento" text="Descargar documento">
+      <Button layoutX="797.0" layoutY="582.0" mnemonicParsing="false" onAction="#clicDescargarDocumento" prefHeight="34.0" prefWidth="189.0" style="-fx-background-color: black;" text="Descargar documento" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="45.0" layoutY="526.0" text="Tipo de anteproyecto:">
+      <Label layoutX="43.0" layoutY="521.0" text="Tipo de anteproyecto:">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblTipoAnteproyecto" layoutX="263.0" layoutY="526.0" prefHeight="23.0" prefWidth="410.0" style="-fx-border-color: black;" text="Tipo anteproyecto" wrapText="true">
+      <Label fx:id="lblTipoAnteproyecto" layoutX="270.0" layoutY="518.0" prefHeight="30.0" prefWidth="448.0" style="-fx-padding: 5; -fx-background-color: white;" text="Tipo anteproyecto" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="47.0" layoutY="486.0" text="LGAC: ">
+      <Label layoutX="43.0" layoutY="474.0" text="LGAC: ">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblLGAC" layoutX="130.0" layoutY="486.0" prefHeight="23.0" prefWidth="544.0" style="-fx-border-color: black;" text="LGAC" wrapText="true">
+      <Label fx:id="lblLGAC" layoutX="118.0" layoutY="471.0" prefHeight="30.0" prefWidth="599.0" style="-fx-padding: 5; -fx-background-color: white;" text="LGAC" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
+      <TextArea fx:id="txtAreaDescripcion" editable="false" layoutX="55.0" layoutY="203.0" prefHeight="89.0" prefWidth="990.0" style="-fx-background-color: white; -fx-border-color: silver;" text="Descripcion" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </TextArea>
    </children>
+   <padding>
+      <Insets left="5.0" top="5.0" />
+   </padding>
 </AnchorPane>

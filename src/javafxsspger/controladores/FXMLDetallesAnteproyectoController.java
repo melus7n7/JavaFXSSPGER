@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
@@ -27,8 +28,6 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     
     @FXML
     private Label lblNombreAnteproyecto;
-    @FXML
-    private Label lblDescripcionAnteproyecto;
     @FXML
     private Label lblNombreDirector;
     @FXML
@@ -45,6 +44,8 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     private Label lblTipoAnteproyecto;
     @FXML
     private Label lblLGAC;
+    @FXML
+    private TextArea txtAreaDescripcion;
     
     
     @Override
@@ -77,7 +78,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     
     public void mostrarDetalles (Anteproyecto anteproyectoRespuesta){
         lblNombreAnteproyecto.setText(anteproyectoRespuesta.getTitulo());
-        lblDescripcionAnteproyecto.setText(anteproyectoRespuesta.getDescripcion());
+        txtAreaDescripcion.setText(anteproyectoRespuesta.getDescripcion());
         lblNombreDirector.setText(anteproyectoRespuesta.getNombreDirector());
         lblCodirectores.setText(anteproyectoRespuesta.getNombreCodirectores());
         lblCuerpoAcademico.setText(anteproyectoRespuesta.getNombreCuerpoAcademico());
