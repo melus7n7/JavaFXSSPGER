@@ -24,8 +24,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.modelo.dao.ActividadDAO;
 import javafxsspger.modelo.dao.TrabajoRecepcionalDAO;
 import javafxsspger.modelo.pojo.Academico;
+import javafxsspger.modelo.pojo.ActividadRespuesta;
 import javafxsspger.modelo.pojo.TrabajoRecepcional;
 import javafxsspger.modelo.pojo.TrabajoRecepcionalRespuesta;
 import javafxsspger.utils.Constantes;
@@ -59,7 +61,7 @@ public class FXMLActividadesAcademicoController implements Initializable {
     
     private void cargarInformacionTrabajosRecepcionales(){
         trabajosRecepcionales=FXCollections.observableArrayList();
-        TrabajoRecepcionalRespuesta trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico()); //MODIFICAR 
+        TrabajoRecepcionalRespuesta trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico()); 
         switch(trabajosRecepcionalesBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
@@ -76,8 +78,6 @@ public class FXMLActividadesAcademicoController implements Initializable {
     
     public void inicializarInformacion(Academico usuarioAcademico){
        this.usuarioAcademico = usuarioAcademico;
-       System.out.println(usuarioAcademico.getIdAcademico());
-       System.out.println(this.usuarioAcademico.getIdAcademico());
        cargarInformacionTrabajosRecepcionales();
     }
 
@@ -99,6 +99,36 @@ public class FXMLActividadesAcademicoController implements Initializable {
 
     @FXML
     private void clicMostrarActividades(ActionEvent event) {
+        try{
+            TrabajoRecepcional trabajoRecepcional = cmbBoxTrabajosRecepcionales.getSelectionModel().getSelectedItem();
+            if (trabajoRecepcional == null) {
+                Utilidades.mostrarDialogoSimple("Error cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                                            
+            } else {
+                
+               int idTrabajoRecepcional=trabajoRecepcional.getIdTrabajoRecepcional();
+               System.out.println(idTrabajoRecepcional);
+               //cargarActividades(idTrabajoRecepcional);
+            }
+        }catch(NullPointerException e){
+                Utilidades.mostrarDialogoSimple("Error cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                            
+        } 
     }
+    /*
+    public void cargarActividades(int idTrabajoRecepcional){
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalAcademico();
+        switch(respuestaBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    //mostrarElementos(respuestaBD.getActividades());
+                break;
+        }
+    }
+*/
     
 }

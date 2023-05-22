@@ -23,7 +23,7 @@ import javafxsspger.utils.Constantes;
 public class ActividadDAO {
     
     
-    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcional(int idTrabajoRecepcional){
+    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcionalAcademico(int idTrabajoRecepcional){
         ActividadRespuesta respuesta = new ActividadRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD!=null){
@@ -34,7 +34,7 @@ public class ActividadDAO {
                 "INNER JOIN Estudiante ON Usuario.idUsuario=Estudiante.idUsuario " +
                 "INNER JOIN Actividad ON Estudiante.idEstudiante=Actividad.idEstudiante " +
                 "INNER JOIN TrabajoRecepcional ON Actividad.idTrabajoRecepcional=TrabajoRecepcional.idTrabajoRecepcional "+
-                "where Actividad.idTrabajoRecepcional=?;"; 
+                "where TrabajoRecepcional.idTrabajoRecepcional=?;"; 
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idTrabajoRecepcional);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -60,8 +60,6 @@ public class ActividadDAO {
             respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return respuesta;
-        
-        
     }
     
     public static int guardarActividad(Actividad actividadNueva){

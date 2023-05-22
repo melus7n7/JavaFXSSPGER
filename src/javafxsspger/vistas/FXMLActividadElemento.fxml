@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="1020.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLAnteproyectoElementoController">
+   <children>
+      <Label fx:id="lblTituloActividad" layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="356.0" text="Titulo de Actividad">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNombreEstudiante" layoutX="21.0" layoutY="46.0" prefHeight="17.0" prefWidth="246.0" text="Nombre de Alumno">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="862.0" layoutY="28.0" mnemonicParsing="false" onAction="#clicVerDetallesActividad" prefHeight="33.0" prefWidth="131.0" style="-fx-background-color: black;" text="Ver detalles" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="457.0" layoutY="18.0" text="Fecha inicio:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaInicio" alignment="CENTER" layoutX="380.0" layoutY="42.0" prefHeight="33.0" prefWidth="246.0" text="FechaInicio" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaFinal" alignment="CENTER" layoutX="604.0" layoutY="42.0" prefHeight="33.0" prefWidth="246.0" text="FechaFinal" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="681.0" layoutY="18.0" text="Fecha final:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

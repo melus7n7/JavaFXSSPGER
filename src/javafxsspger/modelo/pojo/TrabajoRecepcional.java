@@ -160,6 +160,9 @@ public class TrabajoRecepcional {
         this.idLGAC = idLGAC;
     }
     
-    
+    @Override
+    public String toString(){
+        return titulo;
+    }
     
  }
