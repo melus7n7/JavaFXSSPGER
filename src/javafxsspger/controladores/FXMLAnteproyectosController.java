@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 05/05/2023
+*Fecha de modificación: 23/05/2023
 *Descripción: Controlador de la vista de los Anteproyectos Publicados
 */
 
@@ -28,6 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAnteproyectos;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.modelo.pojo.AnteproyectoRespuesta;
@@ -37,7 +38,7 @@ import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
 
-public class FXMLAnteproyectosController implements Initializable {
+public class FXMLAnteproyectosController implements Initializable, INotificacionAnteproyectos {
 
     @FXML
     private VBox vBoxListaAnteproyectosPublicados;
@@ -102,7 +103,7 @@ public class FXMLAnteproyectosController implements Initializable {
             try{
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
-                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), esPorCorregir);
+                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), esPorCorregir, this);
                 vBoxListaAnteproyectosPublicados.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
@@ -168,6 +169,11 @@ public class FXMLAnteproyectosController implements Initializable {
         btnAnteproyectosPublicados.setDisable(true);
         btnAnteproyectoPorCorregir.setDisable(false);
         cargarElementosPublicados();
+    }
+
+    @Override
+    public void notificarCargarAnteproyectosPorCorregir() {
+        cargarElementosPorCorregir();
     }
     
 }

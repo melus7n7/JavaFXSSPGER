@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 14/05/2023
-*Fecha de modificación: 20/05/2023
+*Fecha de modificación: 23/05/2023
 *Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los anteproyectos
 */
 
@@ -216,5 +216,25 @@ public class AnteproyectoDAO {
             anteproyectoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return anteproyectoRespuesta;
+    }
+    
+    public static int publicarAnteproyecto(int idAnteproyectoModificado){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String sentencia = "UPDATE anteproyecto SET idEstado = 2, fechaAprobacion = curdate() WHERE idAnteproyecto = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt (1, idAnteproyectoModificado);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
     }
 }

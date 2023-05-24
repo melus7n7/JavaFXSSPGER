@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 14/05/2023
+*Fecha de modificación: 23/05/2023
 *Descripción: Controlador de la vista de un elemento en la lista de Anteproyectos Publicados
 */
 
@@ -24,12 +24,14 @@ import javafx.stage.Stage;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.utils.Utilidades;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAnteproyectos;
 
 
 public class FXMLAnteproyectoElementoController implements Initializable {
 
     private int idAnteproyecto;
     private boolean esPorCorregir;
+    private INotificacionAnteproyectos interfazNotificacion;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -45,7 +47,8 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         // TODO
     }
     
-    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, boolean esCorreccion){
+    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, boolean esCorreccion, INotificacionAnteproyectos interfazNotificacion){
+        this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
         this.esPorCorregir = esCorreccion;
         lblNombreAnteproyecto.setText(anteproyectoElemento.getTitulo());
@@ -64,7 +67,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
-            detallesAnteproyecto.inicializarInformacion(idAnteproyecto, esPorCorregir);
+            detallesAnteproyecto.inicializarInformacion(idAnteproyecto, esPorCorregir, interfazNotificacion);
             
             Stage escenarioFormulario = new Stage();
             escenarioFormulario.setScene(new Scene (vista));

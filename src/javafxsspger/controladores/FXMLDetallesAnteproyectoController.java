@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 14/05/2023
+*Fecha de modificación: 23/05/2023
 *Descripción: Controlador de la vista del detalle de un anteproyecto
 */
 package javafxsspger.controladores;
@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAnteproyectos;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.utils.Constantes;
@@ -34,6 +35,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     private int idAnteproyectoDetalle;
     private Anteproyecto anteproyectoDetalle;
     private boolean esPorCorregir;
+    private INotificacionAnteproyectos interfazNotificacion;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -66,7 +68,8 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         
     }
     
-    public void inicializarInformacion (int idAnteproyectoDetalles, boolean esPorCorregir){
+    public void inicializarInformacion (int idAnteproyectoDetalles, boolean esPorCorregir, INotificacionAnteproyectos interfazNotificacion){
+        this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyectoDetalle = idAnteproyectoDetalles;
         this.esPorCorregir = esPorCorregir;
         if(!esPorCorregir){
@@ -127,7 +130,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLValidacionAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLValidacionAnteproyectoController validacionAnteproyecto = accesoControlador.getController(); 
-            validacionAnteproyecto.inicializarInformacion(anteproyectoDetalle);
+            validacionAnteproyecto.inicializarInformacion(anteproyectoDetalle, interfazNotificacion);
             
             Stage escenarioDetalle = (Stage) lblCodirectores.getScene().getWindow();
             escenarioDetalle.setScene(new Scene (vista));
