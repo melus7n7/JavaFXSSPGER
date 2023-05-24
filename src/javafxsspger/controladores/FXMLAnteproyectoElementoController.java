@@ -28,26 +28,34 @@ import javafxsspger.JavaFXSSPGER;
 
 public class FXMLAnteproyectoElementoController implements Initializable {
 
+    private int idAnteproyecto;
+    private boolean esPorCorregir;
+    
     @FXML
     private Label lblNombreAnteproyecto;
     @FXML
     private Label lblNombreDirector;
     @FXML
-    private Label lblFechaPublicacion;
-    
-    private int idAnteproyecto;
+    private Label lblFecha;
+    @FXML
+    private Label lblFechaEtiqueta;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
     
-    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento){
+    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, boolean esCorreccion){
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
+        this.esPorCorregir = esCorreccion;
         lblNombreAnteproyecto.setText(anteproyectoElemento.getTitulo());
         lblNombreDirector.setText(anteproyectoElemento.getNombreDirector());
-        lblFechaPublicacion.setText(anteproyectoElemento.getFechaAprobacion());
+        lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
         idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
+        if(esCorreccion){
+            lblFechaEtiqueta.setText("Fecha creación:");
+            lblFecha.setText(anteproyectoElemento.getFechaCreacion());
+        }
     }
 
     @FXML
@@ -56,7 +64,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
-            detallesAnteproyecto.inicializarInformacion(idAnteproyecto);
+            detallesAnteproyecto.inicializarInformacion(idAnteproyecto, esPorCorregir);
             
             Stage escenarioFormulario = new Stage();
             escenarioFormulario.setScene(new Scene (vista));

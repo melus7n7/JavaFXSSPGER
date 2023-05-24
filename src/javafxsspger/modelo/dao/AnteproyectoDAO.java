@@ -31,7 +31,8 @@ public class AnteproyectoDAO {
                         "INNER JOIN encargadosanteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
                         "INNER JOIN academico ON encargadosanteproyecto.idAcademico = encargadosanteproyecto.idAcademico " +
                         "INNER JOIN usuario ON academico.idUsuario = usuario.idUsuario " +
-                        "WHERE encargadosanteproyecto.esDirector = '1' AND encargadosanteproyecto.idAcademico = academico.idAcademico AND anteproyecto.noEstudiantesAsignados <= 0 " +
+                        "WHERE encargadosanteproyecto.esDirector = '1' AND encargadosanteproyecto.idAcademico = academico.idAcademico " +
+                        "AND anteproyecto.noEstudiantesAsignados <= 0 " +
                         "AND anteproyecto.idEstado = 2 " +
                         "ORDER BY usuario.nombreUsuario ASC ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
@@ -43,6 +44,46 @@ public class AnteproyectoDAO {
                     String nombreCompleto = resultado.getString("nombreUsuario") + " " + resultado.getString("apellidoPaterno") + " " + resultado.getString("apellidoMaterno");
                     anteproyecto.setNombreDirector(nombreCompleto);
                     anteproyecto.setFechaAprobacion(resultado.getString("fechaAprobacion"));
+                    anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                    anteproyectosConsulta.add(anteproyecto);
+                }
+                respuesta.setAnteproyectos(anteproyectosConsulta);
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static AnteproyectoRespuesta obtenerAnteproyectosPorCorregir(){
+        AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT anteproyecto.titulo, usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno, " +
+                    "anteproyecto.fechaCreacion, anteproyecto.idAnteproyecto, " +
+                    "encargadosanteproyecto.idAcademico " +
+                    "FROM sspger.anteproyecto " +
+                    "INNER JOIN encargadosanteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
+                    "INNER JOIN academico ON encargadosanteproyecto.idAcademico = encargadosanteproyecto.idAcademico " +
+                    "INNER JOIN usuario ON academico.idUsuario = usuario.idUsuario " +
+                    "WHERE encargadosanteproyecto.esDirector = '1' AND encargadosanteproyecto.idAcademico = academico.idAcademico " +
+                    "AND anteproyecto.noEstudiantesAsignados <= 0 AND anteproyecto.idEstado = 1 " +
+                    "ORDER BY usuario.nombreUsuario ASC ";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <Anteproyecto> anteproyectosConsulta = new ArrayList();
+                while(resultado.next()){
+                    Anteproyecto anteproyecto = new Anteproyecto();
+                    anteproyecto.setTitulo(resultado.getString("titulo"));
+                    String nombreCompleto = resultado.getString("nombreUsuario") + " " + resultado.getString("apellidoPaterno") + " " + resultado.getString("apellidoMaterno");
+                    anteproyecto.setNombreDirector(nombreCompleto);
+                    anteproyecto.setFechaCreacion(resultado.getString("fechaCreacion"));
                     anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
                     anteproyectosConsulta.add(anteproyecto);
                 }

@@ -24,7 +24,7 @@
             <Font name="SansSerif Bold Italic" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="637.0" layoutY="16.0" text="Fecha de publicación:">
+      <Label fx:id="lblFechaEtiqueta" layoutX="637.0" layoutY="16.0" text="Fecha de publicación:">
          <font>
             <Font name="SansSerif Bold Italic" size="15.0" />
          </font>
@@ -39,7 +39,7 @@
             <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblFechaPublicacion" alignment="CENTER" layoutX="607.0" layoutY="43.0" prefHeight="23.0" prefWidth="218.0" text="Mucho Texto" wrapText="true">
+      <Label fx:id="lblFecha" alignment="CENTER" layoutX="607.0" layoutY="43.0" prefHeight="23.0" prefWidth="218.0" text="Mucho Texto" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>

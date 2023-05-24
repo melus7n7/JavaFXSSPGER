@@ -6,16 +6,23 @@
 */
 package javafxsspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.utils.Constantes;
@@ -25,6 +32,8 @@ import javafxsspger.utils.Utilidades;
 public class FXMLDetallesAnteproyectoController implements Initializable {
     
     private int idAnteproyectoDetalle;
+    private Anteproyecto anteproyectoDetalle;
+    private boolean esPorCorregir;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -37,8 +46,6 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     @FXML
     private Label lblCodirectores;
     @FXML
-    private Label lblFechaAprobacion;
-    @FXML
     private Label lblNombreDocumento;
     @FXML
     private Label lblTipoAnteproyecto;
@@ -46,6 +53,12 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     private Label lblLGAC;
     @FXML
     private TextArea txtAreaDescripcion;
+    @FXML
+    private Label lblFecha;
+    @FXML
+    private Button btnIniciarProcesoValidacion;
+    @FXML
+    private Label lblFechaEtiqueta;
     
     
     @Override
@@ -53,8 +66,12 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         
     }
     
-    public void inicializarInformacion (int idAnteproyectoDetalles){
+    public void inicializarInformacion (int idAnteproyectoDetalles, boolean esPorCorregir){
         this.idAnteproyectoDetalle = idAnteproyectoDetalles;
+        this.esPorCorregir = esPorCorregir;
+        if(!esPorCorregir){
+            btnIniciarProcesoValidacion.setVisible(false);
+        }
         cargarElemento();
     }
         
@@ -77,6 +94,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     }
     
     public void mostrarDetalles (Anteproyecto anteproyectoRespuesta){
+        this.anteproyectoDetalle = anteproyectoRespuesta;
         lblNombreAnteproyecto.setText(anteproyectoRespuesta.getTitulo());
         txtAreaDescripcion.setText(anteproyectoRespuesta.getDescripcion());
         lblNombreDirector.setText(anteproyectoRespuesta.getNombreDirector());
@@ -86,7 +104,11 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         lblTipoAnteproyecto.setText(anteproyectoRespuesta.getTipoAnteproyecto());
         lblNoEstudiantesMaximo.setText(""+anteproyectoRespuesta.getNoEstudiantesMaximo());
         lblNombreDocumento.setText("Documento jiji");
-        lblFechaAprobacion.setText(anteproyectoRespuesta.getFechaAprobacion());
+        lblFecha.setText(anteproyectoRespuesta.getFechaAprobacion());
+        if(esPorCorregir){
+            lblFechaEtiqueta.setText("Fecha creación:");
+            lblFecha.setText(anteproyectoRespuesta.getFechaCreacion());
+        }
     }
 
     @FXML
@@ -97,6 +119,23 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
 
     @FXML
     private void clicDescargarDocumento(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIniciarProcesoValidacion(ActionEvent event) {
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLValidacionAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLValidacionAnteproyectoController validacionAnteproyecto = accesoControlador.getController(); 
+            validacionAnteproyecto.inicializarInformacion(anteproyectoDetalle);
+            
+            Stage escenarioDetalle = (Stage) lblCodirectores.getScene().getWindow();
+            escenarioDetalle.setScene(new Scene (vista));
+            escenarioDetalle.setTitle("Validación Anteproyecto");
+            escenarioDetalle.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

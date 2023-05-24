@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLAnteproyectosController">
    <children>
-      <Label layoutX="75.0" layoutY="25.0" text="Anteproyectos Publicados">
+      <Label fx:id="lblTitulo" layoutX="75.0" layoutY="25.0" text="Anteproyectos Publicados">
          <font>
             <Font name="Trebuchet MS Bold" size="50.0" />
          </font>
@@ -20,17 +20,22 @@
             <Image url="@../recursos/flecha.png" />
          </image>
       </ImageView>
-      <Button layoutX="32.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPropiosPublicados" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: black;" text="Anteproyectos Propios Publicados" textFill="WHITE">
+      <Button layoutX="303.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPropiosPublicados" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: black;" text="Anteproyectos Propios Publicados" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="406.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPorCorregir" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: black;" text="Anteproyectos Por Corregir" textFill="WHITE">
+      <Button fx:id="btnAnteproyectoPorCorregir" layoutX="621.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPorCorregir" prefHeight="40.0" prefWidth="245.0" style="-fx-background-color: black;" text="Anteproyectos Por Corregir" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="750.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicCrearAnteproyecto" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: black;" text="Crear Anteproyecto" textFill="WHITE">
+      <Button layoutX="881.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicCrearAnteproyecto" prefHeight="40.0" prefWidth="186.0" style="-fx-background-color: black;" text="Crear Anteproyecto" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnAnteproyectosPublicados" disable="true" layoutX="31.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPublicados" prefHeight="40.0" prefWidth="245.0" style="-fx-background-color: black;" text="Anteproyectos Publicados" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>

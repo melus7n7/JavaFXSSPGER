@@ -20,6 +20,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -41,14 +43,42 @@ public class FXMLAnteproyectosController implements Initializable {
     private VBox vBoxListaAnteproyectosPublicados;
     
     private Academico usuarioAcademico;
+    private boolean esPorCorregir;
+    @FXML
+    private Button btnAnteproyectoPorCorregir;
+    @FXML
+    private Button btnAnteproyectosPublicados;
+    @FXML
+    private Label lblTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cargarElementos();
+        this.esPorCorregir = false;
+        cargarElementosPublicados();
     }
     
-    private void cargarElementos(){
+    private void cargarElementosPublicados(){
+        vBoxListaAnteproyectosPublicados.getChildren().clear();
         AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPublicados();
+        switch(respuestaBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    mostrarElementos(respuestaBD.getAnteproyectos());
+                break;
+        }
+    }
+    
+    private void cargarElementosPorCorregir(){
+        vBoxListaAnteproyectosPublicados.getChildren().clear();
+        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPorCorregir();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin Conexion", 
@@ -72,7 +102,7 @@ public class FXMLAnteproyectosController implements Initializable {
             try{
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
-                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i));
+                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), esPorCorregir);
                 vBoxListaAnteproyectosPublicados.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
@@ -86,6 +116,11 @@ public class FXMLAnteproyectosController implements Initializable {
 
     @FXML
     private void clicAnteproyectosPorCorregir(ActionEvent event) {
+        this.esPorCorregir = true;
+        lblTitulo.setText("Anteproyectos Por Corregir");
+        btnAnteproyectosPublicados.setDisable(false);
+        btnAnteproyectoPorCorregir.setDisable(true);
+        cargarElementosPorCorregir();
     }
 
     @FXML
@@ -124,6 +159,15 @@ public class FXMLAnteproyectosController implements Initializable {
     
     public void inicializarInformacion(Academico usuarioAcademico){
         this.usuarioAcademico = usuarioAcademico;
+    }
+
+    @FXML
+    private void clicAnteproyectosPublicados(ActionEvent event) {
+        this.esPorCorregir = false;
+        lblTitulo.setText("Anteproyectos Publicados");
+        btnAnteproyectosPublicados.setDisable(true);
+        btnAnteproyectoPorCorregir.setDisable(false);
+        cargarElementosPublicados();
     }
     
 }

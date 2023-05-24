@@ -76,12 +76,12 @@
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="721.0" layoutY="35.0" text="Fecha Aprobación:">
+      <Label fx:id="lblFechaEtiqueta" layoutX="721.0" layoutY="35.0" text="Fecha Aprobación:">
          <font>
             <Font name="SansSerif Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblFechaAprobacion" layoutX="895.0" layoutY="30.0" prefHeight="23.0" prefWidth="161.0" style="-fx-padding: 5; -fx-background-color: white;" text="Fecha Aprobacion" wrapText="true">
+      <Label fx:id="lblFecha" layoutX="895.0" layoutY="30.0" prefHeight="23.0" prefWidth="161.0" style="-fx-padding: 5; -fx-background-color: white;" text="Fecha Aprobacion" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
@@ -126,6 +126,11 @@
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </TextArea>
+      <Button fx:id="btnIniciarProcesoValidacion" layoutX="730.0" layoutY="68.0" mnemonicParsing="false" onAction="#clicIniciarProcesoValidacion" prefHeight="34.0" prefWidth="325.0" style="-fx-background-color: black;" text="Iniciar Proceso Validación" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
    </children>
    <padding>
       <Insets left="5.0" top="5.0" />

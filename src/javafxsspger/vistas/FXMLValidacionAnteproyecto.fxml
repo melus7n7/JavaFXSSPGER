@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLValidacionAnteproyectoController">
+   <children>
+      <Label layoutX="126.0" layoutY="24.0" text="Validación de un anteproyecto">
+         <font>
+            <Font name="Trebuchet MS" size="50.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="95.0" fitWidth="83.0" layoutX="26.0" layoutY="5.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="txtAreaDescripcion" editable="false" layoutX="28.0" layoutY="217.0" prefHeight="70.0" prefWidth="561.0" style="-fx-background-color: white; -fx-border-color: silver;" text="Descripcion" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </TextArea>
+      <Label fx:id="lblLGAC" layoutX="126.0" layoutY="444.0" prefHeight="30.0" prefWidth="467.0" style="-fx-padding: 5; -fx-background-color: white;" text="LGAC" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="54.0" layoutY="449.0" text="LGAC: ">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTipoAnteproyecto" layoutX="243.0" layoutY="485.0" prefHeight="30.0" prefWidth="345.0" style="-fx-padding: 5; -fx-background-color: white;" text="Tipo anteproyecto" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="490.0" text="Tipo de anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="168.0" layoutY="614.0" mnemonicParsing="false" onAction="#clicDescargarDocumento" prefHeight="27.0" prefWidth="215.0" style="-fx-background-color: black;" text="Descargar documento" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblNombreDocumento" alignment="CENTER" layoutX="307.0" layoutY="562.0" prefHeight="26.0" prefWidth="285.0" style="-fx-background-color: white;" text="Nombre Documento" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="39.0" layoutY="565.0" text="Documento del Anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaCreacion" layoutX="880.0" layoutY="67.0" prefHeight="23.0" prefWidth="161.0" style="-fx-padding: 5; -fx-background-color: white;" text="Fecha Creación" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="880.0" layoutY="33.0" text="Fecha Creación:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCodirectores" layoutX="192.0" layoutY="337.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="405.0" style="-fx-padding: 5; -fx-background-color: white;" text="Codirectores" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="40.0" layoutY="339.0" prefHeight="50.0" prefWidth="152.0" text="Nombre codirectores: " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNoEstudiantesMaximo" contentDisplay="CENTER" layoutX="310.0" layoutY="522.0" prefHeight="30.0" prefWidth="285.0" style="-fx-padding: 5; -fx-background-color: white;" text="noEstudiantes" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="520.0" prefHeight="34.0" prefWidth="294.0" text="Número estudiantes maximo:" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCuerpoAcademico" layoutX="241.0" layoutY="400.0" prefHeight="31.0" prefWidth="345.0" style="-fx-padding: 5; -fx-background-color: white;" text="Cuerpo Academico" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="54.0" layoutY="405.0" text="Cuerpo Académico:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNombreDirector" layoutX="245.0" layoutY="297.0" prefHeight="31.0" prefWidth="336.0" style="-fx-padding: 5; -fx-background-color: white;" text="Director" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="302.0" text="Nombre del director:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="44.0" layoutY="188.0" text="Descripción del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNombreAnteproyecto" alignment="TOP_LEFT" layoutX="28.0" layoutY="122.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="61.0" prefWidth="559.0" style="-fx-background-color: white; -fx-padding: 5;" text="Nombre" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="44.0" layoutY="95.0" text="Nombre del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="627.0" layoutY="141.0" prefHeight="396.0" prefWidth="449.0" />
+      <Label layoutX="680.0" layoutY="110.0" text="Comentarios:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Button alignment="CENTER" layoutX="712.0" layoutY="561.0" mnemonicParsing="false" onAction="#clicDevolverParaCorreccion" prefHeight="55.0" prefWidth="128.0" style="-fx-background-color: black;" text="Devolver Para Corrección" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" layoutX="896.0" layoutY="562.0" mnemonicParsing="false" onAction="#clicAprobarParaPublicar" prefHeight="55.0" prefWidth="128.0" style="-fx-background-color: black;" text="Aprobar Para Publicar" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
