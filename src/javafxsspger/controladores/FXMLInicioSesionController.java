@@ -91,8 +91,10 @@ public class FXMLInicioSesionController implements Initializable {
                     irPantallaAcademico(usuarioLogin);
                     break;
                 case Constantes.ESTUDIANTE:
+                    irPantallaEstudiante(usuarioLogin);
                     break;
                 case Constantes.ADMINISTRADOR:
+                    irPantallaAdministrador(usuarioLogin);
                     break;
                 default:
                     System.out.print ("ERROR");
@@ -113,8 +115,38 @@ public class FXMLInicioSesionController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
     }
     
+    private void irPantallaEstudiante (Usuario usuarioLogin){
+        Stage escenarioBase = (Stage) txtFieldUsuario.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalEstudiante.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLMenuPrincipalEstudianteController menuPrincipalEstudiante = accesoControlador.getController();
+            menuPrincipalEstudiante.inicializarInformacion(usuarioLogin);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menu Principal");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void irPantallaAdministrador (Usuario usuarioLogin){
+        Stage escenarioBase = (Stage) txtFieldUsuario.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAdministrador.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLMenuPrincipalAdministradorController menuPrincipalEstudiante = accesoControlador.getController();
+            menuPrincipalEstudiante.inicializarInformacion(usuarioLogin);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menu Principal");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     
 }

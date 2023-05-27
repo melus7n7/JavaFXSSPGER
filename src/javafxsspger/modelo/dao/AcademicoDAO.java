@@ -28,13 +28,27 @@ public class AcademicoDAO {
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idUsuario);
                 ResultSet resultado = prepararSentencia.executeQuery();
+                
                 if(resultado.next()){
                     academicoRespuesta.setIdAcademico(resultado.getInt("idAcademico"));
                     academicoRespuesta.setNoPersonal(resultado.getString("noPersonal"));
                     academicoRespuesta.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
+                
+                    String consultaEsDirector = "SELECT Anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico, anteproyecto.idEstado " +
+                        "FROM encargadosanteproyecto " +
+                        "INNER JOIN anteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
+                        "Where anteproyecto.idEstado = ? and encargadosanteproyecto.idAcademico = ?";
+                    PreparedStatement prepararSentenciaEsDirector = conexionBD.prepareStatement(consultaEsDirector);
+                    prepararSentenciaEsDirector.setInt(1, Constantes.APROBADO);
+                    prepararSentenciaEsDirector.setInt(2, academicoRespuesta.getIdAcademico());
+                    ResultSet resultadoEsDirector = prepararSentenciaEsDirector.executeQuery();
+
+                    academicoRespuesta.setEsDirector(resultadoEsDirector.next());
                 }
+                
                 academicoRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 conexionBD.close();
+                
             }catch(SQLException e){
                 academicoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
                 e.printStackTrace();

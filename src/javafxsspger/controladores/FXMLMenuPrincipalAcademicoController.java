@@ -2,7 +2,7 @@
 *Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
 *Fecha de creación: 01/05/2023
 *Fecha de modificación: 20/05/2023
-*Descripción: Controlador de la vista del menú principal del director
+*Descripción: Controlador de la vista del menú principal de los academicos
 */
 package javafxsspger.controladores;
 

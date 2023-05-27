@@ -12,6 +12,10 @@ public class Academico extends Usuario{
     private String noPersonal;
     private int idCuerpoAcademico;
     private int idAnteproyecto;
+    private boolean esDirector;
+    private boolean esProfesor;
+    private boolean esResponsableCA;
+    private boolean esCoordinador;
 
     public Academico(int idUsuario, String nombre, int tipoUsuario) {
         super(idUsuario, nombre, tipoUsuario);
@@ -35,6 +39,22 @@ public class Academico extends Usuario{
     public int getIdAnteproyecto() {
         return idAnteproyecto;
     }
+
+    public boolean isEsDirector() {
+        return esDirector;
+    }
+
+    public boolean isEsProfesor() {
+        return esProfesor;
+    }
+
+    public boolean isEsResponsableCA() {
+        return esResponsableCA;
+    }
+
+    public boolean isEsCoordinador() {
+        return esCoordinador;
+    }
     
 
     public void setIdAcademico(int idAcademico) {
@@ -51,6 +71,22 @@ public class Academico extends Usuario{
 
     public void setIdAnteproyecto(int idAnteproyecto) {
         this.idAnteproyecto = idAnteproyecto;
+    }
+
+    public void setEsDirector(boolean esDirector) {
+        this.esDirector = esDirector;
+    }
+
+    public void setEsProfesor(boolean esProfesor) {
+        this.esProfesor = esProfesor;
+    }
+
+    public void setEsResponsableCA(boolean esResponsableCA) {
+        this.esResponsableCA = esResponsableCA;
+    }
+
+    public void setEsCoordinador(boolean esCoordinador) {
+        this.esCoordinador = esCoordinador;
     }
 
     
