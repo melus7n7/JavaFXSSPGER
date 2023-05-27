@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 23/05/2023
-*Fecha de modificación: 23/05/2023
+*Fecha de modificación: 24/05/2023
 *Descripción: Controlador de la vista de Validación 
 */
 package javafxsspger.controladores;
@@ -24,7 +24,9 @@ import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionAnteproyectos;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
+import javafxsspger.modelo.dao.ComentarioDAO;
 import javafxsspger.modelo.pojo.Anteproyecto;
+import javafxsspger.modelo.pojo.Comentario;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
@@ -32,6 +34,7 @@ import javafxsspger.utils.Utilidades;
 public class FXMLValidacionAnteproyectoController implements Initializable {
 
     private Anteproyecto anteproyectoValidacion;
+    private int idAcademico;
     private INotificacionAnteproyectos interfazNotificacion;
     
     @FXML
@@ -54,6 +57,8 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
     private Label lblNombreDirector;
     @FXML
     private Label lblNombreAnteproyecto;
+    @FXML
+    private TextArea txtAreaComentario;
 
         @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -66,32 +71,22 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
 
     @FXML
     private void clicDevolverParaCorreccion(ActionEvent event) {
+        cambiarPorCorregir();
     }
 
     @FXML
     private void clicAprobarParaPublicar(ActionEvent event) {
-        int codigoRespuesta = AnteproyectoDAO.publicarAnteproyecto(anteproyectoValidacion.getIdAnteproyecto());
-        switch(codigoRespuesta){
-            case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                    Utilidades.mostrarDialogoSimple("Anteproyecto Validado", 
-                            "Se publicó el anteproyecto correctamente", Alert.AlertType.INFORMATION);
-                    interfazNotificacion.notificarCargarAnteproyectosPorCorregir();
-                    cerrarVentana();
-                break;
-        }
-        
-        
+        publicarAnteproyecto();
     }
     
-    public void inicializarInformacion (Anteproyecto anteproyectoValidacion, INotificacionAnteproyectos interfazNotificacion){
+    @FXML
+    private void clicRegresar(MouseEvent event) {
+        Stage escenarioBase = (Stage) lblNombreAnteproyecto.getScene().getWindow();
+        escenarioBase.close();
+    }
+    
+    public void inicializarInformacion (Anteproyecto anteproyectoValidacion, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+        this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.anteproyectoValidacion = anteproyectoValidacion;
         cargarDatos();
@@ -109,15 +104,73 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
         lblNombreDocumento.setText("Documento jiji");
         lblFechaCreacion.setText(anteproyectoValidacion.getFechaCreacion());
     }
-
-    @FXML
-    private void clicRegresar(MouseEvent event) {
-        Stage escenarioBase = (Stage) lblNombreAnteproyecto.getScene().getWindow();
-        escenarioBase.close();
-    }
     
     private void cerrarVentana(){
         Stage escenarioBase = (Stage) lblNombreAnteproyecto.getScene().getWindow();
         escenarioBase.close();
+    }
+    
+    private void publicarAnteproyecto(){
+        int codigoRespuesta = AnteproyectoDAO.publicarAnteproyecto(anteproyectoValidacion.getIdAnteproyecto());
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error de conexión", 
+                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                            "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    Utilidades.mostrarDialogoSimple("Anteproyecto Validado", 
+                            "Se publicó el anteproyecto correctamente", Alert.AlertType.INFORMATION);
+                    interfazNotificacion.notificarCargarAnteproyectosPorCorregir();
+                    cerrarVentana();
+                break;
+        }
+    }
+    
+    private void cambiarPorCorregir(){
+        int codigoRespuesta = AnteproyectoDAO.devolderAnteproyecto(anteproyectoValidacion.getIdAnteproyecto());
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error de conexión", 
+                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                            "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    guardarComentario();
+                break;
+        }
+    }
+    
+    private void guardarComentario(){
+        Comentario comentarioNuevo = new Comentario();
+        comentarioNuevo.setTexto(txtAreaComentario.getText().replaceAll("\n", System.getProperty("line.separator")));
+        comentarioNuevo.setIdAcademico(idAcademico);
+        comentarioNuevo.setIdAnteproyecto(anteproyectoValidacion.getIdAnteproyecto());
+        
+        //Validación
+        
+        int codigoRespuesta = ComentarioDAO.guardarComentario(comentarioNuevo);
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error de conexión", 
+                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                            "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    Utilidades.mostrarDialogoSimple("Anteproyecto Corregido", 
+                            "Se regresó el anteproyecto para su corrección correctamente", Alert.AlertType.INFORMATION);
+                    interfazNotificacion.notificarCargarAnteproyectosPorCorregir();
+                    cerrarVentana();
+                break;
+        } 
     }
 }

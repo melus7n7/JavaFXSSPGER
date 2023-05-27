@@ -33,6 +33,7 @@ import javafxsspger.utils.Utilidades;
 public class FXMLDetallesAnteproyectoController implements Initializable {
     
     private int idAnteproyectoDetalle;
+    private int idAcademico;
     private Anteproyecto anteproyectoDetalle;
     private boolean esPorCorregir;
     private INotificacionAnteproyectos interfazNotificacion;
@@ -68,7 +69,8 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         
     }
     
-    public void inicializarInformacion (int idAnteproyectoDetalles, boolean esPorCorregir, INotificacionAnteproyectos interfazNotificacion){
+    public void inicializarInformacion (int idAnteproyectoDetalles, boolean esPorCorregir, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+        this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyectoDetalle = idAnteproyectoDetalles;
         this.esPorCorregir = esPorCorregir;
@@ -130,7 +132,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLValidacionAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLValidacionAnteproyectoController validacionAnteproyecto = accesoControlador.getController(); 
-            validacionAnteproyecto.inicializarInformacion(anteproyectoDetalle, interfazNotificacion);
+            validacionAnteproyecto.inicializarInformacion(anteproyectoDetalle, interfazNotificacion, idAcademico);
             
             Stage escenarioDetalle = (Stage) lblCodirectores.getScene().getWindow();
             escenarioDetalle.setScene(new Scene (vista));

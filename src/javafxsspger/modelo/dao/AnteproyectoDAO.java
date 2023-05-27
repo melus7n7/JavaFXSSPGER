@@ -237,4 +237,24 @@ public class AnteproyectoDAO {
         }
         return respuesta;
     }
+    
+    public static int devolderAnteproyecto(int idAnteproyectoModificado){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String sentencia = "UPDATE anteproyecto SET idEstado = 3 WHERE idAnteproyecto = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt (1, idAnteproyectoModificado);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
 }

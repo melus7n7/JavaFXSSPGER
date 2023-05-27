@@ -55,7 +55,6 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.esPorCorregir = false;
-        cargarElementosPublicados();
     }
     
     private void cargarElementosPublicados(){
@@ -103,7 +102,7 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
             try{
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
-                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), esPorCorregir, this);
+                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), esPorCorregir, this, usuarioAcademico.getIdAcademico());
                 vBoxListaAnteproyectosPublicados.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
@@ -160,6 +159,7 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     
     public void inicializarInformacion(Academico usuarioAcademico){
         this.usuarioAcademico = usuarioAcademico;
+        cargarElementosPublicados();
     }
 
     @FXML

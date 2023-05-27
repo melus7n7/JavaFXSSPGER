@@ -125,7 +125,7 @@
             <Font name="SansSerif Bold Italic" size="18.0" />
          </font>
       </Label>
-      <TextArea layoutX="627.0" layoutY="141.0" prefHeight="396.0" prefWidth="449.0" />
+      <TextArea fx:id="txtAreaComentario" layoutX="627.0" layoutY="141.0" prefHeight="396.0" prefWidth="449.0" />
       <Label layoutX="680.0" layoutY="110.0" text="Comentarios:">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />

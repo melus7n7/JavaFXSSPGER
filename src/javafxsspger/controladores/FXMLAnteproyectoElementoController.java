@@ -30,6 +30,7 @@ import javafxsspger.interfaces.INotificacionAnteproyectos;
 public class FXMLAnteproyectoElementoController implements Initializable {
 
     private int idAnteproyecto;
+    private int idAcademico;
     private boolean esPorCorregir;
     private INotificacionAnteproyectos interfazNotificacion;
     
@@ -47,7 +48,8 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         // TODO
     }
     
-    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, boolean esCorreccion, INotificacionAnteproyectos interfazNotificacion){
+    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, boolean esCorreccion, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+        this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
         this.esPorCorregir = esCorreccion;
@@ -67,7 +69,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
-            detallesAnteproyecto.inicializarInformacion(idAnteproyecto, esPorCorregir, interfazNotificacion);
+            detallesAnteproyecto.inicializarInformacion(idAnteproyecto, esPorCorregir, interfazNotificacion, idAcademico);
             
             Stage escenarioFormulario = new Stage();
             escenarioFormulario.setScene(new Scene (vista));
