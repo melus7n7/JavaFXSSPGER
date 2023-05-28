@@ -23,7 +23,7 @@ public class AcademicoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT idAcademico, noPersonal, idCuerpoAcademico FROM sspger.academico " +
+                String consulta = "SELECT idAcademico, noPersonal, idCuerpoAcademico, esResponsable FROM sspger.academico " +
                     "WHERE idUsuario = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idUsuario);
@@ -33,17 +33,29 @@ public class AcademicoDAO {
                     academicoRespuesta.setIdAcademico(resultado.getInt("idAcademico"));
                     academicoRespuesta.setNoPersonal(resultado.getString("noPersonal"));
                     academicoRespuesta.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
+                    academicoRespuesta.setEsResponsableCA(resultado.getBoolean("esResponsable"));
                 
                     String consultaEsDirector = "SELECT Anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico, anteproyecto.idEstado " +
-                        "FROM encargadosanteproyecto " +
-                        "INNER JOIN anteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
+                        "FROM encargadosanteproyecto INNER JOIN anteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
                         "Where anteproyecto.idEstado = ? and encargadosanteproyecto.idAcademico = ?";
                     PreparedStatement prepararSentenciaEsDirector = conexionBD.prepareStatement(consultaEsDirector);
                     prepararSentenciaEsDirector.setInt(1, Constantes.APROBADO);
                     prepararSentenciaEsDirector.setInt(2, academicoRespuesta.getIdAcademico());
                     ResultSet resultadoEsDirector = prepararSentenciaEsDirector.executeQuery();
-
                     academicoRespuesta.setEsDirector(resultadoEsDirector.next());
+                    
+                    String consultaEsProfesor = "SELECT idAcademico, idExperienciaEducativa from experienciaeducativa Where idAcademico = ?";
+                    PreparedStatement prepararSentenciaEsProfesor = conexionBD.prepareStatement(consultaEsProfesor);
+                    prepararSentenciaEsProfesor.setInt(1, academicoRespuesta.getIdAcademico());
+                    ResultSet resultadoEsProfesor = prepararSentenciaEsProfesor.executeQuery();
+                    academicoRespuesta.setEsProfesor(resultadoEsProfesor.next());
+                    
+                    String consultaEsCoordinador = "SELECT idCoordinadorAcademia, idExperienciaEducativa from experienciaeducativa Where idCoordinadorAcademia = ?";
+                    PreparedStatement prepararSentenciaEsCoordinador = conexionBD.prepareStatement(consultaEsCoordinador);
+                    prepararSentenciaEsCoordinador.setInt(1, academicoRespuesta.getIdAcademico());
+                    ResultSet resultadoEsCoordinador = prepararSentenciaEsCoordinador.executeQuery();
+                    academicoRespuesta.setEsCoordinador(resultadoEsCoordinador.next());
+                    
                 }
                 
                 academicoRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);

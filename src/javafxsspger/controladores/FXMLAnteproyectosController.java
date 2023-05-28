@@ -40,17 +40,19 @@ import javafxsspger.utils.Utilidades;
 
 public class FXMLAnteproyectosController implements Initializable, INotificacionAnteproyectos {
 
-    @FXML
-    private VBox vBoxListaAnteproyectosPublicados;
-    
     private Academico usuarioAcademico;
     private boolean esPorCorregir;
+    
+    @FXML
+    private VBox vBoxListaAnteproyectosPublicados;
     @FXML
     private Button btnAnteproyectoPorCorregir;
     @FXML
     private Button btnAnteproyectosPublicados;
     @FXML
     private Label lblTitulo;
+    @FXML
+    private Button btnAnteproyectosPropios;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -159,6 +161,12 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     
     public void inicializarInformacion(Academico usuarioAcademico){
         this.usuarioAcademico = usuarioAcademico;
+        if(!usuarioAcademico.isEsDirector()){
+            btnAnteproyectosPropios.setVisible(false);
+        }
+        if(!usuarioAcademico.isEsResponsableCA()){
+            btnAnteproyectoPorCorregir.setVisible(false);
+        }
         cargarElementosPublicados();
     }
 
