@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -41,6 +43,7 @@ public class FXMLCreacionActividadController implements Initializable {
     
     private boolean esEdicion;
     private Estudiante usuarioEstudiante;
+    private Actividad actividad;
     @FXML
     private Label lblTitulo;
     @FXML
@@ -56,11 +59,31 @@ public class FXMLCreacionActividadController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        dtPickerFechaFin.setEditable(false);
+        dtPickerFechaInicio.setEditable(false);
     }   
     
-    public void inicializarInformacion(Estudiante usuarioEstudiante){
+    public void inicializarInformacion(Estudiante usuarioEstudiante, boolean esEdicion, Actividad actividadEdicion){
         this.usuarioEstudiante=usuarioEstudiante;
+        this.esEdicion=esEdicion;
+        this.actividad=actividadEdicion;
+        System.out.println(actividad.getIdActividad());
+        //dtPickerFechaFin.setEditable(false);
+        //dtPickerFechaInicio.setEditable(false);
+        if(esEdicion){
+            inicializarActividadEdicion();
+        }
+    }
+    
+    private void inicializarActividadEdicion(){
+        txtAreaTituloActividad.setText(actividad.getTitulo());
+        txtAreaDescripcionActividad.setText(actividad.getDescripcion());
+        String fechaInicioString = actividad.getFechaInicio();
+        LocalDate fechaI = LocalDate.parse(fechaInicioString);
+        dtPickerFechaInicio.setValue(fechaI);
+        String fechaFinalString = actividad.getFechaFinal();
+        LocalDate fechaF = LocalDate.parse(fechaFinalString);
+        dtPickerFechaFin.setValue(fechaF);
     }
 
     @FXML
@@ -71,13 +94,13 @@ public class FXMLCreacionActividadController implements Initializable {
     private void cerrarVentana(){
         Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
         try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadesEstudiante.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadesAcademico.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLActividadesEstudianteController creacionActividad = accesoControlador.getController();
-            //creacionActividad.inicializarInformacion(usuarioEstudiante);
+            FXMLActividadesAcademicoController Actividades = accesoControlador.getController();
+            //Actividades.inicializarInformacion(usuarioEstudiante); //MODIFICAR
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Actividades");
-            escenarioBase.show();;
+            escenarioBase.show();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -86,6 +109,7 @@ public class FXMLCreacionActividadController implements Initializable {
     @FXML
     private void clicGuardarActividad(ActionEvent event) {
         validarCamposRegistro();
+    
     }
     
     private void validarCamposRegistro(){
@@ -96,16 +120,19 @@ public class FXMLCreacionActividadController implements Initializable {
             String descripcion = txtAreaDescripcionActividad.getText();
             String fechaInicio = dtPickerFechaInicio.getValue().toString();
             String fechaFinal = dtPickerFechaFin.getValue().toString();
-            //int idEstudiante=estudiante.getIdEstudiante();
-            //int idTrabajoRecepcional=estudiante.getIdTrabajoRecepcional();
+            System.out.println(fechaInicio+""+fechaFinal);
+            //int idEstudiante=estudiante.getIdEstudiante(); MODIFICAR
+            //int idTrabajoRecepcional=estudiante.getIdTrabajoRecepcional(); MODIFICAR
             try{
                 SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-dd-MM");
                 Date fechaI = null;
                 fechaI = formatoFecha.parse(fechaInicio);
                 Date fechaF = null;
                 fechaF = formatoFecha.parse(fechaFinal);
-                
                 Actividad actividadValidada = new Actividad();
+                if(esEdicion){
+                    actividadValidada=actividad;
+                }
                 actividadValidada.setTitulo(titulo);
                 actividadValidada.setDescripcion(descripcion);
                 actividadValidada.setFechaInicio(fechaInicio);
@@ -113,23 +140,36 @@ public class FXMLCreacionActividadController implements Initializable {
                 actividadValidada.setIdEstudiante(1); //MODIFICAR
                 actividadValidada.setIdTrabajoRecepcional(1); //MODIFICAR
                 
-                if (fechaI.compareTo(fechaF) > 0 || fechaI.compareTo(fechaF)==fechaF.compareTo(fechaI)) {
+                if (fechaI.compareTo(fechaF) > 0) {
                     Utilidades.mostrarDialogoSimple("Fechas Invalidas", "La fecha ingresada no es válida. Ingrese una nueva fecha.", Alert.AlertType.WARNING);
                 }else {
-                    /*
                     if(esEdicion){  
-                        //actividadValidada.getIdActividad(actividadEdicion.getIdActividad());
                         actualizarActividad(actividadValidada);
                     }else{
                         registrarActividad(actividadValidada);
                     }
-                    */
-                    registrarActividad(actividadValidada);
                 }
             }catch(ParseException e){
                 System.out.println("Error al convertir la fecha.");
             }
         }
+    }
+    
+    private void actualizarActividad(Actividad actividadActualizada){
+        System.out.println(actividadActualizada.getIdActividad());
+        int codigoRespuesta = modificarActividad(actividadActualizada);                
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+            Utilidades.mostrarDialogoSimple("Sin conexion", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde.", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+            Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo despues", Alert.AlertType.WARNING);
+            break;
+            case Constantes.OPERACION_EXITOSA:
+            Utilidades.mostrarDialogoSimple("Actividad actualizada", "La actividad fue actualizada correctamente", Alert.AlertType.WARNING);        
+            cerrarVentana();
+            break;
+        }    
     }
     
     private void registrarActividad(Actividad actividadNueva){
@@ -142,7 +182,7 @@ public class FXMLCreacionActividadController implements Initializable {
             Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
-            Utilidades.mostrarDialogoSimple("Tarifa añadida", "La tarifa fue añadida correctamente", Alert.AlertType.WARNING);        
+            Utilidades.mostrarDialogoSimple("Actividad agregada", "La actividad fue añadida correctamente", Alert.AlertType.WARNING);        
             cerrarVentana();
             break;
         }

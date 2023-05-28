@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="1020.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLAnteproyectoElementoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="1020.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLActividadElementoController">
    <children>
       <Label fx:id="lblTituloActividad" layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="356.0" text="Titulo de Actividad">
          <font>
