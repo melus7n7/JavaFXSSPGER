@@ -6,7 +6,10 @@
 */
 package javafxsspger.controladores;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -108,7 +111,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         lblLGAC.setText(anteproyectoRespuesta.getNombreLGAC());
         lblTipoAnteproyecto.setText(anteproyectoRespuesta.getTipoAnteproyecto());
         lblNoEstudiantesMaximo.setText(""+anteproyectoRespuesta.getNoEstudiantesMaximo());
-        lblNombreDocumento.setText("Documento jiji");
+        lblNombreDocumento.setText(anteproyectoRespuesta.getNombreDocumento());
         lblFecha.setText(anteproyectoRespuesta.getFechaAprobacion());
         if(esPorCorregir){
             lblFechaEtiqueta.setText("Fecha creación:");
@@ -124,6 +127,18 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
 
     @FXML
     private void clicDescargarDocumento(ActionEvent event) {
+        String directorio = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath();
+        String directorioBase =  directorio + "/" + anteproyectoDetalle.getNombreDocumento();
+        File archivo = new File(directorioBase);
+        try {
+            OutputStream output = new FileOutputStream(archivo);
+            output.write(anteproyectoDetalle.getDocumento());
+            output.close();
+            Utilidades.mostrarDialogoSimple("Documento descargado", 
+                "Se ha descargado el documento en la dirección: " + directorio, Alert.AlertType.INFORMATION);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

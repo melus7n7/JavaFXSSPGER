@@ -1,12 +1,15 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 23/05/2023
-*Fecha de modificación: 24/05/2023
+*Fecha de modificación: 27/05/2023
 *Descripción: Controlador de la vista de Validación 
 */
 package javafxsspger.controladores;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -67,6 +70,18 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
 
     @FXML
     private void clicDescargarDocumento(ActionEvent event) {
+        String directorio = javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath();
+        String directorioBase =  directorio + "/" + anteproyectoValidacion.getNombreDocumento();
+        File archivo = new File(directorioBase);
+        try {
+            OutputStream output = new FileOutputStream(archivo);
+            output.write(anteproyectoValidacion.getDocumento());
+            output.close();
+            Utilidades.mostrarDialogoSimple("Documento descargado", 
+                "Se ha descargado el documento en la dirección: " + directorio, Alert.AlertType.INFORMATION);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -101,7 +116,7 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
         lblLGAC.setText(anteproyectoValidacion.getNombreLGAC());
         lblTipoAnteproyecto.setText(anteproyectoValidacion.getTipoAnteproyecto());
         lblNoEstudiantesMaximo.setText(""+anteproyectoValidacion.getNoEstudiantesMaximo());
-        lblNombreDocumento.setText("Documento jiji");
+        lblNombreDocumento.setText(anteproyectoValidacion.getNombreDocumento());
         lblFechaCreacion.setText(anteproyectoValidacion.getFechaCreacion());
     }
     

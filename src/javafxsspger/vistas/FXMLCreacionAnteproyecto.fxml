@@ -61,7 +61,7 @@
             <Font name="SansSerif Regular" size="20.0" />
          </font>
       </Button>
-      <Button layoutX="723.0" layoutY="526.0" mnemonicParsing="false" onAction="#clicAdjuntarDocumento" prefHeight="27.0" prefWidth="224.0" style="-fx-background-color: DIMGRAY;" text="Adjuntar Documento" textFill="WHITE">
+      <Button fx:id="bttAdjuntarDocumento" layoutX="723.0" layoutY="526.0" mnemonicParsing="false" onAction="#clicAdjuntarDocumento" prefHeight="27.0" prefWidth="224.0" style="-fx-background-color: DIMGRAY;" text="Adjuntar Documento" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>
@@ -86,7 +86,7 @@
             <Font name="SansSerif Bold Italic" size="18.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="44.0" layoutY="431.0" prefHeight="189.0" prefWidth="565.0">
+      <ScrollPane fx:id="scrPaneCajaCodirectores" layoutX="44.0" layoutY="431.0" prefHeight="189.0" prefWidth="565.0">
          <content>
             <VBox fx:id="vBoxListaCodirectores" prefHeight="188.0" prefWidth="555.0" />
          </content>

@@ -76,12 +76,12 @@
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblFechaEtiqueta" layoutX="721.0" layoutY="35.0" text="Fecha Aprobación:">
+      <Label fx:id="lblFechaEtiqueta" layoutX="702.0" layoutY="71.0" text="Fecha Aprobación:">
          <font>
             <Font name="SansSerif Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblFecha" layoutX="895.0" layoutY="30.0" prefHeight="23.0" prefWidth="161.0" style="-fx-padding: 5; -fx-background-color: white;" text="Fecha Aprobacion" wrapText="true">
+      <Label fx:id="lblFecha" layoutX="886.0" layoutY="66.0" prefHeight="23.0" prefWidth="161.0" style="-fx-padding: 5; -fx-background-color: white;" text="Fecha Aprobacion" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
@@ -93,7 +93,7 @@
       </Label>
       <Label fx:id="lblNombreDocumento" alignment="CENTER" layoutX="737.0" layoutY="502.0" prefHeight="70.0" prefWidth="311.0" style="-fx-background-color: white;" text="Nombre Documento" wrapText="true">
          <font>
-            <Font name="SansSerif Regular" size="18.0" />
+            <Font name="SansSerif Regular" size="14.0" />
          </font>
       </Label>
       <Button layoutX="797.0" layoutY="582.0" mnemonicParsing="false" onAction="#clicDescargarDocumento" prefHeight="34.0" prefWidth="189.0" style="-fx-background-color: black;" text="Descargar documento" textFill="WHITE">
@@ -126,9 +126,9 @@
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </TextArea>
-      <Button fx:id="btnIniciarProcesoValidacion" layoutX="730.0" layoutY="68.0" mnemonicParsing="false" onAction="#clicIniciarProcesoValidacion" prefHeight="34.0" prefWidth="325.0" style="-fx-background-color: black;" text="Iniciar Proceso Validación" textFill="WHITE">
+      <Button fx:id="btnIniciarProcesoValidacion" layoutX="753.0" layoutY="17.0" mnemonicParsing="false" onAction="#clicIniciarProcesoValidacion" prefHeight="34.0" prefWidth="266.0" style="-fx-background-color: black;" text="Iniciar Proceso Validación" textFill="WHITE">
          <font>
-            <Font name="SansSerif Regular" size="15.0" />
+            <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Button>
    </children>
