@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 23/05/2023
+*Fecha de modificación: 28/05/2023
 *Descripción: Controlador de la vista del detalle de un anteproyecto
 */
 package javafxsspger.controladores;
@@ -38,7 +38,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     private int idAnteproyectoDetalle;
     private int idAcademico;
     private Anteproyecto anteproyectoDetalle;
-    private boolean esPorCorregir;
+    private int numeroPantalla;
     private INotificacionAnteproyectos interfazNotificacion;
     
     @FXML
@@ -62,9 +62,11 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     @FXML
     private Label lblFecha;
     @FXML
-    private Button btnIniciarProcesoValidacion;
+    private Button bttIniciarProcesoValidacion;
     @FXML
     private Label lblFechaEtiqueta;
+    @FXML
+    private Button bttModificarAnteproyecto;
     
     
     @Override
@@ -72,13 +74,18 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         
     }
     
-    public void inicializarInformacion (int idAnteproyectoDetalles, boolean esPorCorregir, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+    public void inicializarInformacion (int idAnteproyectoDetalles, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
         this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyectoDetalle = idAnteproyectoDetalles;
-        this.esPorCorregir = esPorCorregir;
-        if(!esPorCorregir){
-            btnIniciarProcesoValidacion.setVisible(false);
+        this.numeroPantalla = numeroPantalla;
+        switch(this.numeroPantalla){
+            case Constantes.ES_POR_CORREGIR:
+                bttIniciarProcesoValidacion.setVisible(true);
+                break;
+            case Constantes.ES_PROPIO:
+                bttModificarAnteproyecto.setVisible(true);
+                break;
         }
         cargarElemento();
     }
@@ -113,9 +120,12 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         lblNoEstudiantesMaximo.setText(""+anteproyectoRespuesta.getNoEstudiantesMaximo());
         lblNombreDocumento.setText(anteproyectoRespuesta.getNombreDocumento());
         lblFecha.setText(anteproyectoRespuesta.getFechaAprobacion());
-        if(esPorCorregir){
-            lblFechaEtiqueta.setText("Fecha creación:");
-            lblFecha.setText(anteproyectoRespuesta.getFechaCreacion());
+        switch(this.numeroPantalla){
+            case Constantes.ES_POR_CORREGIR:
+            case Constantes.ES_PROPIO:
+                lblFechaEtiqueta.setText("Fecha creación:");
+                lblFecha.setText(anteproyectoRespuesta.getFechaCreacion());
+                break;
         }
     }
 
@@ -156,6 +166,10 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @FXML
+    private void clicModificarAnteproyecto(ActionEvent event) {
     }
     
 }

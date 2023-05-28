@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 23/05/2023
+*Fecha de modificación: 28/05/2023
 *Descripción: Controlador de la vista de un elemento en la lista de Anteproyectos Publicados
 */
 
@@ -25,13 +25,14 @@ import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.utils.Utilidades;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionAnteproyectos;
+import javafxsspger.utils.Constantes;
 
 
 public class FXMLAnteproyectoElementoController implements Initializable {
 
     private int idAnteproyecto;
     private int idAcademico;
-    private boolean esPorCorregir;
+    private int numeroPantalla;
     private INotificacionAnteproyectos interfazNotificacion;
     
     @FXML
@@ -42,24 +43,37 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     private Label lblFecha;
     @FXML
     private Label lblFechaEtiqueta;
+    @FXML
+    private Label lblNombreDirectorEtiqueta;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
     
-    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, boolean esCorreccion, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
         this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
-        this.esPorCorregir = esCorreccion;
+        this.numeroPantalla = numeroPantalla;
         lblNombreAnteproyecto.setText(anteproyectoElemento.getTitulo());
         lblNombreDirector.setText(anteproyectoElemento.getNombreDirector());
-        lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
         idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
-        if(esCorreccion){
-            lblFechaEtiqueta.setText("Fecha creación:");
-            lblFecha.setText(anteproyectoElemento.getFechaCreacion());
+        
+        switch(this.numeroPantalla){
+            case Constantes.ES_PUBLICADO:
+                lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+                break;
+            case Constantes.ES_POR_CORREGIR:
+                lblFechaEtiqueta.setText("Fecha creación:");
+                lblFecha.setText(anteproyectoElemento.getFechaCreacion());
+                break;
+            case Constantes.ES_PROPIO:
+                lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+                lblNombreDirectorEtiqueta.setText("Fecha creación:");
+                lblNombreDirector.setText(anteproyectoElemento.getFechaCreacion());
+                break;
+                
         }
     }
 
@@ -69,7 +83,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
-            detallesAnteproyecto.inicializarInformacion(idAnteproyecto, esPorCorregir, interfazNotificacion, idAcademico);
+            detallesAnteproyecto.inicializarInformacion(idAnteproyecto, numeroPantalla, interfazNotificacion, idAcademico);
             
             Stage escenarioFormulario = new Stage();
             escenarioFormulario.setScene(new Scene (vista));

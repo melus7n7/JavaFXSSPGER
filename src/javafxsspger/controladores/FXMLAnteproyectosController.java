@@ -41,7 +41,7 @@ import javafxsspger.utils.Utilidades;
 public class FXMLAnteproyectosController implements Initializable, INotificacionAnteproyectos {
 
     private Academico usuarioAcademico;
-    private boolean esPorCorregir;
+    private int numeroPantalla;
     
     @FXML
     private VBox vBoxListaAnteproyectosPublicados;
@@ -56,7 +56,87 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.esPorCorregir = false;
+        this.numeroPantalla = Constantes.ES_PUBLICADO;
+    }
+
+    @FXML
+    private void clicAnteproyectosPropiosPublicados(ActionEvent event) {
+        this.numeroPantalla = Constantes.ES_PROPIO;
+        lblTitulo.setText("Anteproyectos Propios");
+        btnAnteproyectosPublicados.setDisable(false);
+        btnAnteproyectoPorCorregir.setDisable(false);
+        btnAnteproyectosPropios.setDisable(true);
+        cargarElementosPropios();
+    }
+
+    @FXML
+    private void clicAnteproyectosPorCorregir(ActionEvent event) {
+        this.numeroPantalla = Constantes.ES_POR_CORREGIR;
+        lblTitulo.setText("Anteproyectos Por Corregir");
+        btnAnteproyectosPublicados.setDisable(false);
+        btnAnteproyectosPropios.setDisable(false);
+        btnAnteproyectoPorCorregir.setDisable(true);
+        cargarElementosPorCorregir();
+    }
+    
+    @FXML
+    private void clicAnteproyectosPublicados(ActionEvent event) {
+        this.numeroPantalla = Constantes.ES_PUBLICADO;
+        lblTitulo.setText("Anteproyectos Publicados");
+        btnAnteproyectosPublicados.setDisable(true);
+        btnAnteproyectoPorCorregir.setDisable(false);
+        btnAnteproyectosPropios.setDisable(false);
+        cargarElementosPublicados();
+    }
+
+    @FXML
+    private void clicCrearAnteproyecto(ActionEvent event) {
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCreacionAnteproyectoController creacionAnteproyecto = accesoControlador.getController();
+            creacionAnteproyecto.inicializarPantalla(usuarioAcademico);
+            
+            Stage escenarioBase = new Stage();
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Creación Anteproyecto");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void clicRegresarMenuPrincipal(MouseEvent event) {
+        Stage escenarioBase = (Stage)vBoxListaAnteproyectosPublicados.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAcademico.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLMenuPrincipalAcademicoController menuPrincipalAcademico = accesoControlador.getController();
+            menuPrincipalAcademico.inicializarInformacionConAcademico(usuarioAcademico);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menú Principal");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void notificarCargarAnteproyectosPorCorregir() {
+        cargarElementosPorCorregir();
+    }
+    
+    public void inicializarInformacion(Academico usuarioAcademico){
+        this.usuarioAcademico = usuarioAcademico;
+        if(!usuarioAcademico.isEsDirector()){
+            btnAnteproyectosPropios.setVisible(false);
+        }
+        if(!usuarioAcademico.isEsResponsableCA()){
+            btnAnteproyectoPorCorregir.setVisible(false);
+        }
+        cargarElementosPublicados();
     }
     
     private void cargarElementosPublicados(){
@@ -97,6 +177,25 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
         }
     }
     
+    private void cargarElementosPropios(){
+        vBoxListaAnteproyectosPublicados.getChildren().clear();
+        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPropios(usuarioAcademico.getIdAcademico());
+        switch(respuestaBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    mostrarElementos(respuestaBD.getAnteproyectos());
+                break;
+        }
+    }
+    
     private void mostrarElementos (ArrayList <Anteproyecto> anteproyectos){
         for (int i=0; i<anteproyectos.size(); i++){
             FXMLLoader fmxlLoaderAnteproyecto = new FXMLLoader();
@@ -104,84 +203,13 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
             try{
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
-                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), esPorCorregir, this, usuarioAcademico.getIdAcademico());
+                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), numeroPantalla, this, usuarioAcademico.getIdAcademico());
                 vBoxListaAnteproyectosPublicados.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
     }
-
-    @FXML
-    private void clicAnteproyectosPropiosPublicados(ActionEvent event) {
-    }
-
-    @FXML
-    private void clicAnteproyectosPorCorregir(ActionEvent event) {
-        this.esPorCorregir = true;
-        lblTitulo.setText("Anteproyectos Por Corregir");
-        btnAnteproyectosPublicados.setDisable(false);
-        btnAnteproyectoPorCorregir.setDisable(true);
-        cargarElementosPorCorregir();
-    }
-
-    @FXML
-    private void clicCrearAnteproyecto(ActionEvent event) {
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionAnteproyecto.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLCreacionAnteproyectoController creacionAnteproyecto = accesoControlador.getController();
-            creacionAnteproyecto.inicializarPantalla(usuarioAcademico);
-            
-            Stage escenarioBase = new Stage();
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Creación Anteproyecto");
-            escenarioBase.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void clicRegresarMenuPrincipal(MouseEvent event) {
-        Stage escenarioBase = (Stage)vBoxListaAnteproyectosPublicados.getScene().getWindow();
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAcademico.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLMenuPrincipalAcademicoController menuPrincipalAcademico = accesoControlador.getController();
-            menuPrincipalAcademico.inicializarInformacionConAcademico(usuarioAcademico);
-            
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Menú Principal");
-            escenarioBase.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
     
-    public void inicializarInformacion(Academico usuarioAcademico){
-        this.usuarioAcademico = usuarioAcademico;
-        if(!usuarioAcademico.isEsDirector()){
-            btnAnteproyectosPropios.setVisible(false);
-        }
-        if(!usuarioAcademico.isEsResponsableCA()){
-            btnAnteproyectoPorCorregir.setVisible(false);
-        }
-        cargarElementosPublicados();
-    }
-
-    @FXML
-    private void clicAnteproyectosPublicados(ActionEvent event) {
-        this.esPorCorregir = false;
-        lblTitulo.setText("Anteproyectos Publicados");
-        btnAnteproyectosPublicados.setDisable(true);
-        btnAnteproyectoPorCorregir.setDisable(false);
-        cargarElementosPublicados();
-    }
-
-    @Override
-    public void notificarCargarAnteproyectosPorCorregir() {
-        cargarElementosPorCorregir();
-    }
     
 }

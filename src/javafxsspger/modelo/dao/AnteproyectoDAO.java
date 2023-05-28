@@ -100,6 +100,41 @@ public class AnteproyectoDAO {
         return respuesta;
     }
     
+    public static AnteproyectoRespuesta obtenerAnteproyectosPropios(int idAcademico){
+        AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT encargadosanteproyecto.idAnteproyecto, " +
+                    "anteproyecto.titulo, anteproyecto.fechaCreacion, anteproyecto.fechaAprobacion " +
+                    "FROM sspger.encargadosanteproyecto " +
+                    "INNER JOIN anteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
+                    "WHERE encargadosanteproyecto.idAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <Anteproyecto> anteproyectosConsulta = new ArrayList();
+                while(resultado.next()){
+                    Anteproyecto anteproyecto = new Anteproyecto();
+                    anteproyecto.setTitulo(resultado.getString("titulo"));
+                    anteproyecto.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    anteproyecto.setFechaAprobacion(resultado.getString("fechaAprobacion"));
+                    anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                    anteproyectosConsulta.add(anteproyecto);
+                }
+                respuesta.setAnteproyectos(anteproyectosConsulta);
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
     public static Anteproyecto obtenerAnteproyecto (int idAnteproyecto){
         Anteproyecto anteproyectoRespuesta = new Anteproyecto();
         Connection conexionBD = ConexionBD.abrirConexionBD();
