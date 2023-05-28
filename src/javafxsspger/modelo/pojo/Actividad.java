@@ -21,11 +21,14 @@ public class Actividad {
     private String fechaFinal;
     private int idEstudiante;
     private int idTrabajoRecepcional;
+    private String nombreEstudiante;
+    private String apellidoPaternoEstudiante;
+    private String apellidoMaternoEstudiante;
 
     public Actividad() {
     }
 
-    public Actividad(int idActividad, String titulo, String descripcion, String fechaCreacion, String fechaInicio, String fechaFinal, int idEstudiante, int idTrabajoRecepcional) {
+    public Actividad(int idActividad, String titulo, String descripcion, String fechaCreacion, String fechaInicio, String fechaFinal, int idEstudiante, int idTrabajoRecepcional, String nombreEstudiante, String apellidoPaternoEstudiante, String apellidoMaternoEstudiante) {
         this.idActividad = idActividad;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -34,6 +37,9 @@ public class Actividad {
         this.fechaFinal = fechaFinal;
         this.idEstudiante = idEstudiante;
         this.idTrabajoRecepcional = idTrabajoRecepcional;
+        this.nombreEstudiante = nombreEstudiante;
+        this.apellidoPaternoEstudiante = apellidoPaternoEstudiante;
+        this.apellidoMaternoEstudiante = apellidoMaternoEstudiante;
     }
 
     public int getIdActividad() {
@@ -99,5 +105,30 @@ public class Actividad {
     public void setIdTrabajoRecepcional(int idTrabajoRecepcional) {
         this.idTrabajoRecepcional = idTrabajoRecepcional;
     }
+
+    public String getNombreEstudiante() {
+        return nombreEstudiante;
+    }
+
+    public void setNombreEstudiante(String nombreEstudate) {
+        this.nombreEstudiante = nombreEstudate;
+    }
+
+    public String getApellidoPaternoEstudiante() {
+        return apellidoPaternoEstudiante;
+    }
+
+    public void setApellidoPaternoEstudiante(String apellidoPaternoEstudiante) {
+        this.apellidoPaternoEstudiante = apellidoPaternoEstudiante;
+    }
+
+    public String getApellidoMaternoEstudiante() {
+        return apellidoMaternoEstudiante;
+    }
+
+    public void setApellidoMaternoEstudiante(String apellidoMaternoEstudiante) {
+        this.apellidoMaternoEstudiante = apellidoMaternoEstudiante;
+    }
+    
     
 }

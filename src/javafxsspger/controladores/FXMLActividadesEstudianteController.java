@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.pojo.Academico;
+import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.Estudiante;
 
 /**
@@ -77,7 +78,9 @@ public class FXMLActividadesEstudianteController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionActividad.fxml"));
             Parent vista = accesoControlador.load();
             FXMLCreacionActividadController creacionActividad = accesoControlador.getController();
-            //creacionActividad.inicializarInformacion(usuarioEstudiante);//MODIFICAR
+            boolean esEdicion=false;
+            Actividad actividad=null;
+            creacionActividad.inicializarInformacion(usuarioEstudiante, esEdicion,actividad);
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Creacion de Actividad");
             escenarioBase.show();;

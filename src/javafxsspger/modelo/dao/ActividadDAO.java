@@ -28,25 +28,28 @@ public class ActividadDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD!=null){
             try{
-                String consulta = "SELECT Usuario.nombreUsuario, Actividad.titulo, Actividad.descripcion, "+
-                "Actividad.fechaCreacion, Actividad.fechaInicio, Actividad.fechaFinal " +
+                String consulta = "SELECT Usuario.nombreUsuario, Usuario.apellidoPaterno, Usuario.apellidoMaterno, Actividad.idActividad, Actividad.titulo,Actividad.descripcion, " +
+                "Actividad.fechaCreacion,Actividad.fechaInicio,Actividad.fechaFinal " +
                 "from Usuario " +
                 "INNER JOIN Estudiante ON Usuario.idUsuario=Estudiante.idUsuario " +
                 "INNER JOIN Actividad ON Estudiante.idEstudiante=Actividad.idEstudiante " +
-                "INNER JOIN TrabajoRecepcional ON Actividad.idTrabajoRecepcional=TrabajoRecepcional.idTrabajoRecepcional "+
-                "where TrabajoRecepcional.idTrabajoRecepcional=?;"; 
+                "INNER JOIN TrabajoRecepcional ON Actividad.idTrabajoRecepcional=TrabajoRecepcional.idTrabajoRecepcional " +
+                "where TrabajoRecepcional.idTrabajoRecepcional=?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idTrabajoRecepcional);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Actividad> ActividadesConsulta = new ArrayList();
                 while(resultado.next()){
                     Actividad actividad = new Actividad();
+                    actividad.setNombreEstudiante(resultado.getString("nombreUsuario"));
+                    actividad.setApellidoPaternoEstudiante(resultado.getString("apellidoPaterno"));
+                    actividad.setApellidoMaternoEstudiante(resultado.getString("apellidoMaterno"));
                     actividad.setIdActividad(resultado.getInt("idActividad"));
                     actividad.setTitulo(resultado.getString("titulo"));
                     actividad.setDescripcion(resultado.getString("descripcion"));
                     actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
                     actividad.setFechaInicio(resultado.getString("fechaInicio"));
-                    actividad.setFechaFinal(resultado.getString("fechaInicio"));
+                    actividad.setFechaFinal(resultado.getString("fechaFinal"));
                     ActividadesConsulta.add(actividad);
                 }
                 respuesta.setActividades(ActividadesConsulta);

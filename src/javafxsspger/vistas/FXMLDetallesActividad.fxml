@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLDetallesActividadController">
+   <children>
+      <Label layoutX="163.0" layoutY="27.0" text="Detalles de Actividad">
+         <font>
+            <Font name="Trebuchet MS Bold" size="50.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="79.0" fitWidth="81.0" layoutX="67.0" layoutY="16.0" onMouseClicked="#clicRegresarAnteproyectos" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="txtAreaActividad" editable="false" layoutX="67.0" layoutY="366.0" prefHeight="169.0" prefWidth="990.0" style="-fx-background-color: white; -fx-border-color: silver;" text="Descripcion" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="55.0" layoutY="337.0" text="Descripción de la Actividad">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTituloActividad" alignment="TOP_LEFT" layoutX="65.0" layoutY="247.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="51.0" prefWidth="990.0" style="-fx-background-color: white; -fx-padding: 5;" text="Titulo" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="51.0" layoutY="212.0" text="Titulo:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="54.0" layoutY="109.0" text="Nombre del Estudiante:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNombreEstudiante" alignment="TOP_LEFT" layoutX="68.0" layoutY="144.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="536.0" style="-fx-background-color: white; -fx-padding: 5;" text="Estudiante:" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaCreacion" alignment="TOP_LEFT" layoutX="689.0" layoutY="144.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="274.0" style="-fx-background-color: white; -fx-padding: 5;" text="Fecha creacion" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="685.0" layoutY="111.0" text="Fecha Creación:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="69.0" layoutY="547.0" text="Fecha inicio:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaInicio" alignment="TOP_LEFT" layoutX="73.0" layoutY="580.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="274.0" style="-fx-background-color: white; -fx-padding: 5;" text="Fecha Inicio" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaFinal" alignment="TOP_LEFT" layoutX="411.0" layoutY="582.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="274.0" style="-fx-background-color: white; -fx-padding: 5;" text="Fecha final" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="407.0" layoutY="549.0" text="Fecha final">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Button layoutX="919.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicVerEntrega" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: black;" text="Ver Entrega" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="742.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: black;" text="Editar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
