@@ -80,12 +80,17 @@
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="919.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicVerEntrega" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: black;" text="Ver Entrega" textFill="WHITE">
+      <Button layoutX="934.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicVerEntrega" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: black;" text="Ver Entrega" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="742.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: black;" text="Editar" textFill="WHITE">
+      <Button layoutX="698.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="34.0" prefWidth="105.0" style="-fx-background-color: black;" text="Editar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="810.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="34.0" prefWidth="117.0" style="-fx-background-color: black;" text="Eliminar" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>

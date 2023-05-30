@@ -1,7 +1,7 @@
 /*
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 20/05/2023
-*Fecha de modificación: 20/05/2023
+*Fecha de modificación: 30/05/2023
 *Descripción: Controlador de la vista de Actividades para el Academico
 */
 package javafxsspger.controladores;
@@ -33,6 +33,7 @@ import javafxsspger.modelo.dao.TrabajoRecepcionalDAO;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.ActividadRespuesta;
+import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.TrabajoRecepcional;
 import javafxsspger.modelo.pojo.TrabajoRecepcionalRespuesta;
 import javafxsspger.utils.Constantes;
@@ -45,11 +46,11 @@ import javafxsspger.utils.Utilidades;
  */
 public class FXMLActividadesAcademicoController implements Initializable {
     
-    private boolean esEstudiante;
     private boolean esProfesor;
     private boolean esDirector;
     
     private Academico usuarioAcademico;
+    private Estudiante usuarioEstudiante;
     
     @FXML
     private VBox vBoxListaActividades;
@@ -69,7 +70,16 @@ public class FXMLActividadesAcademicoController implements Initializable {
     
     private void cargarInformacionTrabajosRecepcionales(){
         trabajosRecepcionales=FXCollections.observableArrayList();
-        TrabajoRecepcionalRespuesta trabajosRecepcionalesBD1, trabajosRecepcionalesBD2, trabajosRecepcionalesBD;
+        TrabajoRecepcionalRespuesta trabajosRecepcionalesBD, trabajoRecepcionalesDirector, trabajoRecepcionalesProfesor; 
+        if(esDirector && esProfesor){
+            
+        }else if(esDirector){
+            trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                 
+        }else if(esProfesor){
+            trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                                 
+        }else{    
+            trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioEstudiante.getIdEstudiante());                 
+        }
             //trabajosRecepcionalesBD1 = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioAcademico.getIdAcademico());         
             //trabajosRecepcionalesBD2 = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());         
             trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());         
@@ -103,19 +113,38 @@ public class FXMLActividadesAcademicoController implements Initializable {
         }
     }
     
+    public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante){
+       this.usuarioEstudiante = usuarioEstudiante;
+       cargarInformacionTrabajosRecepcionales();
+    }
+    
     public void inicializarInformacion(Academico usuarioAcademico){
        this.usuarioAcademico = usuarioAcademico;
        cargarInformacionTrabajosRecepcionales();
     }
 
-    @FXML
-    private void clicRegresarMenuPrincipal(MouseEvent event) {
+    private void regresarMenuAcademico(){
         Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
         try {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAcademico.fxml"));
             Parent vista = accesoControlador.load();
             FXMLMenuPrincipalAcademicoController menuPrincipalAcademico = accesoControlador.getController();
             menuPrincipalAcademico.inicializarInformacionConAcademico(usuarioAcademico);
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menú Principal");
+            escenarioBase.show();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    private void regresarMenuEstudiante(){
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalEstudiante.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLMenuPrincipalEstudianteController menuPrincipalEstudiante = accesoControlador.getController();
+            menuPrincipalEstudiante.inicializarInformacion(usuarioEstudiante);
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Menú Principal");
             escenarioBase.show();
@@ -194,6 +223,15 @@ public class FXMLActividadesAcademicoController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @FXML
+    private void clicRegresar(MouseEvent event) {
+        if(esDirector){
+            regresarMenuAcademico();
+        }else{
+            regresarMenuEstudiante();
+        }        
     }
 
     
