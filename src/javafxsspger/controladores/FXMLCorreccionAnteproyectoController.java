@@ -1,29 +1,27 @@
 /*
 *Autor: Martínez Aguilar Sulem
-*Fecha de creación: 20/05/2023
-*Fecha de modificación: 21/05/2023
-*Descripción: Controlador de la vista de la creación de los anteproyectos
+*Fecha de creación: 29/05/2023
+*Fecha de modificación: 29/05/2023
+*Descripción: Controlador de la vista de la corrección y modificación de anteproyectos
 */
 package javafxsspger.controladores;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -31,22 +29,26 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAnteproyectos;
 import javafxsspger.interfaces.INotificacionCodirector;
 import javafxsspger.modelo.dao.AcademicoDAO;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
+import javafxsspger.modelo.dao.ComentarioDAO;
 import javafxsspger.modelo.dao.CuerpoAcademicoDAO;
 import javafxsspger.modelo.dao.EncargadosAnteproyectoDAO;
 import javafxsspger.modelo.dao.LGACDAO;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.AcademicoRespuesta;
 import javafxsspger.modelo.pojo.Anteproyecto;
+import javafxsspger.modelo.pojo.Comentario;
+import javafxsspger.modelo.pojo.ComentarioRespuesta;
 import javafxsspger.modelo.pojo.CuerpoAcademico;
 import javafxsspger.modelo.pojo.CuerpoAcademicoRespuesta;
 import javafxsspger.modelo.pojo.LGAC;
@@ -56,40 +58,44 @@ import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
 
-public class FXMLCreacionAnteproyectoController implements Initializable, INotificacionCodirector {
-
+public class FXMLCorreccionAnteproyectoController implements Initializable, INotificacionCodirector {
+    
     private ArrayList <Academico> codirectoresAnteproyecto;
     private ObservableList<CuerpoAcademico> cuerposAcademicos;
     private ObservableList<LGAC> lgacs;
     private ObservableList<TipoAnteproyecto> tiposAnteproyecto;
     private File archivoElegido;
-    private Academico academicoCreacion;
+    private int idAcademicoModificacion;
+    private Anteproyecto anteproyectoModificacion;
+    private INotificacionAnteproyectos notificacion;
     
     private String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     private String estiloNormal = "-fx-border-width: 0;";
-    
-    @FXML
-    private TextField txtFieldEstudiantesMaximos;
-    @FXML
-    private ComboBox<TipoAnteproyecto> cmbBoxTipoAnteproyecto;
-    @FXML
-    private ComboBox<LGAC> cmbBoxLGAC;
+
     @FXML
     private ComboBox<CuerpoAcademico> cmbBoxCuerpoAcademico;
     @FXML
-    private Button btnGuardarCambios;
-    @FXML
-    private Label lblNombreDocumento;
-    @FXML
-    private TextArea txtAreaNombreAnteproyecto;
-    @FXML
-    private TextArea txtAreaDescripcionAnteproyecto;
+    private ScrollPane scrPaneCajaCodirectores;
     @FXML
     private VBox vBoxListaCodirectores;
     @FXML
-    private ScrollPane scrPaneCajaCodirectores;
+    private TextArea txtAreaDescripcionAnteproyecto;
+    @FXML
+    private TextArea txtAreaNombreAnteproyecto;
+    @FXML
+    private Label lblNombreDocumento;
     @FXML
     private Button bttAdjuntarDocumento;
+    @FXML
+    private ComboBox<LGAC> cmbBoxLGAC;
+    @FXML
+    private ComboBox<TipoAnteproyecto> cmbBoxTipoAnteproyecto;
+    @FXML
+    private TextField txtFieldEstudiantesMaximos;
+    @FXML
+    private VBox vBoxComentarios;
+    @FXML
+    private Label lblDirector;
 
     
     @Override
@@ -104,11 +110,11 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
                     inicializarLGAC(newValue.getIdCuerpoAcademico());
             }
         });
-    }
-    
+    }    
+
     @FXML
     private void clicAdjuntarDocumento(ActionEvent event) {
-        if(archivoElegido == null){
+        if(anteproyectoModificacion.getDocumento()==null){
             FileChooser dialogoSeleccionImg = new FileChooser();
             dialogoSeleccionImg.setTitle("Selecciona un documento");
             Stage escenarioBase = (Stage)lblNombreDocumento.getScene().getWindow();
@@ -120,20 +126,27 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
             }
         }else{
             archivoElegido = null;
-            bttAdjuntarDocumento.setText("Adjuntar Documento");
+            anteproyectoModificacion.setDocumento(null);
             lblNombreDocumento.setText("");
+            bttAdjuntarDocumento.setText("Adjuntar Documento");
         }
-        
     }
-    
+
     @FXML
-    private void clicGuardarCambios(ActionEvent event) {
-        validarCamposRegistro();
+    private void clicGuardarComoBorrador(ActionEvent event) {
     }
-    
+
     @FXML
     private void clicRegresar(MouseEvent event) {
-        cerrarVentana();
+        regresar();
+    }
+
+    @FXML
+    private void clicEnviarParaAprobacion(ActionEvent event) {
+    }
+    
+    @FXML
+    private void clicEliminar(ActionEvent event) {
     }
     
     @Override
@@ -146,12 +159,31 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         codirectoresAnteproyecto.remove(codirector);
     }
     
-    public void inicializarPantalla (Academico academicoCreacion){
-        this.academicoCreacion = academicoCreacion;
+    public void iniciarPantalla(Anteproyecto anteproyectoModificacion,int idAcademicoModificacion, INotificacionAnteproyectos notificacion){
+        this.notificacion = notificacion;
+        this.anteproyectoModificacion = anteproyectoModificacion;
+        this.idAcademicoModificacion = idAcademicoModificacion;
+        inicializarAnteproyecto();
+        inicializarComentarios();
+    }
+    
+    private void inicializarAnteproyecto(){
+        lblDirector.setText("Director: " + anteproyectoModificacion.getNombreDirector());
+        txtAreaNombreAnteproyecto.setText(anteproyectoModificacion.getTitulo());
+        txtAreaDescripcionAnteproyecto.setText(anteproyectoModificacion.getDescripcion());
+        txtFieldEstudiantesMaximos.setText(anteproyectoModificacion.getNoEstudiantesMaximo()+"");
+        int posicionTipo = obtenerPosicionComboTipoAnteproyecto(anteproyectoModificacion.getIdTipoAnteproyecto());
+        cmbBoxTipoAnteproyecto.getSelectionModel().select(posicionTipo);
+        int posicionCuerpoAcademico = obtenerPosicionComboCuerpoAcademico(anteproyectoModificacion.getIdCuerpoAcademico());
+        cmbBoxCuerpoAcademico.getSelectionModel().select(posicionCuerpoAcademico);
+        int posicionLgac = obtenerPosicionComboLGAC(anteproyectoModificacion.getIdLGAC());
+        cmbBoxLGAC.getSelectionModel().select(posicionLgac);
+        lblNombreDocumento.setText(anteproyectoModificacion.getNombreDocumento());
+        codirectoresAnteproyecto.addAll(anteproyectoModificacion.getCodirectores());
         inicializarCodirectores();
     }
     
-    public void inicializarCuerposAcademico(){
+    private void inicializarCuerposAcademico(){
         cuerposAcademicos = FXCollections.observableArrayList();
         CuerpoAcademicoRespuesta respuestaBD = CuerpoAcademicoDAO.recuperarCuerposAcademicos();
         switch(respuestaBD.getCodigoRespuesta()){
@@ -171,8 +203,8 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         }
     }
     
-    public void inicializarCodirectores (){
-        AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesCodirectores(academicoCreacion);
+    private void inicializarComentarios(){
+        ComentarioRespuesta respuestaBD = ComentarioDAO.recuperarComentarios(anteproyectoModificacion.getIdAnteproyecto());
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin Conexion", 
@@ -184,33 +216,33 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cargarDirectores(respuestaBD.getAcademicos());
+                    cargarComentarios(respuestaBD.getComentarios());
                 break;
         }
     }
     
-    public void cargarDirectores (ArrayList <Academico> academicos){
-        for (int i=0; i<academicos.size(); i++){
+    private void cargarComentarios(ArrayList <Comentario> comentarios){
+        for (int i=0; i<comentarios.size(); i++){
             FXMLLoader fmxlLoader = new FXMLLoader();
-            fmxlLoader.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLCodirectorElemento.fxml"));
+            fmxlLoader.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLComentarioElemento.fxml"));
             try{
                 Pane pane = fmxlLoader.load();
-                FXMLCodirectorElementoController elementoEnLista = fmxlLoader.getController();
-                elementoEnLista.setElementos(academicos.get(i), this, false);
-                vBoxListaCodirectores.getChildren().add(pane);
+                FXMLComentarioElementoController elementoEnLista = fmxlLoader.getController();
+                elementoEnLista.setComentario(comentarios.get(i));
+                vBoxComentarios.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
     }
     
-    public void inicializarDatos(){
+    private void inicializarDatos(){
         tiposAnteproyecto = FXCollections.observableArrayList();
         tiposAnteproyecto.addAll(Utilidades.obtenerTiposAnteproyecto());
         cmbBoxTipoAnteproyecto.setItems(tiposAnteproyecto);
     }
     
-    public void inicializarLGAC(int idCuerpoAcademico){
+    private void inicializarLGAC(int idCuerpoAcademico){
         lgacs = FXCollections.observableArrayList();
         LGACRespuesta lgacRespuesta = LGACDAO.recuperarLGAC(idCuerpoAcademico);
         switch(lgacRespuesta.getCodigoRespuesta()){
@@ -228,7 +260,96 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
                 break;
         }
     }
+    
+    private void inicializarCodirectores (){
+        Academico academicoModificacion = new Academico ();
+        academicoModificacion.setIdAcademico(anteproyectoModificacion.getIdDirector());
+        AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesCodirectores(academicoModificacion);
+        switch(respuestaBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    cargarDirectores(respuestaBD.getAcademicos());
+                break;
+        }
+    }
+    
+    private void cargarDirectores (ArrayList <Academico> academicos){
+        for (int i=0; i<academicos.size(); i++){
+            boolean estaSeleccionado = encontrarCodirector(academicos.get(i).getIdAcademico());
+            FXMLLoader fmxlLoader = new FXMLLoader();
+            fmxlLoader.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLCodirectorElemento.fxml"));
+            try{
+                Pane pane = fmxlLoader.load();
+                FXMLCodirectorElementoController elementoEnLista = fmxlLoader.getController();
+                elementoEnLista.setElementos(academicos.get(i), this, estaSeleccionado);
+                vBoxListaCodirectores.getChildren().add(pane);
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private boolean encontrarCodirector(int idAcademico){
+        for(Academico posibleCodirector: codirectoresAnteproyecto){
+            if(posibleCodirector.getIdAcademico()== idAcademico){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private int obtenerPosicionComboTipoAnteproyecto(int idTipoAnteproyecto){
+        for(int i = 0; i < tiposAnteproyecto.size() ; i++){
+            if(tiposAnteproyecto.get(i).getIdTipoAnteproyecto()== idTipoAnteproyecto){
+                return i;
+            }
+        }
+        return 0;
+    }
+    
+    private int obtenerPosicionComboCuerpoAcademico(int idCuerpoAcademico){
+        for(int i = 0; i < cuerposAcademicos.size() ; i++){
+            if(cuerposAcademicos.get(i).getIdCuerpoAcademico()== idCuerpoAcademico){
+                return i;
+            }
+        }
+        return 0;
+    }
+    
+    private int obtenerPosicionComboLGAC(int idLGAC){
+        for(int i = 0; i < lgacs.size() ; i++){
+            if(lgacs.get(i).getIdLGAC()== idLGAC){
+                return i;
+            }
+        }
+        return 0;
+    }
 
+    private void regresar(){
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
+            detallesAnteproyecto.inicializarInformacion(anteproyectoModificacion.getIdAnteproyecto(), Constantes.ES_PROPIO, notificacion, anteproyectoModificacion.getIdDirector());
+            
+            Stage escenarioFormulario = (Stage) lblDirector.getScene().getWindow();
+            escenarioFormulario.setScene(new Scene (vista));
+            escenarioFormulario.setTitle("Detalles Anteproyecto");
+            escenarioFormulario.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public void validarCamposRegistro(){
         establecerEstiloNormal();
         boolean camposValidos = true;
@@ -317,8 +438,9 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
     }
     
     private void registrarDirectores (Anteproyecto anteproyectoRespuesta){
-        this.academicoCreacion.setIdAnteproyecto(anteproyectoRespuesta.getIdAnteproyecto());
-        int codigoRespuesta = EncargadosAnteproyectoDAO.guardarEncargados(academicoCreacion, codirectoresAnteproyecto);
+        Academico academicoModificacion = new Academico();
+        academicoModificacion.setIdAnteproyecto(anteproyectoRespuesta.getIdAnteproyecto());
+        int codigoRespuesta = EncargadosAnteproyectoDAO.guardarEncargados(academicoModificacion, codirectoresAnteproyecto);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error de conexión", 
@@ -331,14 +453,9 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
             case Constantes.OPERACION_EXITOSA:
                     Utilidades.mostrarDialogoSimple("Anteproyecto Registrado", 
                             "Se envió correctamente el anteproyecto", Alert.AlertType.INFORMATION);
-                    cerrarVentana();
+                    regresar();
                 break;
         }
-    }
-    
-    private void cerrarVentana(){
-        Stage escenarioBase = (Stage) lblNombreDocumento.getScene().getWindow();
-        escenarioBase.close();
     }
     
     private void establecerEstiloNormal(){
@@ -351,5 +468,11 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         cmbBoxTipoAnteproyecto.setStyle(estiloNormal);
         lblNombreDocumento.setStyle(estiloNormal+"-fx-background-color:WHITE;");
     }
+    
+    private void guardarCambios(){
+        
+    }
+
+    
     
 }

@@ -190,7 +190,6 @@ public class AnteproyectoDAO {
                 PreparedStatement prepararSentenciaCodirectores = conexionBD.prepareStatement(consultaCodirectores);
                 prepararSentenciaCodirectores.setInt(1, idAnteproyecto);
                 ResultSet resultadoCodirectores = prepararSentenciaCodirectores.executeQuery();
-                anteproyectoRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 while(resultadoCodirectores.next()){
                     Academico codirector = new Academico();
                     codirector.setIdAcademico(resultadoCodirectores.getInt("idAcademico"));
@@ -202,6 +201,17 @@ public class AnteproyectoDAO {
                     codirectores.add(codirector);
                 }
                 anteproyectoRespuesta.setCodirectores(codirectores);
+                
+                String consultaDirector = "SELECT idAcademico FROM sspger.encargadosanteproyecto " +
+                    "WHERE esDirector = 1 and idAnteproyecto = ?";
+                PreparedStatement prepararSentenciaDirector = conexionBD.prepareStatement(consultaDirector);
+                prepararSentenciaDirector.setInt(1, idAnteproyecto);
+                ResultSet resultadoDirector = prepararSentenciaDirector.executeQuery();
+                if(resultadoDirector.next()){
+                    anteproyectoRespuesta.setIdDirector(resultadoDirector.getInt("idAcademico"));
+                }
+                
+                anteproyectoRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 conexionBD.close();
             }catch(SQLException ex){
                 anteproyectoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);

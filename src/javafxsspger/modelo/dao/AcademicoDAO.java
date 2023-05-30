@@ -23,7 +23,7 @@ public class AcademicoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT idAcademico, noPersonal, idCuerpoAcademico, esResponsable FROM sspger.academico " +
+                String consulta = "SELECT idAcademico, noPersonal, idCuerpoAcademico FROM sspger.academico " +
                     "WHERE idUsuario = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idUsuario);
@@ -33,7 +33,12 @@ public class AcademicoDAO {
                     academicoRespuesta.setIdAcademico(resultado.getInt("idAcademico"));
                     academicoRespuesta.setNoPersonal(resultado.getString("noPersonal"));
                     academicoRespuesta.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
-                    academicoRespuesta.setEsResponsableCA(resultado.getBoolean("esResponsable"));
+                    if(academicoRespuesta.getIdCuerpoAcademico() != 0){
+                        academicoRespuesta.setEsResponsableCA(true);
+                    }else{
+                        academicoRespuesta.setEsResponsableCA(false);
+                    }
+                    
                 
                     String consultaEsDirector = "SELECT Anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico, anteproyecto.idEstado " +
                         "FROM encargadosanteproyecto INNER JOIN anteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +

@@ -170,6 +170,19 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
 
     @FXML
     private void clicModificarAnteproyecto(ActionEvent event) {
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCorreccionAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCorreccionAnteproyectoController correcionAnteproyecto = accesoControlador.getController(); 
+            correcionAnteproyecto.iniciarPantalla(anteproyectoDetalle, idAcademico, interfazNotificacion);
+            
+            Stage escenarioDetalle = (Stage) lblCodirectores.getScene().getWindow();
+            escenarioDetalle.setScene(new Scene (vista));
+            escenarioDetalle.setTitle("Validación Anteproyecto");
+            escenarioDetalle.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

@@ -130,9 +130,6 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     
     public void inicializarInformacion(Academico usuarioAcademico){
         this.usuarioAcademico = usuarioAcademico;
-        if(!usuarioAcademico.isEsDirector()){
-            btnAnteproyectosPropios.setVisible(false);
-        }
         if(!usuarioAcademico.isEsResponsableCA()){
             btnAnteproyectoPorCorregir.setVisible(false);
         }

@@ -33,10 +33,11 @@ public class FXMLCodirectorElementoController implements Initializable {
         // TODO
     }
     
-    public void setElementos (Academico academico, INotificacionCodirector interfazNotificacion){
+    public void setElementos (Academico academico, INotificacionCodirector interfazNotificacion, boolean estaSeleccionado){
         this.interfazNotificacion = interfazNotificacion;
         this.academicoElemento = academico;
         lblNombreCodirector.setText(academico.getNombreCompleto());
+        esCodirector.setSelected(estaSeleccionado);
     }
 
     @FXML

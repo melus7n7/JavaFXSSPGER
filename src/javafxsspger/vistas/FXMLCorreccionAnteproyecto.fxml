@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLCorreccionAnteproyectoController">
+   <children>
+      <ComboBox fx:id="cmbBoxCuerpoAcademico" layoutX="207.0" layoutY="377.0" prefHeight="27.0" prefWidth="374.0" />
+      <Label layoutX="48.0" layoutY="381.0" text="Cuerpo Académico:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrPaneCajaCodirectores" layoutX="37.0" layoutY="466.0" prefHeight="167.0" prefWidth="555.0">
+         <content>
+            <VBox fx:id="vBoxListaCodirectores" prefHeight="156.0" prefWidth="550.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="262.0" layoutY="444.0" text="Codirectores:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAreaDescripcionAnteproyecto" layoutX="47.0" layoutY="226.0" prefHeight="104.0" prefWidth="535.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="txtAreaNombreAnteproyecto" layoutX="47.0" layoutY="124.0" prefHeight="58.0" prefWidth="535.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextArea>
+      <Label fx:id="lblNombreDocumento" alignment="CENTER" layoutX="604.0" layoutY="444.0" prefHeight="58.0" prefWidth="455.0" style="-fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="bttAdjuntarDocumento" layoutX="720.0" layoutY="512.0" mnemonicParsing="false" onAction="#clicAdjuntarDocumento" prefHeight="27.0" prefWidth="224.0" style="-fx-background-color: DIMGRAY;" text="Adjuntar Documento" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" layoutX="648.0" layoutY="556.0" mnemonicParsing="false" onAction="#clicGuardarComoBorrador" prefHeight="67.0" prefWidth="170.0" style="-fx-background-color: black;" text="Guardar como borrador" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="cmbBoxLGAC" layoutX="104.0" layoutY="411.0" prefHeight="27.0" prefWidth="477.0" />
+      <Label layoutX="48.0" layoutY="414.0" text="LGAC:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbBoxTipoAnteproyecto" layoutX="98.0" layoutY="343.0" prefHeight="27.0" prefWidth="205.0" />
+      <Label layoutX="47.0" layoutY="346.0" text="Tipo:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="721.0" layoutY="415.0" text="Documento de anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtFieldEstudiantesMaximos" alignment="CENTER" layoutX="493.0" layoutY="340.0" prefHeight="33.0" prefWidth="87.0">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="315.0" layoutY="343.0" prefHeight="27.0" prefWidth="185.0" text="Estudiantes máximos:" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="57.0" layoutY="196.0" text="Descripción del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="62.0" layoutY="97.0" text="Nombre del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="69.0" fitWidth="67.0" layoutX="62.0" layoutY="20.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="142.0" layoutY="24.0" text="Corrección de Anteproyecto">
+         <font>
+            <Font name="Trebuchet MS Bold" size="50.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="604.0" layoutY="124.0" prefHeight="277.0" prefWidth="455.0">
+         <content>
+            <VBox fx:id="vBoxComentarios" prefHeight="275.0" prefWidth="453.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="773.0" layoutY="97.0" text="Comentarios:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="865.0" layoutY="556.0" mnemonicParsing="false" onAction="#clicEnviarParaAprobacion" prefHeight="67.0" prefWidth="185.0" style="-fx-background-color: black;" text="Enviar para su aprobación" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblDirector" alignment="CENTER" layoutX="818.0" layoutY="51.0" prefHeight="40.0" prefWidth="247.0" text="Director: " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Button alignment="CENTER" layoutX="852.0" layoutY="10.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="33.0" prefWidth="185.0" style="-fx-background-color: black;" text="Eliminar anteproyecto" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
