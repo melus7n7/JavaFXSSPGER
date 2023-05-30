@@ -95,5 +95,9 @@ public class FXMLDetallesActividadController implements Initializable {
             ex.printStackTrace();
         }
     }
+
+    @FXML
+    private void clicEliminar(ActionEvent event) {
+    }
     
 }

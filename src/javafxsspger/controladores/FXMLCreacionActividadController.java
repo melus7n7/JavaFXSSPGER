@@ -1,7 +1,7 @@
 /*
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 20/05/2023
-*Fecha de modificación: 21/05/2023
+*Fecha de modificación: 30/05/2023
 *Descripción: Controlador de la vista para la Creacion de Actividades para el Estudiante
 */
 package javafxsspger.controladores;
@@ -68,8 +68,8 @@ public class FXMLCreacionActividadController implements Initializable {
         this.esEdicion=esEdicion;
         this.actividad=actividadEdicion;
         System.out.println(actividad.getIdActividad());
-        //dtPickerFechaFin.setEditable(false);
-        //dtPickerFechaInicio.setEditable(false);
+        dtPickerFechaFin.setEditable(false);
+        dtPickerFechaInicio.setEditable(false);
         if(esEdicion){
             inicializarActividadEdicion();
         }
@@ -97,7 +97,7 @@ public class FXMLCreacionActividadController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadesAcademico.fxml"));
             Parent vista = accesoControlador.load();
             FXMLActividadesAcademicoController Actividades = accesoControlador.getController();
-            //Actividades.inicializarInformacion(usuarioEstudiante); //MODIFICAR
+            Actividades.inicializarInformacionEstudiante(usuarioEstudiante); 
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Actividades");
             escenarioBase.show();
@@ -121,8 +121,8 @@ public class FXMLCreacionActividadController implements Initializable {
             String fechaInicio = dtPickerFechaInicio.getValue().toString();
             String fechaFinal = dtPickerFechaFin.getValue().toString();
             System.out.println(fechaInicio+""+fechaFinal);
-            //int idEstudiante=estudiante.getIdEstudiante(); MODIFICAR
-            //int idTrabajoRecepcional=estudiante.getIdTrabajoRecepcional(); MODIFICAR
+            int idEstudiante=usuarioEstudiante.getIdEstudiante(); //MODIFICAR
+            int idTrabajoRecepcional=usuarioEstudiante.getIdTrabajoRecepcional(); //MODIFICAR
             try{
                 SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-dd-MM");
                 Date fechaI = null;
@@ -137,8 +137,8 @@ public class FXMLCreacionActividadController implements Initializable {
                 actividadValidada.setDescripcion(descripcion);
                 actividadValidada.setFechaInicio(fechaInicio);
                 actividadValidada.setFechaFinal(fechaFinal);
-                actividadValidada.setIdEstudiante(1); //MODIFICAR
-                actividadValidada.setIdTrabajoRecepcional(1); //MODIFICAR
+                actividadValidada.setIdEstudiante(idEstudiante); //MODIFICAR
+                actividadValidada.setIdTrabajoRecepcional(idTrabajoRecepcional); //MODIFICAR
                 
                 if (fechaI.compareTo(fechaF) > 0) {
                     Utilidades.mostrarDialogoSimple("Fechas Invalidas", "La fecha ingresada no es válida. Ingrese una nueva fecha.", Alert.AlertType.WARNING);
@@ -166,7 +166,7 @@ public class FXMLCreacionActividadController implements Initializable {
             Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo despues", Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
-            Utilidades.mostrarDialogoSimple("Actividad actualizada", "La actividad fue actualizada correctamente", Alert.AlertType.WARNING);        
+            Utilidades.mostrarDialogoSimple("Actividad actualizada", "La actividad fue actualizada correctamente", Alert.AlertType.INFORMATION);        
             cerrarVentana();
             break;
         }    
@@ -182,7 +182,7 @@ public class FXMLCreacionActividadController implements Initializable {
             Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
-            Utilidades.mostrarDialogoSimple("Actividad agregada", "La actividad fue añadida correctamente", Alert.AlertType.WARNING);        
+            Utilidades.mostrarDialogoSimple("Actividad agregada", "La actividad ha sido añadida correctamente", Alert.AlertType.INFORMATION);        
             cerrarVentana();
             break;
         }

@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLActividadesAcademicoController">
    <children>
-      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="32.0" layoutY="42.0" onMouseClicked="#clicRegresarMenuPrincipal" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="32.0" layoutY="42.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
          <image>
             <Image url="@../recursos/flecha.png" />
          </image>
