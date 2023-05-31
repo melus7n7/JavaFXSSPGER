@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -45,6 +46,10 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     private Label lblFechaEtiqueta;
     @FXML
     private Label lblNombreDirectorEtiqueta;
+    @FXML
+    private Button bttVerMas;
+    @FXML
+    private Button bttAsignar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,7 +78,12 @@ public class FXMLAnteproyectoElementoController implements Initializable {
                 lblNombreDirectorEtiqueta.setText("Fecha creación:");
                 lblNombreDirector.setText(anteproyectoElemento.getFechaCreacion());
                 break;
-                
+            case Constantes.ES_ASIGNAR_ESTUDIANTES:
+                lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+                lblNombreDirector.setVisible(false);
+                lblNombreDirectorEtiqueta.setVisible(false);
+                bttVerMas.setVisible(false);
+                bttAsignar.setVisible(true);
         }
     }
 
@@ -94,6 +104,23 @@ public class FXMLAnteproyectoElementoController implements Initializable {
             ex.printStackTrace();
         }
         
+    }
+
+    @FXML
+    private void clicAsignarEstudiante(ActionEvent event) {
+    Stage escenarioBase = (Stage)lblFecha.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAsignacionEstudiantes.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAsignacionEstudiantesController anteproyectos = accesoControlador.getController();
+            //anteproyectos.inicializarInformacion(idAcademico);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Asignación Anteproyectos");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

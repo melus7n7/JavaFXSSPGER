@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 29/05/2023
-*Fecha de modificación: 29/05/2023
+*Fecha de modificación: 30/05/2023
 *Descripción: Controlador de la vista de la corrección y modificación de anteproyectos
 */
 package javafxsspger.controladores;
@@ -65,7 +65,6 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
     private ObservableList<LGAC> lgacs;
     private ObservableList<TipoAnteproyecto> tiposAnteproyecto;
     private File archivoElegido;
-    private int idAcademicoModificacion;
     private Anteproyecto anteproyectoModificacion;
     private INotificacionAnteproyectos notificacion;
     
@@ -113,7 +112,7 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
     }    
 
     @FXML
-    private void clicAdjuntarDocumento(ActionEvent event) {
+    private void clicAdjuntarDocumento(ActionEvent event){
         if(anteproyectoModificacion.getDocumento()==null){
             FileChooser dialogoSeleccionImg = new FileChooser();
             dialogoSeleccionImg.setTitle("Selecciona un documento");
@@ -132,21 +131,37 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         }
     }
 
-    @FXML
-    private void clicGuardarComoBorrador(ActionEvent event) {
-    }
 
     @FXML
     private void clicRegresar(MouseEvent event) {
-        regresar();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
+            detallesAnteproyecto.inicializarInformacion(anteproyectoModificacion.getIdAnteproyecto(), Constantes.ES_PROPIO, notificacion, anteproyectoModificacion.getIdDirector());
+            
+            Stage escenarioFormulario = (Stage) lblDirector.getScene().getWindow();
+            escenarioFormulario.setScene(new Scene (vista));
+            escenarioFormulario.setTitle("Detalles Anteproyecto");
+            escenarioFormulario.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
     private void clicEnviarParaAprobacion(ActionEvent event) {
+        validarCamposRegistro();
     }
     
     @FXML
     private void clicEliminar(ActionEvent event) {
+        eliminarAnteproyecto(anteproyectoModificacion.getIdAnteproyecto());
+    }
+    
+    @FXML
+    private void clicGuardarComoBorrador(ActionEvent event) {
+        validarCamposRegistroParaBorrador();
     }
     
     @Override
@@ -156,13 +171,14 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
 
     @Override
     public void notificarEliminarCodirector(Academico codirector) {
-        codirectoresAnteproyecto.remove(codirector);
+        System.out.println("Se elimina el codirector: "+codirector.getIdAcademico());
+        int posicion = obtenerPosicionCodirector(codirector);
+        codirectoresAnteproyecto.remove(posicion);
     }
     
-    public void iniciarPantalla(Anteproyecto anteproyectoModificacion,int idAcademicoModificacion, INotificacionAnteproyectos notificacion){
+    public void iniciarPantalla(Anteproyecto anteproyectoModificacion, INotificacionAnteproyectos notificacion){
         this.notificacion = notificacion;
         this.anteproyectoModificacion = anteproyectoModificacion;
-        this.idAcademicoModificacion = idAcademicoModificacion;
         inicializarAnteproyecto();
         inicializarComentarios();
     }
@@ -178,8 +194,14 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         cmbBoxCuerpoAcademico.getSelectionModel().select(posicionCuerpoAcademico);
         int posicionLgac = obtenerPosicionComboLGAC(anteproyectoModificacion.getIdLGAC());
         cmbBoxLGAC.getSelectionModel().select(posicionLgac);
-        lblNombreDocumento.setText(anteproyectoModificacion.getNombreDocumento());
-        codirectoresAnteproyecto.addAll(anteproyectoModificacion.getCodirectores());
+        lblNombreDocumento.setText(anteproyectoModificacion.getNombreDocumento()+"");
+        codirectoresAnteproyecto = anteproyectoModificacion.getCodirectores();
+        if(lblNombreDocumento.getText().equals("null")){
+            lblNombreDocumento.setText("");
+        }else{
+            bttAdjuntarDocumento.setText("Eliminar Documento");
+        }
+        
         inicializarCodirectores();
     }
     
@@ -307,6 +329,15 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         return false;
     }
     
+    private int obtenerPosicionCodirector(Academico codirector){
+        for(int i=0; i<codirectoresAnteproyecto.size(); i++){
+            if(codirectoresAnteproyecto.get(i).getIdAcademico() == codirector.getIdAcademico()){
+                return i;
+            }
+        }
+        return 0;
+    }
+    
     private int obtenerPosicionComboTipoAnteproyecto(int idTipoAnteproyecto){
         for(int i = 0; i < tiposAnteproyecto.size() ; i++){
             if(tiposAnteproyecto.get(i).getIdTipoAnteproyecto()== idTipoAnteproyecto){
@@ -331,23 +362,7 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
                 return i;
             }
         }
-        return 0;
-    }
-
-    private void regresar(){
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
-            detallesAnteproyecto.inicializarInformacion(anteproyectoModificacion.getIdAnteproyecto(), Constantes.ES_PROPIO, notificacion, anteproyectoModificacion.getIdDirector());
-            
-            Stage escenarioFormulario = (Stage) lblDirector.getScene().getWindow();
-            escenarioFormulario.setScene(new Scene (vista));
-            escenarioFormulario.setTitle("Detalles Anteproyecto");
-            escenarioFormulario.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        return -1;
     }
     
     public void validarCamposRegistro(){
@@ -391,13 +406,15 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
             Utilidades.mostrarDialogoSimple("Error", "Hay más de 2 codirectores seleccionados", Alert.AlertType.WARNING);
             camposValidos = false;
         }
-        if(archivoElegido == null){
+        if(lblNombreDocumento.getText().isEmpty()){
             lblNombreDocumento.setStyle(estiloError+"-fx-background-color:WHITE;");
         }
         
         if(camposValidos){
-            if(archivoElegido != null){
+            if(!lblNombreDocumento.getText().isEmpty()){
                 Anteproyecto anteproyectoValidado = new Anteproyecto();
+                anteproyectoValidado.setIdDirector(anteproyectoModificacion.getIdDirector());
+                anteproyectoValidado.setIdAnteproyecto(anteproyectoModificacion.getIdAnteproyecto());
                 anteproyectoValidado.setTitulo(titulo);
                 anteproyectoValidado.setDescripcion(descripcion);
                 anteproyectoValidado.setNoEstudiantesMaximo(Integer.parseInt(noEstudiantesMaximo));
@@ -405,13 +422,19 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
                 anteproyectoValidado.setIdTipoAnteproyecto(cmbBoxTipoAnteproyecto.getSelectionModel().getSelectedItem().getIdTipoAnteproyecto());
                 anteproyectoValidado.setIdCuerpoAcademico(cmbBoxCuerpoAcademico.getSelectionModel().getSelectedItem().getIdCuerpoAcademico());
                 anteproyectoValidado.setIdEstado(Constantes.PENDIENTE);
+                anteproyectoValidado.setCodirectores(codirectoresAnteproyecto);
                 try {
-                    anteproyectoValidado.setDocumento(Files.readAllBytes(archivoElegido.toPath()));
-                    anteproyectoValidado.setNombreDocumento(archivoElegido.getName());
+                    if(archivoElegido == null){
+                        anteproyectoValidado.setDocumento(anteproyectoModificacion.getDocumento());
+                        anteproyectoValidado.setNombreDocumento(anteproyectoModificacion.getNombreDocumento());
+                    }else{
+                        anteproyectoValidado.setDocumento(Files.readAllBytes(archivoElegido.toPath()));
+                        anteproyectoValidado.setNombreDocumento(archivoElegido.getName());
+                    }
                 }catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                registrarAnteproyecto(anteproyectoValidado);
+                registrarAnteproyecto(anteproyectoValidado, false);
             }else{
                 Utilidades.mostrarDialogoSimple("Error", "Debe seleccionar un archivo para adjuntar", Alert.AlertType.WARNING);
             }
@@ -420,41 +443,128 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         }
     }
     
-    public void registrarAnteproyecto(Anteproyecto anteproyectoNuevo){
-        Anteproyecto anteproyectoRespuesta = AnteproyectoDAO.guardarAnteproyecto(anteproyectoNuevo);
-        switch(anteproyectoRespuesta.getCodigoRespuesta()){
+    public void registrarAnteproyecto(Anteproyecto anteproyectoNuevo, boolean esBorrador){
+        int respuesta = AnteproyectoDAO.modificarAnteproyecto(anteproyectoNuevo);
+        switch(respuesta){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error de conexión", 
                             "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                    Utilidades.mostrarDialogoSimple("Error de consulta por Registro Anteproyecto", 
                             "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    registrarDirectores(anteproyectoRespuesta);
+                    borrarDirectores(anteproyectoNuevo, esBorrador);
                 break;
         }
     }
     
-    private void registrarDirectores (Anteproyecto anteproyectoRespuesta){
-        Academico academicoModificacion = new Academico();
-        academicoModificacion.setIdAnteproyecto(anteproyectoRespuesta.getIdAnteproyecto());
-        int codigoRespuesta = EncargadosAnteproyectoDAO.guardarEncargados(academicoModificacion, codirectoresAnteproyecto);
+    private void borrarDirectores(Anteproyecto anteproyecto, boolean esComoBorrador){
+        int codigoRespuesta = EncargadosAnteproyectoDAO.borrarEncargados(anteproyecto.getIdAnteproyecto());
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error de conexión", 
                             "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                    Utilidades.mostrarDialogoSimple("Error de consulta de BORRAR DIRECTORES", 
                             "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    Utilidades.mostrarDialogoSimple("Anteproyecto Registrado", 
-                            "Se envió correctamente el anteproyecto", Alert.AlertType.INFORMATION);
-                    regresar();
+                    registrarDirectores(anteproyecto, esComoBorrador);
                 break;
+        }
+    }
+    
+    private void registrarDirectores (Anteproyecto anteproyectoRespuesta, boolean esComoBorrador){
+        Academico academicoModificacion = new Academico();
+        academicoModificacion.setIdAnteproyecto(anteproyectoRespuesta.getIdAnteproyecto());
+        academicoModificacion.setIdAcademico(anteproyectoRespuesta.getIdDirector());
+        int codigoRespuesta = EncargadosAnteproyectoDAO.guardarEncargados(academicoModificacion, anteproyectoRespuesta.getCodirectores());
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error de conexión", 
+                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error de consulta DE REGISTRAR ", 
+                            "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    if(esComoBorrador){
+                        Utilidades.mostrarDialogoSimple("Anteproyecto Modificado Como Borrador", 
+                            "Se guardaron las modificaciones del anteproyecto, puede seguir editándolo más tarde", Alert.AlertType.INFORMATION);
+                    }else{
+                        Utilidades.mostrarDialogoSimple("Anteproyecto Modificado", 
+                            "Se modificó y se envió correctamente el anteproyecto", Alert.AlertType.INFORMATION);
+                    }
+                    notificacion.notificarCargarAnteproyectos();
+                    cerrarVentana();
+                break;
+        }
+    }
+    
+    private void validarCamposRegistroParaBorrador(){
+        establecerEstiloNormal();
+        boolean camposValidos = true;
+        
+        String titulo = txtAreaNombreAnteproyecto.getText().replaceAll("\n", System.getProperty("line.separator"));
+        String descripcion = txtAreaDescripcionAnteproyecto.getText().replaceAll("\n", System.getProperty("line.separator"));
+        String noEstudiantesMaximo = txtFieldEstudiantesMaximos.getText();
+        LGAC lgac = cmbBoxLGAC.getSelectionModel().getSelectedItem();
+        TipoAnteproyecto tipoAnteproyecto = cmbBoxTipoAnteproyecto.getSelectionModel().getSelectedItem();
+        CuerpoAcademico cuerpoAcademico = cmbBoxCuerpoAcademico.getSelectionModel().getSelectedItem();
+        
+        //Proceso de validación
+        if(titulo.length()>300){
+            txtAreaNombreAnteproyecto.setStyle(estiloError);
+            camposValidos = false;
+        }
+        if(descripcion.length()>20000){
+            txtAreaDescripcionAnteproyecto.setStyle(estiloError);
+            camposValidos = false;
+        }
+        if(!noEstudiantesMaximo.matches("[0-9]+")){
+            txtFieldEstudiantesMaximos.setStyle(estiloError);
+            camposValidos = false;
+        }
+        if(noEstudiantesMaximo.isEmpty()){
+            noEstudiantesMaximo = "0";
+        }
+        if(lgac == null){
+            lgac = new LGAC();
+            lgac.setIdLGAC(0);
+        }
+        
+        if(camposValidos){
+                Anteproyecto anteproyectoValidado = new Anteproyecto();
+                anteproyectoValidado.setIdDirector(anteproyectoModificacion.getIdDirector());
+                anteproyectoValidado.setIdAnteproyecto(anteproyectoModificacion.getIdAnteproyecto());
+                anteproyectoValidado.setTitulo(titulo);
+                anteproyectoValidado.setDescripcion(descripcion);
+                anteproyectoValidado.setNoEstudiantesMaximo(Integer.parseInt(noEstudiantesMaximo));
+                anteproyectoValidado.setIdLGAC(lgac.getIdLGAC());
+                anteproyectoValidado.setIdTipoAnteproyecto(tipoAnteproyecto.getIdTipoAnteproyecto());
+                anteproyectoValidado.setIdCuerpoAcademico(cuerpoAcademico.getIdCuerpoAcademico());
+                anteproyectoValidado.setIdEstado(Constantes.POR_CORREGIR);
+                anteproyectoValidado.setCodirectores(codirectoresAnteproyecto);
+             try {
+                if(archivoElegido == null && anteproyectoModificacion.getDocumento() != null){
+                    anteproyectoValidado.setDocumento(anteproyectoModificacion.getDocumento());
+                    anteproyectoValidado.setNombreDocumento(anteproyectoModificacion.getNombreDocumento());
+                }else if(archivoElegido == null && anteproyectoModificacion.getDocumento() == null){
+                    anteproyectoValidado.setDocumento(null);
+                }else if(archivoElegido != null){
+                    anteproyectoValidado.setDocumento(Files.readAllBytes(archivoElegido.toPath()));
+                    anteproyectoValidado.setNombreDocumento(archivoElegido.getName());
+                }
+            }catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            registrarAnteproyecto(anteproyectoValidado,true);
+        }else{
+            Utilidades.mostrarDialogoSimple("Error", "Debe seleccionar un archivo para adjuntar", Alert.AlertType.WARNING);
         }
     }
     
@@ -468,11 +578,30 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         cmbBoxTipoAnteproyecto.setStyle(estiloNormal);
         lblNombreDocumento.setStyle(estiloNormal+"-fx-background-color:WHITE;");
     }
-    
-    private void guardarCambios(){
-        
+
+    private void cerrarVentana(){
+        Stage escenarioBase = (Stage) lblDirector.getScene().getWindow();
+        escenarioBase.close();
     }
 
-    
+    private void eliminarAnteproyecto(int idAnteproyecto){
+        int respuesta = AnteproyectoDAO.borrarAnteproyecto(idAnteproyecto);
+        switch(respuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error de conexión", 
+                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                            "Por el momento no se puede borrar la información en la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    Utilidades.mostrarDialogoSimple("Anteproyecto Eliminado", 
+                            "Se eliminó al anteproyecto exitosamente", Alert.AlertType.INFORMATION);
+                    notificacion.notificarCargarAnteproyectos();
+                    cerrarVentana();
+                break;
+        }
+    }
     
 }

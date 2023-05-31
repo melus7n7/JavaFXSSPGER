@@ -60,6 +60,41 @@ public class AnteproyectoDAO {
         return respuesta;
     }
     
+    public static AnteproyectoRespuesta recuperarAnteproyectosEnDesarrolloPublicados(int idAcademico){
+        AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT anteproyecto.titulo, anteproyecto.fechaAprobacion, anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico " +
+                        "FROM sspger.anteproyecto  " +
+                        "INNER JOIN encargadosanteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
+                        "INNER JOIN academico ON encargadosanteproyecto.idAcademico = encargadosanteproyecto.idAcademico " +
+                        "WHERE encargadosanteproyecto.idAcademico = academico.idAcademico  " +
+                        "AND anteproyecto.idEstado = 2 AND encargadosanteproyecto.idAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <Anteproyecto> anteproyectosConsulta = new ArrayList();
+                while(resultado.next()){
+                    Anteproyecto anteproyecto = new Anteproyecto();
+                    anteproyecto.setTitulo(resultado.getString("titulo"));
+                    anteproyecto.setFechaAprobacion(resultado.getString("fechaAprobacion"));
+                    anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                    anteproyectosConsulta.add(anteproyecto);
+                }
+                respuesta.setAnteproyectos(anteproyectosConsulta);
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
     public static AnteproyectoRespuesta obtenerAnteproyectosPorCorregir(){
         AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
@@ -109,7 +144,7 @@ public class AnteproyectoDAO {
                     "anteproyecto.titulo, anteproyecto.fechaCreacion, anteproyecto.fechaAprobacion " +
                     "FROM sspger.encargadosanteproyecto " +
                     "INNER JOIN anteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
-                    "WHERE encargadosanteproyecto.idAcademico = ?";
+                    "WHERE encargadosanteproyecto.idAcademico = ? AND noEstudiantesAsignados = 0";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idAcademico);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -243,10 +278,8 @@ public class AnteproyectoDAO {
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 anteproyectoRespuesta.setCodigoRespuesta ((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);
                 
-                String consulta = "SELECT idAnteproyecto FROM Anteproyecto " +
-                    "WHERE titulo = ?";
+                String consulta = "SELECT MAX(idanteproyecto) AS idanteproyecto FROM anteproyecto;";
                 PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
-                prepararConsulta.setString(1, anteproyectoNuevo.getTitulo());
                 ResultSet resultado = prepararConsulta.executeQuery();
                 if(resultado.next()){
                     anteproyectoRespuesta.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
@@ -296,6 +329,61 @@ public class AnteproyectoDAO {
                 conexionBD.close();
             }catch (SQLException e){
                 respuesta = Constantes.ERROR_CONSULTA;
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int modificarAnteproyecto (Anteproyecto anteproyectoModificacion){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String sentencia = "UPDATE anteproyecto SET titulo = ?, descripcion = ?, fechaAprobacion = null, noEstudiantesMaximos = ?, " +
+                    "noEstudiantesAsignados = 0, documento = ?, nombreDocumento = ?, idCuerpoAcademico = ?, idEstado = ?, " +
+                    "idTipoAnteproyecto = ?, idLGAC = ? " +
+                    "WHERE idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString (1, anteproyectoModificacion.getTitulo());
+                prepararSentencia.setString(2, anteproyectoModificacion.getDescripcion());
+                prepararSentencia.setInt(3, anteproyectoModificacion.getNoEstudiantesMaximo());
+                prepararSentencia.setBytes(4, anteproyectoModificacion.getDocumento());
+                prepararSentencia.setString(5, anteproyectoModificacion.getNombreDocumento());
+                prepararSentencia.setInt(6, anteproyectoModificacion.getIdCuerpoAcademico());
+                prepararSentencia.setInt(7, anteproyectoModificacion.getIdEstado());
+                prepararSentencia.setInt (8, anteproyectoModificacion.getIdTipoAnteproyecto());
+                prepararSentencia.setInt (9, anteproyectoModificacion.getIdLGAC());
+                prepararSentencia.setInt (10, anteproyectoModificacion.getIdAnteproyecto());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int borrarAnteproyecto(int idAnteproyecto){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String sentencia = "DELETE FROM anteproyecto WHERE idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt (1, idAnteproyecto);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         }else{
             respuesta = Constantes.ERROR_CONEXION;
