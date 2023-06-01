@@ -35,6 +35,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     private int idAcademico;
     private int numeroPantalla;
     private INotificacionAnteproyectos interfazNotificacion;
+    private Anteproyecto anteproyectoElemento;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -57,6 +58,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     }
     
     public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+        this.anteproyectoElemento = anteproyectoElemento;
         this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
@@ -108,16 +110,17 @@ public class FXMLAnteproyectoElementoController implements Initializable {
 
     @FXML
     private void clicAsignarEstudiante(ActionEvent event) {
-    Stage escenarioBase = (Stage)lblFecha.getScene().getWindow();
         try {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAsignacionEstudiantes.fxml"));
             Parent vista = accesoControlador.load();
             FXMLAsignacionEstudiantesController anteproyectos = accesoControlador.getController();
-            //anteproyectos.inicializarInformacion(idAcademico);
+            anteproyectos.inicializarDetalles(anteproyectoElemento);
             
+            Stage escenarioBase = new Stage();
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Asignación Anteproyectos");
-            escenarioBase.show();
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.showAndWait();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

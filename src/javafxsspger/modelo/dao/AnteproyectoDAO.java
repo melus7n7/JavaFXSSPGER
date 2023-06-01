@@ -65,7 +65,7 @@ public class AnteproyectoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT anteproyecto.titulo, anteproyecto.fechaAprobacion, anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico " +
+                String consulta = "SELECT anteproyecto.titulo, anteproyecto.fechaAprobacion, anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico, anteproyecto.noEstudiantesMaximos " +
                         "FROM sspger.anteproyecto  " +
                         "INNER JOIN encargadosanteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
                         "INNER JOIN academico ON encargadosanteproyecto.idAcademico = encargadosanteproyecto.idAcademico " +
@@ -80,6 +80,7 @@ public class AnteproyectoDAO {
                     anteproyecto.setTitulo(resultado.getString("titulo"));
                     anteproyecto.setFechaAprobacion(resultado.getString("fechaAprobacion"));
                     anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                    anteproyecto.setNoEstudiantesMaximo(resultado.getInt("noEstudiantesMaximos"));
                     anteproyectosConsulta.add(anteproyecto);
                 }
                 respuesta.setAnteproyectos(anteproyectosConsulta);
@@ -263,9 +264,9 @@ public class AnteproyectoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD!=null){
             try{
-                String sentencia = "insert into anteproyecto (titulo, descripcion, fechaCreacion, noEstudiantesMaximos, noEstudiantesAsignados, " +
+                String sentencia = "insert into anteproyecto (titulo, descripcion, fechaCreacion, noEstudiantesAsignados, noEstudiantesMaximos, " +
                     "idEstado, idTipoAnteproyecto, idLGAC, documento, nombreDocumento, idCuerpoAcademico) " +
-                    "values (?, ? , CURDATE(), ? , 0, 1 , ?, ?, ?, ?, ?)";
+                    "values (?, ? , CURDATE(),0, ? , 1 , ?, ?, ?, ?, ?)";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setString (1, anteproyectoNuevo.getTitulo());
                 prepararSentencia.setString(2, anteproyectoNuevo.getDescripcion());
@@ -390,4 +391,27 @@ public class AnteproyectoDAO {
         }
         return respuesta;
     }
+    
+    public static int cambiarEstudianteAnteproyecto(Anteproyecto anteproyecto){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String sentencia = "UPDATE anteproyecto SET noEstudiantesAsignados = ? WHERE idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt (1, anteproyecto.getNoEstudiantesAsignados());
+                prepararSentencia.setInt (2, anteproyecto.getIdAnteproyecto());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
 }
