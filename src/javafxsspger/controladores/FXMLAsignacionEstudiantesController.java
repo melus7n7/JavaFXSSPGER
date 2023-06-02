@@ -107,7 +107,7 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
                         "No se pueden añadir más estudiantes debido a que el máximo de estudiantes ha sido alcanzado", 
                         Alert.AlertType.WARNING);
             }else{
-                agregarEstudiante(estudiante);
+                validarExistenciaTrabajoRecepcional(estudiante);
             }
         }else{
             Utilidades.mostrarDialogoSimple("Selecciona un estudiante", 
@@ -212,6 +212,15 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
         colNombre.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
     }
     
+    private void validarExistenciaTrabajoRecepcional(Estudiante estudiante){
+        if(anteproyectoAsignar.getIdTrabajoRecepcional() == 0){
+            anteproyectoAsignar.setIdTrabajoRecepcional(crearTrabajoRecepcional());
+        }
+        estudiante.setIdAnteproyecto(anteproyectoAsignar.getIdAnteproyecto());
+        estudiante.setIdTrabajoRecepcional(anteproyectoAsignar.getIdTrabajoRecepcional());
+        agregarEstudiante(estudiante);
+    }
+    
     private void agregarEstudiante(Estudiante estudiante){
         estudiante.setIdAnteproyecto(anteproyectoAsignar.getIdAnteproyecto());
         int respuestaBD = EstudianteDAO.asignarAnteproyectoEstudiante(estudiante);
@@ -226,15 +235,11 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    Utilidades.mostrarDialogoSimple("Estudiante asignado", 
-                        "Se asignó correctamente el estudiante " + estudiante.getNombreCompleto(), 
-                        Alert.AlertType.INFORMATION);
-                    cambiarEstudiantes(anteproyectoAsignar.getNoEstudiantesAsignados()+1);
-                    recuperarEstudiantes();
-                    recuperarEstudiantesPosibles();
+                    agregarEstudianteAnteproyecto(anteproyectoAsignar.getNoEstudiantesAsignados()+1, estudiante);
                 break;
         }
     }
+    
     
     private void eliminarEstudiante(Estudiante estudiante){
         int respuestaBD = EstudianteDAO.eliminarAnteproyectoEstudiante(estudiante);
@@ -249,41 +254,19 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    Utilidades.mostrarDialogoSimple("Estudiante eliminado", 
-                        "Se eliminó correctamente el estudiante " + estudiante.getNombreCompleto(), 
-                        Alert.AlertType.INFORMATION);
-                    cambiarEstudiantes(anteproyectoAsignar.getNoEstudiantesAsignados()-1);
-                    recuperarEstudiantes();
-                    recuperarEstudiantesPosibles();
+                    anteproyectoAsignar.setNoEstudiantesAsignados(anteproyectoAsignar.getNoEstudiantesAsignados()-1);
+                    disminuirEstudianteAnteproyecto(anteproyectoAsignar.getNoEstudiantesAsignados(),estudiante);
+                    if(anteproyectoAsignar.getNoEstudiantesAsignados()==0){
+                        eliminarTrabajoRecepcional();
+                        anteproyectoAsignar.setIdTrabajoRecepcional(0);
+                    }
+                    
                 break;
         }
     }
     
-    private void cambiarEstudiantes(int noEstudiantesAsignados){
-        anteproyectoAsignar.setNoEstudiantesAsignados(noEstudiantesAsignados);
-        int respuestaBD = AnteproyectoDAO.cambiarEstudianteAnteproyecto(anteproyectoAsignar);
-        switch(respuestaBD){
-            case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al eliminar estudiante", 
-                        "Hubo un error al eliminar el estudiante, por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                if(anteproyectoAsignar.getNoEstudiantesAsignados() == 1 && estudiantesAsignados.isEmpty()){
-                    crearTrabajoRecepcional();
-                }
-                if(anteproyectoAsignar.getNoEstudiantesAsignados() == 0 && estudiantesAsignados.size() == 1){
-                    eliminarTrabajoRecepcional();
-                }
-                break;
-        }
-    }
-    
-    private void crearTrabajoRecepcional(){
+    private int crearTrabajoRecepcional(){
+        int idTrabajoRecepcional = 0;
         TrabajoRecepcional respuesta = TrabajoRecepcionalDAO.crearTrabajoRecepcional(anteproyectoAsignar.getIdAnteproyecto());
         switch(respuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
@@ -296,9 +279,11 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                asignarEncargados(respuesta.getIdTrabajoRecepcional());
+                idTrabajoRecepcional = respuesta.getIdTrabajoRecepcional();
+                asignarEncargados(idTrabajoRecepcional);
                 break;
         }
+        return idTrabajoRecepcional;
     }
     
     private void asignarEncargados(int idTrabajoRecepcional){
@@ -314,7 +299,6 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                System.out.println("Añadido co");
                 break;
         }
     }
@@ -332,7 +316,59 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                System.out.println("Eliminado");
+                break;
+        }
+    }
+    
+    private void agregarEstudianteAnteproyecto(int noEstudiantesAsignados, Estudiante estudiante){
+        anteproyectoAsignar.setNoEstudiantesAsignados(noEstudiantesAsignados);
+        int respuestaBD = AnteproyectoDAO.cambiarEstudianteAnteproyecto(anteproyectoAsignar);
+        switch(respuestaBD){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al eliminar estudiante", 
+                        "Hubo un error al eliminar el estudiante, por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    Utilidades.mostrarDialogoSimple("Estudiante asignado", 
+                        "Se asignó correctamente el estudiante " + estudiante.getNombreCompleto(), 
+                        Alert.AlertType.INFORMATION);
+                    txtFieldBuscador.setText("");
+                    recuperarEstudiantes();
+                    recuperarEstudiantesPosibles();
+                /*else{
+                    Utilidades.mostrarDialogoSimple("Estudiante eliminado", 
+                        "Se eliminó correctamente el estudiante " + estudiante.getNombreCompleto(), 
+                        Alert.AlertType.INFORMATION);
+                }*/
+                break;
+        }
+    }
+    
+    private void disminuirEstudianteAnteproyecto(int noEstudiantesAsignados, Estudiante estudiante){
+        anteproyectoAsignar.setNoEstudiantesAsignados(noEstudiantesAsignados);
+        int respuestaBD = AnteproyectoDAO.cambiarEstudianteAnteproyecto(anteproyectoAsignar);
+        switch(respuestaBD){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al eliminar estudiante", 
+                        "Hubo un error al eliminar el estudiante, por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    Utilidades.mostrarDialogoSimple("Estudiante eliminado", 
+                        "Se eliminó correctamente el estudiante " + estudiante.getNombreCompleto(), 
+                        Alert.AlertType.INFORMATION);
+                    txtFieldBuscador.setText("");
+                    recuperarEstudiantes();
+                    recuperarEstudiantesPosibles();
                 break;
         }
     }

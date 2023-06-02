@@ -65,7 +65,7 @@ public class AnteproyectoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT anteproyecto.titulo, anteproyecto.fechaAprobacion, anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico, anteproyecto.noEstudiantesMaximos " +
+                String consulta = "SELECT anteproyecto.titulo, anteproyecto.fechaAprobacion, anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico, anteproyecto.noEstudiantesMaximos, anteproyecto.noEstudiantesAsignados " +
                         "FROM sspger.anteproyecto  " +
                         "INNER JOIN encargadosanteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
                         "INNER JOIN academico ON encargadosanteproyecto.idAcademico = encargadosanteproyecto.idAcademico " +
@@ -81,7 +81,16 @@ public class AnteproyectoDAO {
                     anteproyecto.setFechaAprobacion(resultado.getString("fechaAprobacion"));
                     anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
                     anteproyecto.setNoEstudiantesMaximo(resultado.getInt("noEstudiantesMaximos"));
+                    anteproyecto.setNoEstudiantesAsignados(resultado.getInt("noEstudiantesAsignados"));
                     anteproyectosConsulta.add(anteproyecto);
+                    
+                    String consultaTrabajo = "SELECT idTrabajoRecepcional FROM sspger.trabajorecepcional WHERE idAnteproyecto = ?";
+                    PreparedStatement prepararSentenciaTrabajo = conexionBD.prepareStatement(consultaTrabajo);
+                    prepararSentenciaTrabajo.setInt(1, anteproyecto.getIdAnteproyecto());
+                    ResultSet resultadoTrabajo = prepararSentenciaTrabajo.executeQuery();
+                    if(resultadoTrabajo.next()){
+                        anteproyecto.setIdTrabajoRecepcional(resultadoTrabajo.getInt("idTrabajoRecepcional"));
+                    }
                 }
                 respuesta.setAnteproyectos(anteproyectosConsulta);
                 respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
