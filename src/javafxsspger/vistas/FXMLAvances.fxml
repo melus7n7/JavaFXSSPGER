@@ -8,16 +8,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLAvancesController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLAvancesController">
    <children>
-      <Button alignment="CENTER" layoutX="850.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicCrearActividad" prefHeight="50.0" prefWidth="218.0" style="-fx-background-color: black;" text="Crear Actividad" textFill="WHITE">
+      <Button fx:id="bttCrearAvance" alignment="CENTER" layoutX="850.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicCrearAvance" prefHeight="50.0" prefWidth="218.0" style="-fx-background-color: black;" text="Crear Avance" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="20.0" />
          </font>
       </Button>
-      <ComboBox fx:id="cmbBoxTrabajosRecepcionales" layoutX="184.0" layoutY="100.0" prefHeight="38.0" prefWidth="335.0" />
-      <Button alignment="CENTER" layoutX="43.0" layoutY="100.0" mnemonicParsing="false" onAction="#clicMostrarActividades" prefHeight="38.0" prefWidth="112.0" style="-fx-background-color: black;" text="Mostrar" textFill="WHITE">
+      <ComboBox fx:id="cmbBoxEstudiante" layoutX="184.0" layoutY="100.0" prefHeight="38.0" prefWidth="335.0" />
+      <Button alignment="CENTER" layoutX="43.0" layoutY="100.0" mnemonicParsing="false" onAction="#clicMostrarAvances" prefHeight="38.0" prefWidth="112.0" style="-fx-background-color: black;" text="Mostrar" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="20.0" />
          </font>

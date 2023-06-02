@@ -129,10 +129,11 @@ public class EstudianteDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String sentencia = "UPDATE estudiante SET idAnteproyecto = ? WHERE idEstudiante = ?;";
+                String sentencia = "UPDATE estudiante SET idAnteproyecto = ?, idTrabajoRecepcional = ? WHERE idEstudiante = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt (1, estudiante.getIdAnteproyecto());
-                prepararSentencia.setInt(2, estudiante.getIdEstudiante());
+                prepararSentencia.setInt (2, estudiante.getIdTrabajoRecepcional());
+                prepararSentencia.setInt(3, estudiante.getIdEstudiante());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
                 conexionBD.close();
@@ -151,7 +152,7 @@ public class EstudianteDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String sentencia = "UPDATE estudiante SET idAnteproyecto = null WHERE idEstudiante = ?;";
+                String sentencia = "UPDATE estudiante SET idAnteproyecto = null, idTrabajoRecepcional = null WHERE idEstudiante = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, estudiante.getIdEstudiante());
                 int filasAfectadas = prepararSentencia.executeUpdate();
@@ -163,6 +164,82 @@ public class EstudianteDAO {
             }
         }else{
             respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static EstudianteRespuesta recuperarEstudiantesProfesor (int idAcademico){
+        EstudianteRespuesta respuesta = new EstudianteRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT ExperienciaEducativa.idExperienciaEducativa, perteneceexperienciaeducativa.idestudiante, " +
+                    "usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno " +
+                    "FROM sspger.ExperienciaEducativa " +
+                    "INNER JOIN perteneceexperienciaeducativa ON perteneceexperienciaeducativa.idExperienciaEducativa = ExperienciaEducativa.idExperienciaEducativa " +
+                    "INNER JOIN estudiante ON estudiante.idEstudiante = perteneceexperienciaeducativa.idEstudiante " +
+                    "INNER JOIN usuario ON usuario.idUsuario = estudiante.idUsuario " +
+                    "where ExperienciaEducativa.idAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <Estudiante> estudiantesConsulta = new ArrayList();
+                while(resultado.next()){
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setIdEstudiante(resultado.getInt("idestudiante"));
+                    String nombreCompleto = resultado.getString("nombreUsuario") + " " + resultado.getString("apellidoPaterno") + " " + resultado.getString("apellidoMaterno");
+                    estudiante.setNombreCompleto(nombreCompleto);
+                    estudiante.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    estudiante.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    estudiante.setNombre(resultado.getString("nombreUsuario"));
+                    estudiantesConsulta.add(estudiante);
+                }
+                respuesta.setEstudiantes(estudiantesConsulta);
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static EstudianteRespuesta recuperarEstudiantesDirector (int idAcademico){
+        EstudianteRespuesta respuesta = new EstudianteRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT estudiante.idestudiante, usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno " +
+                    "FROM sspger.encargadostrabajorecepcional " +
+                    "INNER JOIN estudiante ON estudiante.idTrabajoRecepcional = encargadostrabajorecepcional.idTrabajoRecepcional " +
+                    "INNER JOIN usuario ON usuario.idUsuario = estudiante.idUsuario " +
+                    "where encargadostrabajorecepcional.idAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <Estudiante> estudiantesConsulta = new ArrayList();
+                while(resultado.next()){
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setIdEstudiante(resultado.getInt("idestudiante"));
+                    String nombreCompleto = resultado.getString("nombreUsuario") + " " + resultado.getString("apellidoPaterno") + " " + resultado.getString("apellidoMaterno");
+                    estudiante.setNombreCompleto(nombreCompleto);
+                    estudiante.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    estudiante.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    estudiante.setNombre(resultado.getString("nombreUsuario"));
+                    estudiantesConsulta.add(estudiante);
+                }
+                respuesta.setEstudiantes(estudiantesConsulta);
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return respuesta;
     }

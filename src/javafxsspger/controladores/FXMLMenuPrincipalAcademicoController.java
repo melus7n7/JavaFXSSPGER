@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -33,6 +34,18 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     private Label lblTitulo;
     @FXML
     private Label lblNombreAcademico;
+    @FXML
+    private Button bttTrabajosRecepcionales;
+    @FXML
+    private Button bttActividades;
+    @FXML
+    private Button bttCronograma;
+    @FXML
+    private Button bttAsignar;
+    @FXML
+    private Button bttAvances;
+    @FXML
+    private Button bttGenerarReporte;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -100,6 +113,19 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
 
     @FXML
     private void clicAvances(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAvances.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAvancesController actividades = accesoControlador.getController();
+            actividades.inicializarInformacionAcademico(usuarioAcademico);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Avances");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     @FXML
@@ -115,11 +141,26 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
         respuesta.setIdTipoUsuario(usuarioLogin.getIdTipoUsuario());
         this.usuarioAcademico = respuesta;
         lblNombreAcademico.setText("Hola académico " + usuarioAcademico.getNombre());
+        mostrarPermisos();
     }
     
     public void inicializarInformacionConAcademico(Academico usuarioAcademico){
         this.usuarioAcademico = usuarioAcademico;
         lblNombreAcademico.setText("Hola académico " + this.usuarioAcademico.getNombre());
+        mostrarPermisos();
+    }
+    
+    public void mostrarPermisos(){
+        if(usuarioAcademico.isEsProfesor() || usuarioAcademico.isEsDirector()){
+            bttAvances.setDisable(false);
+            bttActividades.setDisable(false);
+            bttGenerarReporte.setDisable(false);
+            bttTrabajosRecepcionales.setDisable(false);
+            bttCronograma.setDisable(false);
+        }
+        if(usuarioAcademico.isEsDirector()){
+            bttAsignar.setDisable(false);
+        }
     }
 
     

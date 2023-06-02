@@ -19,6 +19,7 @@ public class Anteproyecto {
     private int noEstudiantesAsignados;
     private byte[] documento;
     private String nombreDocumento;
+    private int idTrabajoRecepcional;
     
     private int idCuerpoAcademico;
     private String nombreCuerpoAcademico;
@@ -122,6 +123,10 @@ public class Anteproyecto {
         return noEstudiantesAsignados;
     }
 
+    public int getIdTrabajoRecepcional() {
+        return idTrabajoRecepcional;
+    }
+
     
     //Setters
     public void setTitulo(String titulo) {
@@ -206,6 +211,10 @@ public class Anteproyecto {
 
     public void setNoEstudiantesAsignados(int noEstudiantesAsignados) {
         this.noEstudiantesAsignados = noEstudiantesAsignados;
+    }
+
+    public void setIdTrabajoRecepcional(int idTrabajoRecepcional) {
+        this.idTrabajoRecepcional = idTrabajoRecepcional;
     }
 
     
