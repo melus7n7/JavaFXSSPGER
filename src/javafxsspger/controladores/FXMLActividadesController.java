@@ -81,7 +81,7 @@ public class FXMLActividadesController implements Initializable {
                 trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                 
             System.out.println("Eres Director");            
             }else if(usuarioAcademico.isEsProfesor()){
-                trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                                 
+                //MODIFICAR
                 System.out.println("Eres Profesor");            
             }
         }else{    
