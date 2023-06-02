@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 20/05/2023
-*Fecha de modificación: 21/05/2023
+*Fecha de modificación: 30/05/2023
 *Descripción: Controlador de la vista de la creación de los anteproyectos
 */
 package javafxsspger.controladores;
@@ -38,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAnteproyectos;
 import javafxsspger.interfaces.INotificacionCodirector;
 import javafxsspger.modelo.dao.AcademicoDAO;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
@@ -64,6 +65,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
     private ObservableList<TipoAnteproyecto> tiposAnteproyecto;
     private File archivoElegido;
     private Academico academicoCreacion;
+    private INotificacionAnteproyectos notificacion;
     
     private String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     private String estiloNormal = "-fx-border-width: 0;";
@@ -146,7 +148,8 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         codirectoresAnteproyecto.remove(codirector);
     }
     
-    public void inicializarPantalla (Academico academicoCreacion){
+    public void inicializarPantalla (Academico academicoCreacion, INotificacionAnteproyectos notificacion){
+        this.notificacion = notificacion;
         this.academicoCreacion = academicoCreacion;
         inicializarCodirectores();
     }
@@ -331,6 +334,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
             case Constantes.OPERACION_EXITOSA:
                     Utilidades.mostrarDialogoSimple("Anteproyecto Registrado", 
                             "Se envió correctamente el anteproyecto", Alert.AlertType.INFORMATION);
+                    notificacion.notificarCargarAnteproyectos();
                     cerrarVentana();
                 break;
         }

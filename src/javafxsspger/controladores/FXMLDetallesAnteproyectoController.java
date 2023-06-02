@@ -127,6 +127,9 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
                 lblFecha.setText(anteproyectoRespuesta.getFechaCreacion());
                 break;
         }
+        if(anteproyectoRespuesta.getIdEstado() != Constantes.APROBADO){
+            bttModificarAnteproyecto.setVisible(false);
+        }
     }
 
     @FXML
@@ -174,7 +177,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCorreccionAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLCorreccionAnteproyectoController correcionAnteproyecto = accesoControlador.getController(); 
-            correcionAnteproyecto.iniciarPantalla(anteproyectoDetalle, idAcademico, interfazNotificacion);
+            correcionAnteproyecto.iniciarPantalla(anteproyectoDetalle, interfazNotificacion);
             
             Stage escenarioDetalle = (Stage) lblCodirectores.getScene().getWindow();
             escenarioDetalle.setScene(new Scene (vista));

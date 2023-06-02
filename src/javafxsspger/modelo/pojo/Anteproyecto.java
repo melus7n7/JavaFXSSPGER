@@ -16,6 +16,7 @@ public class Anteproyecto {
     private String fechaCreacion;
     private String fechaAprobacion;
     private int noEstudiantesMaximo;
+    private int noEstudiantesAsignados;
     private byte[] documento;
     private String nombreDocumento;
     
@@ -32,6 +33,7 @@ public class Anteproyecto {
     
     private int codigoRespuesta;
     private ArrayList<Academico> codirectores;
+    private ArrayList<Estudiante> estudiantes;
 
     public Anteproyecto() {
     }
@@ -111,6 +113,15 @@ public class Anteproyecto {
     public int getIdEstado() {
         return idEstado;
     }
+
+    public ArrayList<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public int getNoEstudiantesAsignados() {
+        return noEstudiantesAsignados;
+    }
+
     
     //Setters
     public void setTitulo(String titulo) {
@@ -188,6 +199,15 @@ public class Anteproyecto {
     public void setIdDirector(int idDirector) {
         this.idDirector = idDirector;
     }
+
+    public void setEstudiantes(ArrayList<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
+    }
+
+    public void setNoEstudiantesAsignados(int noEstudiantesAsignados) {
+        this.noEstudiantesAsignados = noEstudiantesAsignados;
+    }
+
     
     public String getNombreCodirectores (){
         String nombres = "";

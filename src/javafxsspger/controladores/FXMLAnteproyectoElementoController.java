@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -34,6 +35,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     private int idAcademico;
     private int numeroPantalla;
     private INotificacionAnteproyectos interfazNotificacion;
+    private Anteproyecto anteproyectoElemento;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -45,6 +47,10 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     private Label lblFechaEtiqueta;
     @FXML
     private Label lblNombreDirectorEtiqueta;
+    @FXML
+    private Button bttVerMas;
+    @FXML
+    private Button bttAsignar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,6 +58,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     }
     
     public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+        this.anteproyectoElemento = anteproyectoElemento;
         this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
@@ -73,7 +80,12 @@ public class FXMLAnteproyectoElementoController implements Initializable {
                 lblNombreDirectorEtiqueta.setText("Fecha creación:");
                 lblNombreDirector.setText(anteproyectoElemento.getFechaCreacion());
                 break;
-                
+            case Constantes.ES_ASIGNAR_ESTUDIANTES:
+                lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+                lblNombreDirector.setVisible(false);
+                lblNombreDirectorEtiqueta.setVisible(false);
+                bttVerMas.setVisible(false);
+                bttAsignar.setVisible(true);
         }
     }
 
@@ -94,6 +106,24 @@ public class FXMLAnteproyectoElementoController implements Initializable {
             ex.printStackTrace();
         }
         
+    }
+
+    @FXML
+    private void clicAsignarEstudiante(ActionEvent event) {
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAsignacionEstudiantes.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAsignacionEstudiantesController anteproyectos = accesoControlador.getController();
+            anteproyectos.inicializarDetalles(anteproyectoElemento);
+            
+            Stage escenarioBase = new Stage();
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Asignación Anteproyectos");
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

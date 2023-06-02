@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="450.0" style="-fx-background-color: THISTLE;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLComentarioElementoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="447.0" style="-fx-background-color: THISTLE; -fx-border-color: silver; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLComentarioElementoController">
    <children>
       <Label fx:id="lblAutor" layoutX="10.0" layoutY="5.0" prefHeight="14.0" prefWidth="231.0" text="Por: ">
          <font>
@@ -19,6 +19,6 @@
             <Font name="SansSerif Regular" size="11.0" />
          </font>
       </Label>
-      <TextArea fx:id="txtAreaComentario" editable="false" layoutX="7.0" layoutY="20.0" prefHeight="111.0" prefWidth="436.0" wrapText="true" />
+      <TextArea fx:id="txtAreaComentario" editable="false" layoutX="6.0" layoutY="19.0" prefHeight="111.0" prefWidth="436.0" wrapText="true" />
    </children>
 </Pane>

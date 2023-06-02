@@ -27,6 +27,7 @@ public class TrabajoRecepcional {
     private int idCuerpoAcademico; 
     private int idEstado; 
     private int idLGAC;
+    private int codigoRespuesta;
 
     public TrabajoRecepcional() {
     }
@@ -158,6 +159,14 @@ public class TrabajoRecepcional {
 
     public void setIdLGAC(int idLGAC) {
         this.idLGAC = idLGAC;
+    }
+
+    public int getCodigoRespuesta() {
+        return codigoRespuesta;
+    }
+
+    public void setCodigoRespuesta(int codigoRespuesta) {
+        this.codigoRespuesta = codigoRespuesta;
     }
     
     @Override

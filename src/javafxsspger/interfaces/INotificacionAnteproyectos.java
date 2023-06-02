@@ -7,5 +7,5 @@
 package javafxsspger.interfaces;
 
 public interface INotificacionAnteproyectos {
-    public void notificarCargarAnteproyectosPorCorregir();
+    public void notificarCargarAnteproyectos();
 }

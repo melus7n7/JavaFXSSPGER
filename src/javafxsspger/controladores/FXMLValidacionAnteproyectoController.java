@@ -96,8 +96,20 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
     
     @FXML
     private void clicRegresar(MouseEvent event) {
-        Stage escenarioBase = (Stage) lblNombreAnteproyecto.getScene().getWindow();
-        escenarioBase.close();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
+            detallesAnteproyecto.inicializarInformacion(anteproyectoValidacion.getIdAnteproyecto(), Constantes.ES_POR_CORREGIR, interfazNotificacion, anteproyectoValidacion.getIdDirector());
+            
+            Stage escenarioFormulario = (Stage) lblCodirectores.getScene().getWindow();
+            escenarioFormulario.setScene(new Scene (vista));
+            escenarioFormulario.setTitle("Detalles Anteproyecto");
+            escenarioFormulario.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    
     }
     
     public void inicializarInformacion (Anteproyecto anteproyectoValidacion, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
@@ -139,7 +151,7 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
             case Constantes.OPERACION_EXITOSA:
                     Utilidades.mostrarDialogoSimple("Anteproyecto Validado", 
                             "Se publicó el anteproyecto correctamente", Alert.AlertType.INFORMATION);
-                    interfazNotificacion.notificarCargarAnteproyectosPorCorregir();
+                    interfazNotificacion.notificarCargarAnteproyectos();
                     cerrarVentana();
                 break;
         }
@@ -183,7 +195,7 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
             case Constantes.OPERACION_EXITOSA:
                     Utilidades.mostrarDialogoSimple("Anteproyecto Corregido", 
                             "Se regresó el anteproyecto para su corrección correctamente", Alert.AlertType.INFORMATION);
-                    interfazNotificacion.notificarCargarAnteproyectosPorCorregir();
+                    interfazNotificacion.notificarCargarAnteproyectos();
                     cerrarVentana();
                 break;
         } 
