@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -44,10 +45,7 @@ import javafxsspger.utils.Utilidades;
  *
  * @author monti
  */
-public class FXMLActividadesAcademicoController implements Initializable {
-    
-    private boolean esProfesor;
-    private boolean esDirector;
+public class FXMLActividadesController implements Initializable {
     
     private Academico usuarioAcademico;
     private Estudiante usuarioEstudiante;
@@ -60,6 +58,8 @@ public class FXMLActividadesAcademicoController implements Initializable {
     private ComboBox<TrabajoRecepcional> cmbBoxTrabajosRecepcionales;
     
     private ObservableList<TrabajoRecepcional> trabajosRecepcionales;
+    @FXML
+    private Button bttCrearActividad;
     /**
      * Initializes the controller class.
      */
@@ -70,35 +70,25 @@ public class FXMLActividadesAcademicoController implements Initializable {
     
     private void cargarInformacionTrabajosRecepcionales(){
         trabajosRecepcionales=FXCollections.observableArrayList();
-        TrabajoRecepcionalRespuesta trabajosRecepcionalesBD, trabajoRecepcionalesDirector, trabajoRecepcionalesProfesor; 
-        if(esDirector && esProfesor){
-            
-        }else if(esDirector){
-            trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                 
-        }else if(esProfesor){
-            trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                                 
+        TrabajoRecepcionalRespuesta trabajosRecepcionalesBD = new TrabajoRecepcionalRespuesta(); 
+        if(usuarioAcademico!=null){
+            if(usuarioAcademico.isEsDirector() && usuarioAcademico.isEsProfesor()){
+                //trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioAcademico.getIdAcademico());
+                //HashSet <TrabajoRecepcional> hashSet = new HashSet<TrabajoRecepcional>(trabajosRecepcionalesBD.getTrabajosRecepcionales());
+                //ArrayList<TrabajoRecepcional> lista = new ArrayList<>(hashSet);
+                System.out.println("Es director y profesor");
+            }else if(usuarioAcademico.isEsDirector()){
+                trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                 
+            System.out.println("Eres Director");            
+            }else if(usuarioAcademico.isEsProfesor()){
+                trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                                 
+                System.out.println("Eres Profesor");            
+            }
         }else{    
             trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioEstudiante.getIdEstudiante());                 
-        }
-            //trabajosRecepcionalesBD1 = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioAcademico.getIdAcademico());         
-            //trabajosRecepcionalesBD2 = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());         
-            trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());         
-        /*    
-        if(esEstudiante){
-            //trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioAcademico.getIdAcademico());         
-        }else if (esProfesor){
-            //trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesProfesor(this.usuarioAcademico.getIdAcademico()); 
-        }
-        if(esDirector){
-            //trabajosRecepcionalesDirectorBD TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesDirector(this.usuarioAcademico.getIdAcademico());                         
+            System.out.println("Eres estudiante");
         }
         
-        if(esDirector && esProfesor){
-            trabajosRecepcionalesBD.getTrabajosRecepcionales().addAll(trabajosRecepcionalesBD1.getTrabajosRecepcionales());
-            Set <TrabajoRecepcional> hashSet = new HashSet<TrabajoRecepcional>(trabajosRecepcionalesBD.getTrabajosRecepcionales());
-            
-        }
-        */
         switch(trabajosRecepcionalesBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
@@ -114,13 +104,16 @@ public class FXMLActividadesAcademicoController implements Initializable {
     }
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante){
+        System.out.println(usuarioEstudiante.getIdEstudiante());
        this.usuarioEstudiante = usuarioEstudiante;
        cargarInformacionTrabajosRecepcionales();
     }
     
     public void inicializarInformacion(Academico usuarioAcademico){
        this.usuarioAcademico = usuarioAcademico;
+       bttCrearActividad.setVisible(false);
        cargarInformacionTrabajosRecepcionales();
+       
     }
 
     private void regresarMenuAcademico(){
@@ -158,16 +151,23 @@ public class FXMLActividadesAcademicoController implements Initializable {
         eliminarActividades();
         try{
             TrabajoRecepcional trabajoRecepcional = cmbBoxTrabajosRecepcionales.getSelectionModel().getSelectedItem();
-            if (trabajoRecepcional == null) {
+            if(trabajoRecepcional == null){
                 Utilidades.mostrarDialogoSimple("Error cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                                            
-            } else {
-                
+            }else{
                int idTrabajoRecepcional=trabajoRecepcional.getIdTrabajoRecepcional();
-               System.out.println(idTrabajoRecepcional);
-              cargarActividades(idTrabajoRecepcional);
+               System.out.println("Trabajo Recepcional selec"+idTrabajoRecepcional);
+               System.out.println("Trabajo Recepcional seleccionado es: "+idTrabajoRecepcional);
+               System.out.println("Trabajo Recepcional selec"+idTrabajoRecepcional);
+               System.out.println("Trabajo Recepcional selec"+idTrabajoRecepcional);
+               if(usuarioAcademico!=null){
+                   cargarActividadesAcademico(idTrabajoRecepcional);
+               }else{
+                   cargarActividadesEstudiante(idTrabajoRecepcional);
+               }
+               
             }
         }catch(NullPointerException e){
-                Utilidades.mostrarDialogoSimple("Error cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                            
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                            
         } 
     }
     
@@ -175,10 +175,30 @@ public class FXMLActividadesAcademicoController implements Initializable {
         vBoxListaActividades.getChildren().clear();
     }
     
-    private void cargarActividades(int idTrabajoRecepcional){
+    private void cargarActividadesAcademico(int idTrabajoRecepcional){
         trabajosRecepcionales.clear();
         cargarInformacionTrabajosRecepcionales();
         ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalAcademico(idTrabajoRecepcional);
+
+        switch(respuestaBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    mostrarActividades(respuestaBD.getActividades());
+                break;
+        }
+    }
+    
+    private void cargarActividadesEstudiante(int idTrabajoRecepcional){
+        trabajosRecepcionales.clear();
+        cargarInformacionTrabajosRecepcionales();
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalEstudiante(idTrabajoRecepcional, usuarioEstudiante.getIdEstudiante());
+
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
@@ -194,20 +214,38 @@ public class FXMLActividadesAcademicoController implements Initializable {
     }
     
     private void mostrarActividades(ArrayList <Actividad> actividades){
-        for (int i=0; i<actividades.size(); i++){
+        if(usuarioAcademico!=null){
+            //ACADEMICO
+            if(usuarioAcademico.isEsDirector() || usuarioAcademico.isEsProfesor()){
+            for (int i=0; i<actividades.size(); i++){
+                FXMLLoader accesoControlador = new FXMLLoader();
+                accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLActividadElemento.fxml"));
+                try{
+                    Pane pane = accesoControlador.load();
+                    FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
+                    elementoEnLista.inicializarActividadElementoAcademico(actividades.get(i), usuarioAcademico);
+                    vBoxListaActividades.getChildren().add(pane);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+            }
+        }else{
+            //ESTUDIANTE
+            for (int i=0; i<actividades.size(); i++){
             FXMLLoader accesoControlador = new FXMLLoader();
             accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLActividadElemento.fxml"));
             try{
-                Pane pane = accesoControlador.load();
-                FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
-                elementoEnLista.inicializarActividadElemento(actividades.get(i), usuarioAcademico);
-                vBoxListaActividades.getChildren().add(pane);
-            }catch(IOException e){
-                e.printStackTrace();
+                    Pane pane = accesoControlador.load();
+                    FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
+                    elementoEnLista.inicializarActividadElementoEstudiante(actividades.get(i), usuarioEstudiante);
+                    System.out.println("ID ESTUDIANTE Actividades: "+this.usuarioEstudiante.getIdEstudiante());
+                    vBoxListaActividades.getChildren().add(pane);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
             }
         }
-    
-    
     }
 
     @FXML
@@ -217,6 +255,7 @@ public class FXMLActividadesAcademicoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionActividad.fxml"));
             Parent vista = accesoControlador.load();
             FXMLCreacionActividadController creacionActividad = accesoControlador.getController();
+            creacionActividad.inicializarInformacionEstudiante(usuarioEstudiante,false, null); 
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Creacion de Actividad");
             escenarioBase.show();
@@ -227,7 +266,7 @@ public class FXMLActividadesAcademicoController implements Initializable {
 
     @FXML
     private void clicRegresar(MouseEvent event) {
-        if(esDirector){
+        if(usuarioAcademico.isEsDirector()){
             regresarMenuAcademico();
         }else{
             regresarMenuEstudiante();

@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -43,6 +44,10 @@ public class FXMLDetallesActividadController implements Initializable {
     private Label lblFechaInicio;
     @FXML
     private Label lblFechaFinal;
+    @FXML
+    private Button bttEditar;
+    @FXML
+    private Button bttEliminar;
 
     /**
      * Initializes the controller class.
@@ -52,12 +57,18 @@ public class FXMLDetallesActividadController implements Initializable {
         // 
     }    
 
-    @FXML
-    private void clicRegresarAnteproyectos(MouseEvent event) {
+    
+    public void inicializarInformacionAcademico(Academico usuarioAcademico, Actividad actividad){
+       this.usuarioAcademico = usuarioAcademico;
+       this.actividad=actividad;
+       cargarInformacionActividad();
+       bttEditar.setVisible(false);
+       bttEliminar.setVisible(false);
     }
     
-    public void inicializarInformacion(Academico usuarioAcademico, Actividad actividad){
-       this.usuarioAcademico = usuarioAcademico;
+    public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante, Actividad actividad){
+       this.usuarioEstudiante = usuarioEstudiante;
+       System.out.println("IDESTUDIANTE1: "+usuarioEstudiante.getIdEstudiante());
        this.actividad=actividad;
        cargarInformacionActividad();
     }
@@ -86,8 +97,8 @@ public class FXMLDetallesActividadController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionActividad.fxml"));
             Parent vista = accesoControlador.load();
             FXMLCreacionActividadController creacionActividad = accesoControlador.getController();
-            boolean esEdicion=true;        
-            creacionActividad.inicializarInformacion(usuarioEstudiante, esEdicion, actividad);
+            boolean esEdicion=true;    
+            creacionActividad.inicializarInformacionEstudiante(usuarioEstudiante, esEdicion, actividad);
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Creacion de Actividad");
             escenarioBase.show();
@@ -98,6 +109,15 @@ public class FXMLDetallesActividadController implements Initializable {
 
     @FXML
     private void clicEliminar(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void clicRegresar(MouseEvent event) {
+        
+        //RegresarAcademico
+        
+        //RegresarEstudiante
     }
     
 }

@@ -63,11 +63,12 @@ public class FXMLCreacionActividadController implements Initializable {
         dtPickerFechaInicio.setEditable(false);
     }   
     
-    public void inicializarInformacion(Estudiante usuarioEstudiante, boolean esEdicion, Actividad actividadEdicion){
+    public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante, boolean esEdicion, Actividad actividadEdicion){
         this.usuarioEstudiante=usuarioEstudiante;
+        System.out.println(this.usuarioEstudiante.getIdEstudiante());
+        System.out.println(usuarioEstudiante.getIdEstudiante());
         this.esEdicion=esEdicion;
         this.actividad=actividadEdicion;
-        System.out.println(actividad.getIdActividad());
         dtPickerFechaFin.setEditable(false);
         dtPickerFechaInicio.setEditable(false);
         if(esEdicion){
@@ -84,6 +85,7 @@ public class FXMLCreacionActividadController implements Initializable {
         String fechaFinalString = actividad.getFechaFinal();
         LocalDate fechaF = LocalDate.parse(fechaFinalString);
         dtPickerFechaFin.setValue(fechaF);
+        lblTitulo.setText("Modificacíon de Actividad");
     }
 
     @FXML
@@ -94,9 +96,9 @@ public class FXMLCreacionActividadController implements Initializable {
     private void cerrarVentana(){
         Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
         try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadesAcademico.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividades.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLActividadesAcademicoController Actividades = accesoControlador.getController();
+            FXMLActividadesController Actividades = accesoControlador.getController();
             Actividades.inicializarInformacionEstudiante(usuarioEstudiante); 
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Actividades");
