@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
+import javafxsspger.modelo.pojo.Estudiante;
 
 /**
  * FXML Controller class
@@ -37,6 +38,8 @@ public class FXMLActividadElementoController implements Initializable {
     @FXML
     private Label lblFechaFinal;
 
+    private Estudiante usuarioEstudiante;
+    
     private Academico usuarioAcademico;
     private int idActividad;
     private Actividad actividadActual;
@@ -49,7 +52,7 @@ public class FXMLActividadElementoController implements Initializable {
         // TODO
     }    
     
-    public void inicializarActividadElemento(Actividad actividadElemento, Academico usuarioAcademico){
+    public void inicializarActividadElementoAcademico(Actividad actividadElemento, Academico usuarioAcademico){
         this.actividadActual=actividadElemento;
         this.usuarioAcademico=usuarioAcademico;
         this.idActividad=actividadElemento.getIdActividad();
@@ -59,22 +62,55 @@ public class FXMLActividadElementoController implements Initializable {
         lblFechaFinal.setText(actividadElemento.getFechaFinal());
     }
     
+    public void inicializarActividadElementoEstudiante(Actividad actividadElemento, Estudiante usuarioEstudiante){
+        this.actividadActual=actividadElemento;
+        this.usuarioEstudiante=usuarioEstudiante;
+        this.idActividad=actividadElemento.getIdActividad();
+        lblTituloActividad.setText(actividadElemento.getTitulo());
+        lblNombreEstudiante.setText(actividadElemento.getNombreEstudiante()+" "+actividadElemento.getApellidoPaternoEstudiante()+" "+actividadElemento.getApellidoMaternoEstudiante());
+        lblFechaInicio.setText(actividadElemento.getFechaInicio());
+        lblFechaFinal.setText(actividadElemento.getFechaFinal());
+    }
+    
     @FXML
     private void clicVerDetallesActividad(ActionEvent event) {
-        Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLDetallesActividadController actividad = accesoControlador.getController();
+        if(usuarioAcademico!=null){
+            if(usuarioAcademico.isEsDirector()){
+                Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
+                try {
+                    FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
+                    Parent vista = accesoControlador.load();
+                    FXMLDetallesActividadController actividad = accesoControlador.getController();
             
-            actividad.inicializarInformacion(usuarioAcademico, actividadActual);
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Actividades");
-            escenarioBase.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+                    actividad.inicializarInformacionAcademico(usuarioAcademico, actividadActual);
+                    escenarioBase.setScene(new Scene (vista));
+                    escenarioBase.setTitle("Actividades");
+                    escenarioBase.show();
+                }catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }else if(usuarioAcademico.isEsProfesor()){
+        //DESABILITAR BOTONE, TODO:
+            
+            
+            
+            
+            }
+        }else{
+            Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
+            try {
+                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
+                Parent vista = accesoControlador.load();
+                FXMLDetallesActividadController actividad = accesoControlador.getController();
+            
+                actividad.inicializarInformacionEstudiante(usuarioEstudiante, actividadActual);
+                escenarioBase.setScene(new Scene (vista));
+                escenarioBase.setTitle("Actividades");
+                escenarioBase.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
-        
         
     }
     

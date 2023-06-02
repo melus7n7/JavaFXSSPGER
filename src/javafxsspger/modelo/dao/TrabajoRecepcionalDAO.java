@@ -90,4 +90,57 @@ public class TrabajoRecepcionalDAO {
         return respuesta;
     }
     
+    public static TrabajoRecepcional crearTrabajoRecepcional(int idAnteproyecto){
+        TrabajoRecepcional respuesta = new TrabajoRecepcional();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String sentencia = "INSERT INTO trabajorecepcional (titulo, descripcion, fechaCreacion, fechaAprobacion, noEstudiantesMaximos, noEstudiantesAsignados, " +
+                    " documento, nombreDocumento, idAnteproyecto, idTipoAnteproyecto, idCuerpoAcademico, idLGAC, idEstado) " +
+                    "SELECT titulo, descripcion, fechaCreacion, fechaAprobacion, noEstudiantesMaximos, noEstudiantesAsignados, " +
+                    "documento, nombreDocumento, idAnteproyecto, idTipoAnteproyecto, idCuerpoAcademico, idLGAC, ? FROM anteproyecto " +
+                    "WHERE idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt (1, Constantes.EN_DESARROLLO);
+                prepararSentencia.setInt (2, idAnteproyecto);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta.setCodigoRespuesta((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);
+                
+                String consulta = "SELECT MAX(idTrabajoRecepcional) AS idTrabajoRecepcional FROM trabajoRecepcional;";
+                PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararConsulta.executeQuery();
+                if(resultado.next()){
+                    respuesta.setIdTrabajoRecepcional(resultado.getInt("idTrabajoRecepcional"));
+                }
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            }
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static int eliminarTrabajoRecepcional(int idAnteproyecto){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String sentencia = "DELETE FROM trabajorecepcional WHERE idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt (1, idAnteproyecto);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas >= 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
 }

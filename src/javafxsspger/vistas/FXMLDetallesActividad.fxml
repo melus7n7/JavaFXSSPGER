@@ -15,7 +15,7 @@
             <Font name="Trebuchet MS Bold" size="50.0" />
          </font>
       </Label>
-      <ImageView fitHeight="79.0" fitWidth="81.0" layoutX="67.0" layoutY="16.0" onMouseClicked="#clicRegresarAnteproyectos" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+      <ImageView fitHeight="79.0" fitWidth="81.0" layoutX="67.0" layoutY="16.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
          <image>
             <Image url="@../recursos/flecha.png" />
          </image>
@@ -85,12 +85,12 @@
             <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="698.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="34.0" prefWidth="105.0" style="-fx-background-color: black;" text="Editar" textFill="WHITE">
+      <Button fx:id="bttEditar" layoutX="698.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="34.0" prefWidth="105.0" style="-fx-background-color: black;" text="Editar" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="810.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="34.0" prefWidth="117.0" style="-fx-background-color: black;" text="Eliminar" textFill="WHITE">
+      <Button fx:id="bttEliminar" layoutX="810.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="34.0" prefWidth="117.0" style="-fx-background-color: black;" text="Eliminar" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLAnteproyectosParaAsignarController">
+   <children>
+      <ScrollPane layoutX="32.0" layoutY="104.0" prefHeight="513.0" prefWidth="1036.0">
+         <content>
+            <VBox fx:id="vBoxListaAnteproyectos" prefHeight="512.0" prefWidth="1020.0" />
+         </content>
+      </ScrollPane>
+      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="28.0" layoutY="36.0" onMouseClicked="#clicRegresarMenuPrincipal" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblTitulo" layoutX="83.0" layoutY="30.0" text="Asignación de un estudiante">
+         <font>
+            <Font name="Trebuchet MS Bold" size="50.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

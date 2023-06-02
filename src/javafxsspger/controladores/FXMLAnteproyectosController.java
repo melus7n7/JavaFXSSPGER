@@ -95,7 +95,7 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLCreacionAnteproyectoController creacionAnteproyecto = accesoControlador.getController();
-            creacionAnteproyecto.inicializarPantalla(usuarioAcademico);
+            creacionAnteproyecto.inicializarPantalla(usuarioAcademico,this);
             
             Stage escenarioBase = new Stage();
             escenarioBase.setScene(new Scene (vista));
@@ -124,8 +124,18 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     }
 
     @Override
-    public void notificarCargarAnteproyectosPorCorregir() {
-        cargarElementosPorCorregir();
+    public void notificarCargarAnteproyectos() {
+        switch(numeroPantalla){
+            case Constantes.ES_POR_CORREGIR:
+                cargarElementosPorCorregir();
+                break;
+            case Constantes.ES_PROPIO:
+                cargarElementosPropios();
+                break;
+            case Constantes.ES_PUBLICADO:
+                cargarElementosPublicados();
+                break;
+        }
     }
     
     public void inicializarInformacion(Academico usuarioAcademico){
@@ -207,6 +217,6 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
             }
         }
     }
-    
+
     
 }

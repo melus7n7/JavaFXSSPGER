@@ -6,11 +6,18 @@
 */
 package javafxsspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.EstudianteDAO;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.Usuario;
@@ -43,6 +50,23 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
     public void inicializarInformacionConEstudiante(Estudiante usuarioEstudiante){
         this.usuarioEstudiante = usuarioEstudiante;
         lblSaludo.setText("Hola estudiante " + this.usuarioEstudiante.getNombre());
+    }
+
+    @FXML
+    private void clicActividades(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividades.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLActividadesController actividades = accesoControlador.getController();
+            System.out.println(usuarioEstudiante.getIdEstudiante());
+            actividades.inicializarInformacionEstudiante(usuarioEstudiante); 
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Actividades");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLAvancesController">
+   <children>
+      <Button alignment="CENTER" layoutX="850.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicCrearActividad" prefHeight="50.0" prefWidth="218.0" style="-fx-background-color: black;" text="Crear Actividad" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="cmbBoxTrabajosRecepcionales" layoutX="184.0" layoutY="100.0" prefHeight="38.0" prefWidth="335.0" />
+      <Button alignment="CENTER" layoutX="43.0" layoutY="100.0" mnemonicParsing="false" onAction="#clicMostrarActividades" prefHeight="38.0" prefWidth="112.0" style="-fx-background-color: black;" text="Mostrar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <ScrollPane layoutX="43.0" layoutY="168.0" prefHeight="461.0" prefWidth="1032.0">
+         <content>
+            <VBox fx:id="vBoxListaActividades" prefHeight="199.0" prefWidth="1029.0" />
+         </content>
+      </ScrollPane>
+      <Label fx:id="lblTitulo" layoutX="130.0" layoutY="27.0" text="Avances">
+         <font>
+            <Font name="Trebuchet MS Bold" size="50.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="72.0" fitWidth="89.0" layoutX="42.0" layoutY="20.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

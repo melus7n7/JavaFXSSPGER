@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.AcademicoDAO;
@@ -42,9 +43,9 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     private void clicActividades(ActionEvent event) {
         Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
         try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadesAcademico.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividades.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLActividadesAcademicoController actividades = accesoControlador.getController();
+            FXMLActividadesController actividades = accesoControlador.getController();
             
             actividades.inicializarInformacion(usuarioAcademico);
             escenarioBase.setScene(new Scene (vista));
@@ -75,9 +76,26 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
             ex.printStackTrace();
         }
     }
+    
+    @FXML
+    private void clicTrabajosRecepcionales(ActionEvent event) {
+    }
 
     @FXML
     private void clicAsignarEstudiante(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectosParaAsignar.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAnteproyectosParaAsignarController anteproyectos = accesoControlador.getController();
+            anteproyectos.inicializarInformacion(usuarioAcademico);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Asignación Anteproyectos");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -104,7 +122,5 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
         lblNombreAcademico.setText("Hola académico " + this.usuarioAcademico.getNombre());
     }
 
-    @FXML
-    private void clicTrabajosRecepcionales(ActionEvent event) {
-    }
+    
 }

@@ -16,7 +16,7 @@
       </Label>
       <Label fx:id="lblNombreAnteproyecto" layoutX="21.0" layoutY="31.0" prefHeight="46.0" prefWidth="373.0" text="Mucho Texto" wrapText="true">
          <font>
-            <Font name="SansSerif Regular" size="15.0" />
+            <Font name="SansSerif Regular" size="13.0" />
          </font>
       </Label>
       <Label fx:id="lblNombreDirectorEtiqueta" layoutX="406.0" layoutY="16.0" text="Nombre del director:">
@@ -29,20 +29,25 @@
             <Font name="SansSerif Bold Italic" size="15.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="862.0" layoutY="28.0" mnemonicParsing="false" onAction="#clicVerMasAnteproyecto" prefHeight="33.0" prefWidth="131.0" style="-fx-background-color: black;" text="Ver más" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="bttVerMas" alignment="CENTER" contentDisplay="CENTER" layoutX="862.0" layoutY="28.0" mnemonicParsing="false" onAction="#clicVerMasAnteproyecto" prefHeight="33.0" prefWidth="131.0" style="-fx-background-color: black;" text="Ver más" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Button>
       <Label fx:id="lblNombreDirector" alignment="CENTER" layoutX="361.0" layoutY="38.0" prefHeight="33.0" prefWidth="246.0" text="Mucho Texto" wrapText="true">
          <font>
-            <Font name="SansSerif Regular" size="15.0" />
+            <Font name="SansSerif Regular" size="13.0" />
          </font>
       </Label>
       <Label fx:id="lblFecha" alignment="CENTER" layoutX="607.0" layoutY="43.0" prefHeight="23.0" prefWidth="218.0" text="Mucho Texto" wrapText="true">
          <font>
-            <Font name="SansSerif Regular" size="15.0" />
+            <Font name="SansSerif Regular" size="13.0" />
          </font>
       </Label>
+      <Button fx:id="bttAsignar" alignment="CENTER" contentDisplay="CENTER" layoutX="862.0" layoutY="28.0" mnemonicParsing="false" onAction="#clicAsignarEstudiante" prefHeight="33.0" prefWidth="131.0" style="-fx-background-color: black;" text="Asignar" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

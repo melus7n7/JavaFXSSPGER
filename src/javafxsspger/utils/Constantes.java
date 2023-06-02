@@ -25,4 +25,5 @@ public class Constantes {
     public static final int ES_POR_CORREGIR = 1;
     public static final int ES_PROPIO = 2;
     public static final int ES_PUBLICADO = 3;
+    public static final int ES_ASIGNAR_ESTUDIANTES = 4;
 }
