@@ -80,7 +80,7 @@ public class FXMLActividadesEstudianteController implements Initializable {
             FXMLCreacionActividadController creacionActividad = accesoControlador.getController();
             boolean esEdicion=false;
             Actividad actividad=null;
-            creacionActividad.inicializarInformacion(usuarioEstudiante, esEdicion,actividad);
+            //creacionActividad.inicializarInformacion(usuarioEstudiante, esEdicion,actividad);
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Creacion de Actividad");
             escenarioBase.show();;

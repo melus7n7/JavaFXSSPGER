@@ -65,6 +65,50 @@ public class ActividadDAO {
         return respuesta;
     }
     
+    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcionalEstudiante(int idTrabajoRecepcional, int idEstudiante){
+        ActividadRespuesta respuesta = new ActividadRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String consulta = "SELECT Usuario.nombreUsuario, Usuario.apellidoPaterno, Usuario.apellidoMaterno, Actividad.idActividad, Actividad.titulo,Actividad.descripcion, " +
+                "Actividad.fechaCreacion,Actividad.fechaInicio,Actividad.fechaFinal " +
+                "from Usuario " +
+                "INNER JOIN Estudiante ON Usuario.idUsuario=Estudiante.idUsuario " +
+                "INNER JOIN Actividad ON Estudiante.idEstudiante=Actividad.idEstudiante " +
+                "INNER JOIN TrabajoRecepcional ON Actividad.idTrabajoRecepcional=TrabajoRecepcional.idTrabajoRecepcional " +
+                "where TrabajoRecepcional.idTrabajoRecepcional=? AND Estudiante.idEstudiante=? ;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idTrabajoRecepcional);
+                prepararSentencia.setInt(2, idEstudiante); 
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Actividad> ActividadesConsulta = new ArrayList();
+                while(resultado.next()){
+                    Actividad actividad = new Actividad();
+                    actividad.setNombreEstudiante(resultado.getString("nombreUsuario"));
+                    actividad.setApellidoPaternoEstudiante(resultado.getString("apellidoPaterno"));
+                    actividad.setApellidoMaternoEstudiante(resultado.getString("apellidoMaterno"));
+                    actividad.setIdActividad(resultado.getInt("idActividad"));
+                    actividad.setTitulo(resultado.getString("titulo"));
+                    actividad.setDescripcion(resultado.getString("descripcion"));
+                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
+                    actividad.setFechaFinal(resultado.getString("fechaFinal"));
+                    ActividadesConsulta.add(actividad);
+                }
+                respuesta.setActividades(ActividadesConsulta);
+                conexionBD.close();
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                e.printStackTrace();
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    
     public static int guardarActividad(Actividad actividadNueva){
             int respuesta;
             Connection conexionBD = ConexionBD.abrirConexionBD();
