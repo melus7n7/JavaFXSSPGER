@@ -125,12 +125,9 @@ public class FXMLCreacionActividadController implements Initializable {
             System.out.println(fechaInicio+""+fechaFinal);
             int idEstudiante=usuarioEstudiante.getIdEstudiante(); //MODIFICAR
             int idTrabajoRecepcional=usuarioEstudiante.getIdTrabajoRecepcional(); //MODIFICAR
-            try{
-                SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-dd-MM");
-                Date fechaI = null;
-                fechaI = formatoFecha.parse(fechaInicio);
-                Date fechaF = null;
-                fechaF = formatoFecha.parse(fechaFinal);
+            
+                LocalDate fechaI = dtPickerFechaInicio.getValue();
+                LocalDate fechaF = dtPickerFechaFin.getValue();
                 Actividad actividadValidada = new Actividad();
                 if(esEdicion){
                     actividadValidada=actividad;
@@ -151,9 +148,7 @@ public class FXMLCreacionActividadController implements Initializable {
                         registrarActividad(actividadValidada);
                     }
                 }
-            }catch(ParseException e){
-                System.out.println("Error al convertir la fecha.");
-            }
+            
         }
     }
     
