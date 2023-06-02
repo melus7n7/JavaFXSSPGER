@@ -34,10 +34,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
+import javafxsspger.modelo.dao.EncargadosTrabajoRecepcionalDAO;
 import javafxsspger.modelo.dao.EstudianteDAO;
+import javafxsspger.modelo.dao.TrabajoRecepcionalDAO;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.EstudianteRespuesta;
+import javafxsspger.modelo.pojo.TrabajoRecepcional;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
@@ -270,6 +273,66 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
+                if(anteproyectoAsignar.getNoEstudiantesAsignados() == 1 && estudiantesAsignados.isEmpty()){
+                    crearTrabajoRecepcional();
+                }
+                if(anteproyectoAsignar.getNoEstudiantesAsignados() == 0 && estudiantesAsignados.size() == 1){
+                    eliminarTrabajoRecepcional();
+                }
+                break;
+        }
+    }
+    
+    private void crearTrabajoRecepcional(){
+        TrabajoRecepcional respuesta = TrabajoRecepcionalDAO.crearTrabajoRecepcional(anteproyectoAsignar.getIdAnteproyecto());
+        switch(respuesta.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al crear el trabajo recepcional", 
+                        "Hubo un error al crear el trabajo recepcional, por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                asignarEncargados(respuesta.getIdTrabajoRecepcional());
+                break;
+        }
+    }
+    
+    private void asignarEncargados(int idTrabajoRecepcional){
+        int respuesta = EncargadosTrabajoRecepcionalDAO.guardarEncargadosTrabajoRecepcional(anteproyectoAsignar.getIdAnteproyecto(), idTrabajoRecepcional);
+        switch(respuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al asignar directores trabajo recepcional", 
+                        "Hubo un error al asignar directores al trabajo recepcional, por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                System.out.println("Añadido co");
+                break;
+        }
+    }
+    
+    private void eliminarTrabajoRecepcional(){
+        int respuesta = TrabajoRecepcionalDAO.eliminarTrabajoRecepcional(anteproyectoAsignar.getIdAnteproyecto());
+        switch(respuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
+                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al eliminar trabajo recepcional", 
+                        "Hubo un error al eliminar el trabajo recepcional, por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                System.out.println("Eliminado");
                 break;
         }
     }

@@ -8,12 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLAnteproyectosParaAsignarController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLAnteproyectosParaAsignarController">
    <children>
       <ScrollPane layoutX="32.0" layoutY="104.0" prefHeight="513.0" prefWidth="1036.0">
          <content>
-            <VBox fx:id="vBoxListaAnteproyectos" prefHeight="511.0" prefWidth="1020.0" />
+            <VBox fx:id="vBoxListaAnteproyectos" prefHeight="512.0" prefWidth="1020.0" />
          </content>
       </ScrollPane>
       <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="28.0" layoutY="36.0" onMouseClicked="#clicRegresarMenuPrincipal" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
