@@ -65,32 +65,27 @@
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblFechaInicio" alignment="TOP_LEFT" layoutX="73.0" layoutY="580.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="274.0" style="-fx-background-color: white; -fx-padding: 5;" text="Fecha Inicio" wrapText="true">
+      <Label fx:id="lblFechaInicio" alignment="TOP_LEFT" layoutX="73.0" layoutY="580.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="188.0" style="-fx-background-color: white; -fx-padding: 5;" text="Fecha Inicio" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblFechaFinal" alignment="TOP_LEFT" layoutX="411.0" layoutY="582.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="274.0" style="-fx-background-color: white; -fx-padding: 5;" text="Fecha final" wrapText="true">
+      <Label fx:id="lblFechaFinal" alignment="TOP_LEFT" layoutX="313.0" layoutY="578.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="188.0" style="-fx-background-color: white; -fx-padding: 5;" text="Fecha final" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="407.0" layoutY="549.0" text="Fecha final">
+      <Label layoutX="309.0" layoutY="545.0" text="Fecha final">
          <font>
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="934.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicVerEntrega" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: black;" text="Ver Entrega" textFill="WHITE">
+      <Button layoutX="845.0" layoutY="586.0" mnemonicParsing="false" onAction="#clicVerEntrega" prefHeight="34.0" prefWidth="163.0" style="-fx-background-color: black;" text="Ver Entrega" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="bttEditar" layoutX="698.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="34.0" prefWidth="105.0" style="-fx-background-color: black;" text="Editar" textFill="WHITE">
-         <font>
-            <Font name="SansSerif Regular" size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="bttEliminar" layoutX="810.0" layoutY="590.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="34.0" prefWidth="117.0" style="-fx-background-color: black;" text="Eliminar" textFill="WHITE">
+      <Button fx:id="bttEditar" layoutX="612.0" layoutY="588.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="34.0" prefWidth="147.0" style="-fx-background-color: black;" text="Editar" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>

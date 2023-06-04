@@ -84,13 +84,13 @@ public class FXMLActividadElementoController implements Initializable {
             
                     actividad.inicializarInformacionAcademico(usuarioAcademico, actividadActual);
                     escenarioBase.setScene(new Scene (vista));
-                    escenarioBase.setTitle("Actividades");
+                    escenarioBase.setTitle("Detalles de Actividad");
                     escenarioBase.show();
                 }catch (IOException ex) {
                     ex.printStackTrace();
                 }
-            }else if(usuarioAcademico.isEsProfesor()){
-        //DESABILITAR BOTONE, TODO:
+            }else if(usuarioAcademico.isEsProfesor() && usuarioAcademico.isEsDirector()==false){
+        
             
             
             
@@ -105,7 +105,7 @@ public class FXMLActividadElementoController implements Initializable {
             
                 actividad.inicializarInformacionEstudiante(usuarioEstudiante, actividadActual);
                 escenarioBase.setScene(new Scene (vista));
-                escenarioBase.setTitle("Actividades");
+                escenarioBase.setTitle("Detalles de Actividad");
                 escenarioBase.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
