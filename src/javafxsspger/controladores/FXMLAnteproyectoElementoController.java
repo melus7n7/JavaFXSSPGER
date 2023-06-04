@@ -69,23 +69,26 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         
         switch(this.numeroPantalla){
             case Constantes.ES_PUBLICADO:
-                lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+                lblFecha.setText(anteproyectoElemento.getFechaAprobacion() + " ");
                 break;
             case Constantes.ES_POR_CORREGIR:
                 lblFechaEtiqueta.setText("Fecha creación:");
-                lblFecha.setText(anteproyectoElemento.getFechaCreacion());
+                lblFecha.setText(anteproyectoElemento.getFechaCreacion() + " ");
                 break;
             case Constantes.ES_PROPIO:
-                lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+                lblFecha.setText(anteproyectoElemento.getFechaAprobacion() + " ");
                 lblNombreDirectorEtiqueta.setText("Fecha creación:");
-                lblNombreDirector.setText(anteproyectoElemento.getFechaCreacion());
+                lblNombreDirector.setText(anteproyectoElemento.getFechaCreacion() + " ");
                 break;
             case Constantes.ES_ASIGNAR_ESTUDIANTES:
-                lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+                lblFecha.setText(anteproyectoElemento.getFechaAprobacion() + " ");
                 lblNombreDirector.setVisible(false);
                 lblNombreDirectorEtiqueta.setVisible(false);
                 bttVerMas.setVisible(false);
                 bttAsignar.setVisible(true);
+        }
+        if(lblFecha.getText().equals("null ")){
+            lblFecha.setText("Pendiente por aprobación");
         }
     }
 

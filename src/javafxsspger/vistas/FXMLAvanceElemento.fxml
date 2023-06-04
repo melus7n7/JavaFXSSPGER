@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="88.0" prefWidth="996.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLAvanceElementoController">
+   <children>
+      <Label layoutX="20.0" layoutY="14.0" text="Nombre del avance:">
+         <font>
+            <Font name="SansSerif Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNombreAvance" layoutX="32.0" layoutY="30.0" prefHeight="43.0" prefWidth="523.0" text="Avance" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="626.0" layoutY="14.0" text="Fecha creación:">
+         <font>
+            <Font name="SansSerif Italic" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="803.0" layoutY="23.0" mnemonicParsing="false" onAction="#clicVerDetalle" prefHeight="43.0" prefWidth="145.0" style="-fx-background-color: black;" text="Ver detalle" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblFechaCreacion" alignment="CENTER" layoutX="571.0" layoutY="35.0" prefHeight="31.0" prefWidth="209.0" text="Fecha" textAlignment="CENTER">
+         <font>
+            <Font name="SansSerif Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

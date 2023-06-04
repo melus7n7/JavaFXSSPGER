@@ -151,7 +151,7 @@ public class AnteproyectoDAO {
         if(conexionBD != null){
             try{
                 String consulta = "SELECT encargadosanteproyecto.idAnteproyecto, " +
-                    "anteproyecto.titulo, anteproyecto.fechaCreacion, anteproyecto.fechaAprobacion " +
+                    "anteproyecto.titulo, anteproyecto.fechaCreacion, anteproyecto.fechaAprobacion, anteproyecto.idEstado " +
                     "FROM sspger.encargadosanteproyecto " +
                     "INNER JOIN anteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
                     "WHERE encargadosanteproyecto.idAcademico = ? AND noEstudiantesAsignados = 0";
@@ -165,6 +165,7 @@ public class AnteproyectoDAO {
                     anteproyecto.setFechaCreacion(resultado.getString("fechaCreacion"));
                     anteproyecto.setFechaAprobacion(resultado.getString("fechaAprobacion"));
                     anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                    anteproyecto.setIdEstado(resultado.getInt("idEstado"));
                     anteproyectosConsulta.add(anteproyecto);
                 }
                 respuesta.setAnteproyectos(anteproyectosConsulta);
@@ -187,7 +188,7 @@ public class AnteproyectoDAO {
             try{
                 String consulta = "SELECT anteproyecto.idAnteproyecto, anteproyecto.titulo, anteproyecto.descripcion, anteproyecto.fechaCreacion, anteproyecto.fechaAprobacion, " +
                     "anteproyecto.noEstudiantesMaximos, anteproyecto.documento, anteproyecto.nombreDocumento, " +
-                    "anteproyecto.idCuerpoAcademico, anteproyecto.idTipoAnteproyecto, anteproyecto.idLGAC, " +
+                    "anteproyecto.idCuerpoAcademico, anteproyecto.idTipoAnteproyecto, anteproyecto.idLGAC, anteproyecto.idEstado, " +
                     "usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno, " +
                     "cuerpoacademico.nombre AS nombreCA, tipoanteproyecto.tipoanteproyecto, lgac.nombre AS nombreLGAC " +
                     "FROM sspger.anteproyecto " +
@@ -222,6 +223,7 @@ public class AnteproyectoDAO {
                     anteproyectoRespuesta.setNombreLGAC(resultado.getString("nombreLGAC"));
                     
                     anteproyectoRespuesta.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                    anteproyectoRespuesta.setIdEstado(resultado.getInt("idEstado"));
                     
                 }
                 

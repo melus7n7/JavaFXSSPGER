@@ -23,7 +23,7 @@
       </Button>
       <ScrollPane layoutX="43.0" layoutY="168.0" prefHeight="461.0" prefWidth="1032.0">
          <content>
-            <VBox fx:id="vBoxListaActividades" prefHeight="199.0" prefWidth="1029.0" />
+            <VBox fx:id="vBoxListaAvances" prefHeight="467.0" prefWidth="1016.0" />
          </content>
       </ScrollPane>
       <Label fx:id="lblTitulo" layoutX="130.0" layoutY="27.0" text="Avances">

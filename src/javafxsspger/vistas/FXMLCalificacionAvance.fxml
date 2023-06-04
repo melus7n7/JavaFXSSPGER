@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLCalificacionAvanceController">
+   <children>
+      <Label layoutX="176.0" layoutY="46.0" text="Label">
+         <font>
+            <Font name="Trebuchet MS Bold" size="55.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="94.0" fitWidth="104.0" layoutX="48.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+      <TextArea layoutX="116.0" layoutY="170.0" prefHeight="200.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>

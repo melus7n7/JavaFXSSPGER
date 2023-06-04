@@ -66,7 +66,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     @FXML
     private Label lblFechaEtiqueta;
     @FXML
-    private Button bttModificarAnteproyecto;
+    private Button bttModificar;
     
     
     @Override
@@ -84,7 +84,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
                 bttIniciarProcesoValidacion.setVisible(true);
                 break;
             case Constantes.ES_PROPIO:
-                bttModificarAnteproyecto.setVisible(true);
+                bttModificar.setVisible(true);
                 break;
         }
         cargarElemento();
@@ -127,8 +127,9 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
                 lblFecha.setText(anteproyectoRespuesta.getFechaCreacion());
                 break;
         }
-        if(anteproyectoRespuesta.getIdEstado() != Constantes.APROBADO){
-            bttModificarAnteproyecto.setVisible(false);
+        if(anteproyectoRespuesta.getIdEstado() == Constantes.APROBADO){
+            System.out.println("ESTA EN " + anteproyectoRespuesta.getIdEstado() );
+            bttModificar.setVisible(false);
         }
     }
 

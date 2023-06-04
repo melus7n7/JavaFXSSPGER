@@ -131,7 +131,7 @@
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="bttModificarAnteproyecto" layoutX="753.0" layoutY="17.0" mnemonicParsing="false" onAction="#clicModificarAnteproyecto" prefHeight="34.0" prefWidth="266.0" style="-fx-background-color: black;" text="Modificar anteproyecto" textFill="WHITE" visible="false">
+      <Button fx:id="bttModificar" layoutX="753.0" layoutY="17.0" mnemonicParsing="false" onAction="#clicModificarAnteproyecto" prefHeight="34.0" prefWidth="266.0" style="-fx-background-color: black;" text="Modificar anteproyecto" textFill="WHITE" visible="false">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>

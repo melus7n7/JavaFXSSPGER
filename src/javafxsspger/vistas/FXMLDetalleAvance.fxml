@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLDetalleAvanceController">
+   <children>
+      <Button fx:id="bttEditar" layoutX="872.0" layoutY="578.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="34.0" prefWidth="161.0" style="-fx-background-color: black;" text="Editar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblFechaInicio" alignment="CENTER" contentDisplay="CENTER" layoutX="621.0" layoutY="61.0" prefHeight="23.0" prefWidth="161.0" style="-fx-padding: 5; -fx-background-color: white;" text="Fecha Inicio" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaEtiqueta" layoutX="646.0" layoutY="32.0" text="Fecha Inicio:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="283.0" layoutY="460.0" prefHeight="34.0" prefWidth="237.0" text="Porcentaje Completado: " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCalificacion" alignment="CENTER" layoutX="79.0" layoutY="495.0" prefHeight="31.0" prefWidth="172.0" style="-fx-padding: 5; -fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="109.0" layoutY="465.0" text="Calificación: ">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="213.0" text="Descripción del avance:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTitulo" alignment="TOP_LEFT" layoutX="67.0" layoutY="132.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="61.0" prefWidth="462.0" style="-fx-background-color: white; -fx-padding: 5;" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="105.0" text="Título:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="163.0" layoutY="27.0" text="Detalle Avance">
+         <font>
+            <Font name="Trebuchet MS Bold" size="50.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="79.0" fitWidth="81.0" layoutX="67.0" layoutY="16.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblFechaEtiqueta1" layoutX="906.0" layoutY="32.0" text="Fecha Fin:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaFin" alignment="CENTER" layoutX="871.0" layoutY="61.0" prefHeight="23.0" prefWidth="161.0" style="-fx-padding: 5; -fx-background-color: white;" text="Fecha Fin" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDescripcion" alignment="TOP_LEFT" layoutX="67.0" layoutY="242.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="201.0" prefWidth="465.0" style="-fx-background-color: white; -fx-padding: 5;" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNivelSatisfaccion" alignment="CENTER" layoutX="67.0" layoutY="571.0" prefHeight="31.0" prefWidth="465.0" style="-fx-padding: 5; -fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="567.0" layoutY="126.0" prefHeight="433.0" prefWidth="499.0">
+         <content>
+            <VBox fx:id="vBoxListaActividades" prefHeight="440.0" prefWidth="484.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="570.0" layoutY="104.0" text="Actividades:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="bttEliminar" layoutX="648.0" layoutY="578.0" mnemonicParsing="false" onAction="#clicEliminarAvance" prefHeight="34.0" prefWidth="161.0" style="-fx-background-color: black;" text="Eliminar Avance" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="193.0" layoutY="536.0" text="Nivel de satisfacción: ">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblPorcentaje" alignment="CENTER" layoutX="315.0" layoutY="495.0" prefHeight="31.0" prefWidth="172.0" style="-fx-padding: 5; -fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="bttCalificar" layoutX="757.0" layoutY="578.0" mnemonicParsing="false" onAction="#clicCalificarAvance" prefHeight="34.0" prefWidth="161.0" style="-fx-background-color: black;" text="Calificar Avance" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

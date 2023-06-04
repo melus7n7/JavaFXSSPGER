@@ -24,7 +24,8 @@ public class Actividad {
     private String nombreEstudiante;
     private String apellidoPaternoEstudiante;
     private String apellidoMaternoEstudiante;
-
+    private boolean tieneEntrega;
+    
     public Actividad() {
     }
 
@@ -128,6 +129,14 @@ public class Actividad {
 
     public void setApellidoMaternoEstudiante(String apellidoMaternoEstudiante) {
         this.apellidoMaternoEstudiante = apellidoMaternoEstudiante;
+    }
+
+    public boolean isTieneEntrega() {
+        return tieneEntrega;
+    }
+
+    public void setTieneEntrega(boolean tieneEntrega) {
+        this.tieneEntrega = tieneEntrega;
     }
     
     

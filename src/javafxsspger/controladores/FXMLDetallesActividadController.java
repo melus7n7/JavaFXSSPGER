@@ -1,7 +1,9 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+*Autor: Montiel Salas Jacob
+*Fecha de creación: 03/06/2023
+*Fecha de modificación: 03/06/2023
+*Descripción: Controlador de la vista del detalle de un avance
+*/
 package javafxsspger.controladores;
 
 import java.io.IOException;
@@ -49,9 +51,6 @@ public class FXMLDetallesActividadController implements Initializable {
     @FXML
     private Button bttEliminar;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // 

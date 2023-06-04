@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 27/05/2023
-*Fecha de modificación: 27/05/2023
+*Fecha de modificación: 03/06/2023
 *Descripción: Controlador de la vista del menú principal del estudiante
 */
 package javafxsspger.controladores;
@@ -63,6 +63,22 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
             actividades.inicializarInformacionEstudiante(usuarioEstudiante); 
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Actividades");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void clicAvances(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAvances.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAvancesController actividades = accesoControlador.getController();
+            actividades.inicializarInformacionEstudiante(usuarioEstudiante); 
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Avances");
             escenarioBase.show();
         } catch (IOException ex) {
             ex.printStackTrace();
