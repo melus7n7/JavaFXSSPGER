@@ -60,7 +60,7 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
             Parent vista = accesoControlador.load();
             FXMLActividadesController actividades = accesoControlador.getController();
             
-            actividades.inicializarInformacion(usuarioAcademico);
+            actividades.inicializarInformacionAcademico(usuarioAcademico);
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Actividades");
             escenarioBase.show();
