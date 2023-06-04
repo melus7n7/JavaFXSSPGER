@@ -46,8 +46,6 @@ public class FXMLDetallesActividadController implements Initializable {
     private Label lblFechaFinal;
     @FXML
     private Button bttEditar;
-    @FXML
-    private Button bttEliminar;
 
     /**
      * Initializes the controller class.
@@ -63,7 +61,6 @@ public class FXMLDetallesActividadController implements Initializable {
        this.actividad=actividad;
        cargarInformacionActividad();
        bttEditar.setVisible(false);
-       bttEliminar.setVisible(false);
     }
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante, Actividad actividad){
@@ -80,7 +77,7 @@ public class FXMLDetallesActividadController implements Initializable {
         txtAreaActividad.setEditable(false);
         lblFechaInicio.setText(actividad.getFechaInicio());
         lblFechaFinal.setText(actividad.getFechaFinal());
-        lblFechaCreacion.setText(actividad.getFechaFinal());
+        lblFechaCreacion.setText(actividad.getFechaCreacion());
         
     }
 
@@ -107,17 +104,44 @@ public class FXMLDetallesActividadController implements Initializable {
         }
     }
 
-    @FXML
-    private void clicEliminar(ActionEvent event) {
-        
-    }
 
     @FXML
     private void clicRegresar(MouseEvent event) {
-        
-        //RegresarAcademico
-        
-        //RegresarEstudiante
+        if(usuarioAcademico!=null){
+            regresarActividadesAcademico();
+        }else{
+            regresarActividadesEstudiante();
+        }
+    }
+    
+    private void regresarActividadesAcademico(){
+        Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividades.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLActividadesController actividadesAcademico = accesoControlador.getController();
+            actividadesAcademico.inicializarInformacionAcademico(usuarioAcademico);
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Actividades");
+            escenarioBase.show();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    private void regresarActividadesEstudiante(){
+        Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividades.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLActividadesController actividadesEstudiante = accesoControlador.getController();
+            actividadesEstudiante.inicializarInformacionEstudiante(usuarioEstudiante);
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Actividades");
+            escenarioBase.show();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
     }
     
 }

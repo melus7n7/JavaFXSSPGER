@@ -109,7 +109,7 @@ public class FXMLActividadesController implements Initializable {
        cargarInformacionTrabajosRecepcionales();
     }
     
-    public void inicializarInformacion(Academico usuarioAcademico){
+    public void inicializarInformacionAcademico(Academico usuarioAcademico){
        this.usuarioAcademico = usuarioAcademico;
        bttCrearActividad.setVisible(false);
        cargarInformacionTrabajosRecepcionales();
@@ -266,7 +266,7 @@ public class FXMLActividadesController implements Initializable {
 
     @FXML
     private void clicRegresar(MouseEvent event) {
-        if(usuarioAcademico.isEsDirector()){
+        if(usuarioAcademico!=null){
             regresarMenuAcademico();
         }else{
             regresarMenuEstudiante();
