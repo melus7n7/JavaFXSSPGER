@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 03/06/2023
-*Fecha de modificación: 03/06/2023
+*Fecha de modificación: 04/06/2023
 *Descripción: Controlador de la vista del detalle de un avance
 */
 package javafxsspger.controladores;
@@ -73,6 +73,7 @@ public class FXMLDetalleAvanceController implements Initializable {
 
     @FXML
     private void clicEditar(ActionEvent event) {
+        
     }
 
     @FXML
@@ -83,10 +84,13 @@ public class FXMLDetalleAvanceController implements Initializable {
 
     @FXML
     private void clicEliminarAvance(ActionEvent event) {
+        
+        
     }
 
     @FXML
     private void clicCalificarAvance(ActionEvent event) {
+        
     }
     
     public void inicializarDetalleAvanceAcademico(int idAvance, Academico usuarioAcademico){
@@ -125,6 +129,9 @@ public class FXMLDetalleAvanceController implements Initializable {
     
     
     private void mostrarDetalles(){
+        if(esAcademico){
+            bttCalificar.setVisible(esDirectorDelAvance());
+        }
         lblTitulo.setText(avanceDetalle.getTitulo());
         lblDescripcion.setText(avanceDetalle.getDescripcion());
         lblCalificacion.setText(avanceDetalle.getPuntajeSatisfaccion()+"");
@@ -146,6 +153,15 @@ public class FXMLDetalleAvanceController implements Initializable {
         }else{
             lblPorcentaje.setText("No hay actividades ...");
         }
+    }
+    
+    private boolean esDirectorDelAvance(){
+        for(Academico academico: avanceDetalle.getDirectores()){
+            if(academico.getIdAcademico() == usuarioAcademico.getIdAcademico()){
+                return true;
+            }
+        }
+        return false;
     }
     
     private void cargarActividades(){

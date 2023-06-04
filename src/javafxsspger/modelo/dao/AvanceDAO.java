@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javafxsspger.modelo.ConexionBD;
+import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.Avance;
 import javafxsspger.modelo.pojo.AvanceRespuesta;
@@ -73,6 +74,22 @@ public class AvanceDAO {
                     respuesta.setNivelSatisfaccion(resultado.getString("nivelSatisfaccion"));
                     respuesta.setPuntajeSatisfaccion(resultado.getInt("puntajeSatisfaccion"));
                     
+                    String consultaDirectores = "SELECT encargadostrabajorecepcional.idAcademico FROM avance " +
+                        "INNER JOIN estudiante ON estudiante.idEstudiante = avance.idEstudiante " +
+                        "INNER JOIN trabajorecepcional on trabajorecepcional.idTrabajoRecepcional = estudiante.idTrabajoRecepcional " +
+                        "INNER JOIN encargadostrabajorecepcional on encargadostrabajorecepcional.idTrabajoRecepcional = trabajorecepcional.idTrabajoRecepcional " +
+                        "Where idAvance = ?";
+                    PreparedStatement prepararSentenciaActividadesDirectores = conexionBD.prepareStatement(consultaDirectores);
+                    prepararSentenciaActividadesDirectores.setInt(1, idAvance);
+                    ResultSet resultadoDirectores = prepararSentenciaActividadesDirectores.executeQuery();
+                    ArrayList<Academico> academicos = new ArrayList();
+                    while(resultadoDirectores.next()){
+                        Academico academico = new Academico();
+                        academico.setIdAcademico(resultadoDirectores.getInt("idAcademico"));
+                        academicos.add(academico);
+                    }
+                    respuesta.setDirectores(academicos);
+                    
                     String consultaActividades = "SELECT actividad.idActividad, actividad.descripcion, actividad.titulo, actividad.fechaCreacion, actividad.idEstudiante, " +
                         "usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno, actividad.fechaCreacion, actividad.fechaFinal, " +
                         "actividad.fechaInicio FROM sspger.actividad " +
@@ -82,6 +99,7 @@ public class AvanceDAO {
                     PreparedStatement prepararSentenciaActividades = conexionBD.prepareStatement(consultaActividades);
                     prepararSentenciaActividades.setInt(1, idAvance);
                     ResultSet resultadoActividades = prepararSentenciaActividades.executeQuery();
+                    
                     ArrayList<Actividad> actividades = new ArrayList();
                     while(resultadoActividades.next()){
                         Actividad actividad = new Actividad();

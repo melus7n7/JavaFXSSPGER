@@ -155,12 +155,17 @@ public class FXMLAvancesController implements Initializable {
                 respuestaTotal.setEstudiantes(new ArrayList());
                 respuestaTotal.getEstudiantes().addAll(respuesta1.getEstudiantes());
                 respuestaTotal.getEstudiantes().addAll(respuesta2.getEstudiantes());
-                HashSet<Estudiante> conjunto = new HashSet(respuestaTotal.getEstudiantes());
-                ArrayList<Estudiante> listaSinDuplicados = new ArrayList<>(conjunto);
+                ArrayList<Estudiante> listaSinDuplicados = new ArrayList();
+                for(Estudiante estudiante: respuestaTotal.getEstudiantes()){
+                    if(!estaRepetido(estudiante, listaSinDuplicados)){
+                        listaSinDuplicados.add(estudiante);
+                    }
+                }
                 respuestaTotal.setEstudiantes(listaSinDuplicados);
             }else{
                 respuestaTotal.setCodigoRespuesta(Constantes.ERROR_CONEXION);
             }
+            respuesta = respuestaTotal;
         }
         switch(respuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
@@ -211,5 +216,14 @@ public class FXMLAvancesController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+    
+    private boolean estaRepetido(Estudiante estudiante, ArrayList<Estudiante> estudiantes){
+        for(Estudiante estudianteLista: estudiantes){
+            if(estudiante.getIdEstudiante() == estudianteLista.getIdEstudiante()){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -23,6 +23,7 @@ public class Avance {
     private ArrayList <Actividad> actividades;
     private int codigoRespuesta;
     private int idEstudiante;
+    private ArrayList <Academico> directores;
 
     public Avance() {
     }
@@ -79,6 +80,10 @@ public class Avance {
         return descripcion;
     }
 
+    public ArrayList<Academico> getDirectores() {
+        return directores;
+    }
+
     public void setIdAvance(int idAvance) {
         this.idAvance = idAvance;
     }
@@ -129,6 +134,10 @@ public class Avance {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public void setDirectores(ArrayList<Academico> directores) {
+        this.directores = directores;
     }
     
     
