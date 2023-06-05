@@ -8,6 +8,8 @@ package javafxsspger.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -24,6 +27,7 @@ import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.Estudiante;
+import javafxsspger.utils.Utilidades;
 
 /**
  * FXML Controller class
@@ -74,9 +78,17 @@ public class FXMLDetallesActividadController implements Initializable {
         lblNombreEstudiante.setText(actividad.getNombreEstudiante()+" "+actividad.getApellidoPaternoEstudiante()+" "+actividad.getApellidoMaternoEstudiante());
         txtAreaActividad.setText(actividad.getDescripcion());
         txtAreaActividad.setEditable(false);
-        lblFechaInicio.setText(actividad.getFechaInicio());
-        lblFechaFinal.setText(actividad.getFechaFinal());
-        lblFechaCreacion.setText(actividad.getFechaCreacion());
+        DateTimeFormatter formatoOriginal = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatoDeseado = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fecha = LocalDate.parse(actividad.getFechaInicio(), formatoOriginal);
+        String fechaInicio = fecha.format(formatoDeseado);
+        lblFechaInicio.setText(fechaInicio);
+        fecha = LocalDate.parse(actividad.getFechaFinal(), formatoOriginal);
+        String fechaFinal = fecha.format(formatoDeseado);
+        lblFechaFinal.setText(fechaFinal);
+        fecha = LocalDate.parse(actividad.getFechaCreacion(), formatoOriginal);
+        String fechaCreacion = fecha.format(formatoDeseado);
+        lblFechaCreacion.setText(fechaCreacion);
         
     }
 
@@ -88,18 +100,28 @@ public class FXMLDetallesActividadController implements Initializable {
     private Estudiante usuarioEstudiante;//MODIFICAR
     @FXML
     private void clicEditar(ActionEvent event) {
-        Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionActividad.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLCreacionActividadController creacionActividad = accesoControlador.getController();
-            boolean esEdicion=true;    
-            creacionActividad.inicializarInformacionEstudiante(usuarioEstudiante, esEdicion, actividad);
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Creacion de Actividad");
-            escenarioBase.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        System.out.println("Entra");
+        LocalDate fechaActual = LocalDate.now();
+        String formatoDeFecha = "yyyy-MM-dd";
+        LocalDate fechaCreacion = LocalDate.parse(actividad.getFechaCreacion(), DateTimeFormatter.ofPattern(formatoDeFecha));
+        if(fechaActual.isAfter(fechaCreacion.plusDays(1))){
+            System.out.println("if");
+            Utilidades.mostrarDialogoSimple("Tiempo limite de modificación expirado", "No se puede modificar la actividad después de un día de ser creada", Alert.AlertType.INFORMATION);                    
+         }else{
+            System.out.println("else");
+            Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
+            try {
+                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionActividad.fxml"));
+                Parent vista = accesoControlador.load();
+                FXMLCreacionActividadController creacionActividad = accesoControlador.getController();
+                boolean esEdicion=true;    
+                creacionActividad.inicializarInformacionEstudiante(usuarioEstudiante, esEdicion, actividad);
+                escenarioBase.setScene(new Scene (vista));
+                escenarioBase.setTitle("Creacion de Actividad");
+                escenarioBase.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

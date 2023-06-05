@@ -23,8 +23,7 @@ import javafxsspger.utils.Constantes;
  */
 public class ActividadDAO {
     
-    
-    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcionalAcademico(int idTrabajoRecepcional){
+    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcionalDirector(int idTrabajoRecepcional){
         ActividadRespuesta respuesta = new ActividadRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD!=null){
@@ -81,6 +80,51 @@ public class ActividadDAO {
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idTrabajoRecepcional);
                 prepararSentencia.setInt(2, idEstudiante); 
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Actividad> ActividadesConsulta = new ArrayList();
+                while(resultado.next()){
+                    Actividad actividad = new Actividad();
+                    actividad.setNombreEstudiante(resultado.getString("nombreUsuario"));
+                    actividad.setApellidoPaternoEstudiante(resultado.getString("apellidoPaterno"));
+                    actividad.setApellidoMaternoEstudiante(resultado.getString("apellidoMaterno"));
+                    actividad.setIdActividad(resultado.getInt("idActividad"));
+                    actividad.setTitulo(resultado.getString("titulo"));
+                    actividad.setDescripcion(resultado.getString("descripcion"));
+                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
+                    actividad.setFechaFinal(resultado.getString("fechaFinal"));
+                    ActividadesConsulta.add(actividad);
+                }
+                respuesta.setActividades(ActividadesConsulta);
+                conexionBD.close();
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                e.printStackTrace();
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcionalProfesor(int idTrabajoRecepcional, int idAcademico){
+        ActividadRespuesta respuesta = new ActividadRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String consulta = "SELECT  Usuario.nombreUsuario, Usuario.apellidoPaterno, Usuario.apellidoMaterno, Actividad.idActividad, Actividad.titulo,Actividad.descripcion, " +
+                "Actividad.fechaCreacion,Actividad.fechaInicio,Actividad.fechaFinal " +
+                "FROM sspger.ExperienciaEducativa " +
+                "INNER JOIN perteneceexperienciaeducativa ON perteneceexperienciaeducativa.idExperienciaEducativa = ExperienciaEducativa.idExperienciaEducativa     " +
+                "INNER JOIN estudiante ON estudiante.idEstudiante = perteneceexperienciaeducativa.idEstudiante      " +
+                "INNER JOIN usuario ON usuario.idUsuario = estudiante.idUsuario  " +
+                "INNER JOIN trabajorecepcional ON trabajorecepcional.idTrabajoRecepcional=estudiante.idTrabajoRecepcional" +
+                "INNER JOIN actividad ON estudiante.idEstudiante = actividad.idEstudiante " +
+                "where ExperienciaEducativa.idAcademico = ? AND trabajorecepcional.idTrabajoRecepcional = ?; ";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAcademico);
+                prepararSentencia.setInt(2, idTrabajoRecepcional);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Actividad> ActividadesConsulta = new ArrayList();
                 while(resultado.next()){
