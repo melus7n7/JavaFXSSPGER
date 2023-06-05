@@ -25,6 +25,7 @@ public class Actividad {
     private String apellidoPaternoEstudiante;
     private String apellidoMaternoEstudiante;
     private boolean tieneEntrega;
+    private int idAvance;
     
     public Actividad() {
     }
@@ -137,6 +138,14 @@ public class Actividad {
 
     public void setTieneEntrega(boolean tieneEntrega) {
         this.tieneEntrega = tieneEntrega;
+    }
+
+    public int getIdAvance() {
+        return idAvance;
+    }
+
+    public void setIdAvance(int idAvance) {
+        this.idAvance = idAvance;
     }
     
     

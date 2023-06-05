@@ -95,6 +95,8 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
     private VBox vBoxComentarios;
     @FXML
     private Label lblDirector;
+    @FXML
+    private ScrollPane scrPaneContenedorComentarios;
 
     
     @Override
@@ -244,6 +246,7 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
     }
     
     private void cargarComentarios(ArrayList <Comentario> comentarios){
+        int altoVBox = 0;
         for (int i=0; i<comentarios.size(); i++){
             FXMLLoader fmxlLoader = new FXMLLoader();
             fmxlLoader.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLComentarioElemento.fxml"));
@@ -251,10 +254,15 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
                 Pane pane = fmxlLoader.load();
                 FXMLComentarioElementoController elementoEnLista = fmxlLoader.getController();
                 elementoEnLista.setComentario(comentarios.get(i));
+                altoVBox += pane.getPrefHeight();
+                vBoxComentarios.setPrefHeight(altoVBox);
                 vBoxComentarios.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
+        }
+        if(vBoxComentarios.getPrefHeight() < scrPaneContenedorComentarios.getPrefHeight()){
+            vBoxComentarios.setPrefHeight(scrPaneContenedorComentarios.getPrefHeight());
         }
     }
     
@@ -304,6 +312,7 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
     }
     
     private void cargarDirectores (ArrayList <Academico> academicos){
+        int altoVBox = 0;
         for (int i=0; i<academicos.size(); i++){
             boolean estaSeleccionado = encontrarCodirector(academicos.get(i).getIdAcademico());
             FXMLLoader fmxlLoader = new FXMLLoader();
@@ -312,10 +321,15 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
                 Pane pane = fmxlLoader.load();
                 FXMLCodirectorElementoController elementoEnLista = fmxlLoader.getController();
                 elementoEnLista.setElementos(academicos.get(i), this, estaSeleccionado);
+                altoVBox += pane.getPrefHeight();
+                vBoxListaCodirectores.setPrefHeight(altoVBox);
                 vBoxListaCodirectores.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
+        }
+        if(vBoxListaCodirectores.getPrefHeight() < scrPaneCajaCodirectores.getPrefHeight()){
+            vBoxListaCodirectores.setPrefHeight(scrPaneCajaCodirectores.getPrefHeight());
         }
     }
     

@@ -9,6 +9,7 @@ package javafxsspger.interfaces;
 import javafxsspger.modelo.pojo.Academico;
 
 public interface INotificacionCodirector {
+    
     public void notificarAñadirCodirector(Academico codirector);
     public void notificarEliminarCodirector(Academico codirector);
 }

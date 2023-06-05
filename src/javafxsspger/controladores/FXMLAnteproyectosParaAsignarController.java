@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -38,6 +39,8 @@ public class FXMLAnteproyectosParaAsignarController implements Initializable {
     private VBox vBoxListaAnteproyectos;
     @FXML
     private Label lblTitulo;
+    @FXML
+    private ScrollPane scrPaneContenedorAnteproyectos;
 
     
     @Override
@@ -86,6 +89,7 @@ public class FXMLAnteproyectosParaAsignarController implements Initializable {
     }
     
     private void mostrarElementos (ArrayList <Anteproyecto> anteproyectos){
+        int altoVBox = 0;
         for (int i=0; i<anteproyectos.size(); i++){
             FXMLLoader fmxlLoaderAnteproyecto = new FXMLLoader();
             fmxlLoaderAnteproyecto.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectoElemento.fxml"));
@@ -93,10 +97,15 @@ public class FXMLAnteproyectosParaAsignarController implements Initializable {
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
                 elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), Constantes.ES_ASIGNAR_ESTUDIANTES, null, usuarioAcademico.getIdAcademico());
+                altoVBox += pane.getPrefHeight();
+                vBoxListaAnteproyectos.setPrefHeight(altoVBox);
                 vBoxListaAnteproyectos.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
+        }
+        if(vBoxListaAnteproyectos.getPrefHeight() < scrPaneContenedorAnteproyectos.getPrefHeight()){
+            vBoxListaAnteproyectos.setPrefHeight(scrPaneContenedorAnteproyectos.getPrefHeight());
         }
     }
     

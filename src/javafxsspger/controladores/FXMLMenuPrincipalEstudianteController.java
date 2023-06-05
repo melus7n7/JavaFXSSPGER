@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
@@ -29,6 +30,14 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
     
     @FXML
     private Label lblSaludo;
+    @FXML
+    private Button bttActividades;
+    @FXML
+    private Button bttAvances;
+    @FXML
+    private Button bttTrabajoRecepcional;
+    @FXML
+    private Button bttCronogramaActividades;
     
     
     @Override
@@ -45,11 +54,13 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
         respuesta.setIdTipoUsuario(usuarioLogin.getIdTipoUsuario());
         this.usuarioEstudiante = respuesta;
         lblSaludo.setText("Hola estudiante " + usuarioEstudiante.getNombre());
+        mostrarPermisos();
     }
     
     public void inicializarInformacionConEstudiante(Estudiante usuarioEstudiante){
         this.usuarioEstudiante = usuarioEstudiante;
         lblSaludo.setText("Hola estudiante " + this.usuarioEstudiante.getNombre());
+        mostrarPermisos();
     }
 
     @FXML
@@ -84,5 +95,28 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
             ex.printStackTrace();
         }
     }
+    
+    @FXML
+    private void clicTrabajoRecepcional(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicCronogramaActividades(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicAnteproyectos(ActionEvent event) {
+    }
+    
+    private void mostrarPermisos(){
+        if(usuarioEstudiante.getIdAnteproyecto() == 0){
+            bttActividades.setDisable(true);
+            bttAvances.setDisable(true);
+            bttCronogramaActividades.setDisable(true);
+            bttTrabajoRecepcional.setDisable(true);
+        }
+    }
+
+    
     
 }

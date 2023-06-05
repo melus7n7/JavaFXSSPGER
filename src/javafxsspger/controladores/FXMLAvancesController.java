@@ -23,11 +23,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAvances;
 import javafxsspger.modelo.dao.AvanceDAO;
 import javafxsspger.modelo.dao.EstudianteDAO;
 import javafxsspger.modelo.pojo.Academico;
@@ -39,12 +42,13 @@ import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
 
-public class FXMLAvancesController implements Initializable {
+public class FXMLAvancesController implements Initializable, INotificacionAvances {
 
     private Academico academicoAvances;
     private Estudiante estudianteAvances;
     private ObservableList<Estudiante> estudiantes;
     private boolean esAcademico;
+    private boolean desdeCreacion;
     
     @FXML
     private ComboBox<Estudiante> cmbBoxEstudiante;
@@ -54,37 +58,60 @@ public class FXMLAvancesController implements Initializable {
     private Button bttCrearAvance;
     @FXML
     private VBox vBoxListaAvances;
+    @FXML
+    private ScrollPane scrPaneContenedorAvances;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        desdeCreacion = false;
     }    
 
     @FXML
     private void clicCrearAvance(ActionEvent event) {
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionAvance.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCreacionAvanceController crearAvance = accesoControlador.getController();
+            crearAvance.inicializarPantalla(estudianteAvances, this);
+            
+            Stage escenarioBase = new Stage();
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menú Principal");
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
     private void clicMostrarAvances(ActionEvent event) {
+        vBoxListaAvances.getChildren().clear();
         Estudiante estudiante = cmbBoxEstudiante.getSelectionModel().getSelectedItem();
         if(estudiante != null){
             recuperarAvances(estudiante);
         }else{
-            Utilidades.mostrarDialogoSimple("Estudiante no seleccionado", 
-                "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);
+            if(!desdeCreacion){
+                Utilidades.mostrarDialogoSimple("Estudiante no seleccionado", 
+                    "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);
+            }
         }
     }
 
     @FXML
     private void clicRegresar(MouseEvent event) {
-        //Cambiar
         if(esAcademico){
             irMenuPrincipalAcademico();
         }else{
             regresarMenuEstudiante();
-        }
-            
+        }   
+    }
+    
+    @Override
+    public void notificarCargarAvances() {
+        desdeCreacion = true;
+        clicMostrarAvances(new ActionEvent());
     }
     
     private void irMenuPrincipalAcademico(){
@@ -201,6 +228,7 @@ public class FXMLAvancesController implements Initializable {
     }
     
     private void cargarAvances(ArrayList<Avance> avances){
+        int altoVBox = 0;
         for (int i=0; i<avances.size(); i++){
             try{
                 FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAvanceElemento.fxml"));
@@ -209,12 +237,17 @@ public class FXMLAvancesController implements Initializable {
                 if(esAcademico){
                     avanceElementoController.incializarElementoAcademico(avances.get(i),academicoAvances);
                 }else{
-                    avanceElementoController.incializarElementoEstudiante(avances.get(i),estudianteAvances);
+                    avanceElementoController.incializarElementoEstudiante(avances.get(i),estudianteAvances, this);
                 }
+                altoVBox += pane.getPrefHeight();
+                vBoxListaAvances.setPrefHeight(altoVBox);
                 vBoxListaAvances.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
+        }
+        if(vBoxListaAvances.getPrefHeight() < scrPaneContenedorAvances.getPrefHeight()){
+            vBoxListaAvances.setPrefHeight(scrPaneContenedorAvances.getPrefHeight());
         }
     }
     
@@ -226,4 +259,6 @@ public class FXMLAvancesController implements Initializable {
         }
         return false;
     }
+
+    
 }

@@ -85,9 +85,9 @@
             <Font name="SansSerif Regular" size="16.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="567.0" layoutY="126.0" prefHeight="433.0" prefWidth="499.0">
+      <ScrollPane fx:id="scrPaneContenedorActividades" layoutX="567.0" layoutY="126.0" prefHeight="307.0" prefWidth="499.0">
          <content>
-            <VBox fx:id="vBoxListaActividades" prefHeight="440.0" prefWidth="484.0" />
+            <VBox fx:id="vBoxListaActividades" prefHeight="304.0" prefWidth="484.0" />
          </content>
       </ScrollPane>
       <Label layoutX="570.0" layoutY="104.0" text="Actividades:">
@@ -115,5 +115,11 @@
             <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Button>
+      <TextArea fx:id="txtAreaRetroalimentacion" editable="false" layoutX="567.0" layoutY="466.0" prefHeight="99.0" prefWidth="499.0" wrapText="true" />
+      <Label layoutX="575.0" layoutY="439.0" text="Retroalimentación:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

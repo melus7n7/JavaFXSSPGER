@@ -14,14 +14,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAvances;
 import javafxsspger.modelo.dao.AvanceDAO;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
@@ -37,6 +42,7 @@ public class FXMLDetalleAvanceController implements Initializable {
     private Estudiante usuarioEstudiante;
     private Academico usuarioAcademico;
     private boolean esAcademico;
+    private INotificacionAvances notificacion;
             
     @FXML
     private Button bttEditar;
@@ -64,33 +70,60 @@ public class FXMLDetalleAvanceController implements Initializable {
     private Label lblNivelSatisfaccion;
     @FXML
     private Button bttCalificar;
+    @FXML
+    private ScrollPane scrPaneContenedorActividades;
+    @FXML
+    private TextArea txtAreaRetroalimentacion;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }
 
     @FXML
     private void clicEditar(ActionEvent event) {
-        
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionAvance.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCreacionAvanceController creacionAvance = accesoControlador.getController(); 
+            creacionAvance.incializarPantallaEdicion(usuarioEstudiante, avanceDetalle, notificacion);
+            
+            Stage escenarioDetalle = (Stage) lblCalificacion.getScene().getWindow();
+            escenarioDetalle.setScene(new Scene (vista));
+            escenarioDetalle.setTitle("Modificación avance");
+            escenarioDetalle.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
     private void clicRegresar(MouseEvent event) {
-        Stage escenarioBase = (Stage) lblCalificacion.getScene().getWindow();
-        escenarioBase.close();
+        cerrarVentana();
     }
 
     @FXML
     private void clicEliminarAvance(ActionEvent event) {
-        
-        
+        eliminarAvance();
+        cerrarVentana();
     }
 
     @FXML
     private void clicCalificarAvance(ActionEvent event) {
-        
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCalificacionAvance.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCalificacionAvanceController calificacionAvance = accesoControlador.getController(); 
+            calificacionAvance.inicializarPantalla(avanceDetalle, usuarioAcademico);
+            
+            Stage escenarioDetalle = (Stage) lblCalificacion.getScene().getWindow();
+            escenarioDetalle.setScene(new Scene (vista));
+            escenarioDetalle.setTitle("Calificacion avance");
+            escenarioDetalle.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public void inicializarDetalleAvanceAcademico(int idAvance, Academico usuarioAcademico){
@@ -101,7 +134,8 @@ public class FXMLDetalleAvanceController implements Initializable {
         bttEditar.setVisible(false);
     }
     
-    public void inicializarDetalleAvanceEstudiante(int idAvance, Estudiante usuarioEstudiante){
+    public void inicializarDetalleAvanceEstudiante(int idAvance, Estudiante usuarioEstudiante, INotificacionAvances notificacion){
+        this.notificacion = notificacion;
         this.esAcademico = false;
         this.usuarioEstudiante = usuarioEstudiante;
         recuperarDetallesAvance(idAvance);
@@ -125,8 +159,6 @@ public class FXMLDetalleAvanceController implements Initializable {
                 break;
         }
     }
-
-    
     
     private void mostrarDetalles(){
         if(esAcademico){
@@ -138,21 +170,25 @@ public class FXMLDetalleAvanceController implements Initializable {
         lblNivelSatisfaccion.setText(avanceDetalle.getNivelSatisfaccion());
         lblFechaInicio.setText(avanceDetalle.getFechaInicio());
         lblFechaFin.setText(avanceDetalle.getFechaFin());
-        calcularPorcentajeCompletado();
-        cargarActividades();
+        txtAreaRetroalimentacion.setText(avanceDetalle.getRetroalimentacion());
+        if(avanceDetalle.getActividades() != null && !avanceDetalle.getActividades().isEmpty()){
+            cargarActividades();
+            calcularPorcentajeCompletado();
+        }else{
+            lblPorcentaje.setText("No hay actividades ...");
+            lblFechaInicio.setText("--/--/----");
+            lblFechaFin.setText("--/--/----");
+        }
+        
     }
     
     private void calcularPorcentajeCompletado(){
-        if(!avanceDetalle.getActividades().isEmpty()){
-            int actividadesCumplidas = 0;
-            for(Actividad actividad: avanceDetalle.getActividades()){
-                actividadesCumplidas += (actividad.isTieneEntrega()) ? 1 : 0;
-            }
-            String porcentaje = actividadesCumplidas/avanceDetalle.getActividades().size() + "";
-            lblPorcentaje.setText(porcentaje + "%");
-        }else{
-            lblPorcentaje.setText("No hay actividades ...");
+        int actividadesCumplidas = 0;
+        for(Actividad actividad: avanceDetalle.getActividades()){
+            actividadesCumplidas += (actividad.isTieneEntrega()) ? 1 : 0;
         }
+        String porcentaje = actividadesCumplidas/avanceDetalle.getActividades().size() + "";
+        lblPorcentaje.setText(porcentaje + "%");
     }
     
     private boolean esDirectorDelAvance(){
@@ -165,6 +201,7 @@ public class FXMLDetalleAvanceController implements Initializable {
     }
     
     private void cargarActividades(){
+        int altoVBox = 0;
         for (int i=0; i<avanceDetalle.getActividades().size(); i++){
             try{
                 FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividadEnAvanceElemento.fxml"));
@@ -175,10 +212,39 @@ public class FXMLDetalleAvanceController implements Initializable {
                 }else{
                     actividadElementoController.cargarActividadEstudiante(avanceDetalle.getActividades().get(i), usuarioEstudiante);
                 }
+                altoVBox += pane.getPrefHeight();
+                vBoxListaActividades.setPrefHeight(altoVBox);
                 vBoxListaActividades.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
+        if(vBoxListaActividades.getPrefHeight() < scrPaneContenedorActividades.getPrefHeight()){
+            vBoxListaActividades.setPrefHeight(scrPaneContenedorActividades.getPrefHeight());
+        }
+    }
+    
+    private void eliminarAvance(){
+        int respuesta = AvanceDAO.eliminarAvance(avanceDetalle.getIdAvance());
+        switch(respuesta){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error de conexión", 
+                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error de consulta", 
+                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("Avance Eliminado", 
+                            "Se ha eliminado el avance del sistema", Alert.AlertType.INFORMATION);
+                notificacion.notificarCargarAvances();
+                break;
+        }
+    }
+    
+    private void cerrarVentana(){
+        Stage escenarioBase = (Stage) lblCalificacion.getScene().getWindow();
+        escenarioBase.close();
     }
 }

@@ -16,9 +16,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionActividad;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.Estudiante;
@@ -30,6 +32,7 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
     private Estudiante usuarioEstudiante;
     private Academico usuarioAcademico;
     private boolean esAcademico;
+    private INotificacionActividad notificacion;
     
     @FXML
     private Label lblNombreActividad;
@@ -37,6 +40,8 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
     private Button bttVerMasActividad;
     @FXML
     private Label lblFechaCreacion;
+    @FXML
+    private CheckBox chcBoxAgregarActividad;
 
     
     @Override
@@ -64,6 +69,15 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
             }
     }
     
+    @FXML
+    private void clicAgregarActividad(ActionEvent event) {
+        if(chcBoxAgregarActividad.isSelected()){
+            notificacion.notificarAñadirActividad(actividadActual);
+        }else{
+            notificacion.notificarEliminarActividad(actividadActual);
+        }
+    }
+    
     public void cargarActividadAcademico(Actividad actividad, Academico usuarioAcademico){
         this.usuarioAcademico = usuarioAcademico;
         this.actividadActual = actividad;
@@ -78,6 +92,23 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
         this.esAcademico = false;
         lblNombreActividad.setText(actividad.getTitulo());
         lblFechaCreacion.setText("Fecha Creación: " + actividad.getFechaCreacion());
+    }
+    
+    public void cargarActividadCreacionAvance(Actividad actividad, INotificacionActividad notificacion, boolean estaSeleccionado){
+        this.actividadActual = actividad;
+        this.notificacion = notificacion;
+        bttVerMasActividad.setVisible(false);
+        chcBoxAgregarActividad.setVisible(true);
+        chcBoxAgregarActividad.setSelected(estaSeleccionado);
+        lblNombreActividad.setText(actividad.getTitulo());
+        lblFechaCreacion.setText("Fecha Creación: " + actividad.getFechaCreacion());
+    }
+
+    public void incializarElementoParaCalificacion(Actividad actividad){
+        this.actividadActual = actividad;
+        lblNombreActividad.setText(actividad.getTitulo());
+        lblFechaCreacion.setText("Fecha Creación: " + actividad.getFechaCreacion());
+        bttVerMasActividad.setVisible(false);
     }
     
 }

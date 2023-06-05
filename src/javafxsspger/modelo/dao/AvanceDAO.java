@@ -56,7 +56,7 @@ public class AvanceDAO {
         if(conexionBD!=null){
             try{
                 String consulta = "SELECT avance.idAvance, avance.titulo, avance.descripcion, avance.fechaCreacion, avance.fechaInicio, " +
-                    "avance.fechaFinal, avance.idRubricaCalificacion, rubricacalificacion.nivelSatisfaccion, " +
+                    "avance.fechaFinal, avance.idRubricaCalificacion, rubricacalificacion.nivelSatisfaccion, avance.retroalimentacion, " +
                     "rubricacalificacion.puntajeSatisfaccion FROM avance " +
                     "INNER JOIN rubricacalificacion ON rubricacalificacion.idRubricaCalificacion = avance.idRubricaCalificacion " +
                     "Where idAvance = ?";
@@ -73,6 +73,7 @@ public class AvanceDAO {
                     respuesta.setIdRubrica(resultado.getInt("idRubricaCalificacion"));
                     respuesta.setNivelSatisfaccion(resultado.getString("nivelSatisfaccion"));
                     respuesta.setPuntajeSatisfaccion(resultado.getInt("puntajeSatisfaccion"));
+                    respuesta.setRetroalimentacion(resultado.getString("retroalimentacion"));
                     
                     String consultaDirectores = "SELECT encargadostrabajorecepcional.idAcademico FROM avance " +
                         "INNER JOIN estudiante ON estudiante.idEstudiante = avance.idEstudiante " +
@@ -132,5 +133,134 @@ public class AvanceDAO {
             respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return respuesta;
-    } 
+    }
+    
+    public static Avance guardarAvance(Avance avance){
+        Avance respuesta = new Avance();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "INSERT INTO Avance(titulo,descripcion,fechaCreacion, fechaInicio, fechaFinal, idEstudiante, idRubricaCalificacion) " +
+                    "VALUES (?, ?, curdate(), ?, ?, ?, ?)";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, avance.getTitulo());
+                prepararSentencia.setString(2, avance.getDescripcion());
+                prepararSentencia.setString(3, avance.getFechaInicio());
+                prepararSentencia.setString(4, avance.getFechaFin());
+                prepararSentencia.setInt(5, avance.getIdEstudiante());
+                prepararSentencia.setInt(6, Constantes.ID_CALIFICACION_PENDIENTE);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta.setCodigoRespuesta(((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA));
+                
+                if(respuesta.getCodigoRespuesta() == Constantes.OPERACION_EXITOSA){
+                    String consulta = "SELECT MAX(idAvance) AS idAvance FROM avance";
+                    PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
+                    ResultSet resultado = prepararConsulta.executeQuery();
+                    if(resultado.next()){
+                        respuesta.setIdAvance(resultado.getInt("idAvance"));
+                    }
+                }
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            }
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static int guardarModificaciones(Avance avance){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "UPDATE Avance SET titulo = ?, descripcion = ?, fechaInicio = ?, fechaFinal = ?, idEstudiante = ? WHERE idAvance = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, avance.getTitulo());
+                prepararSentencia.setString(2, avance.getDescripcion());
+                prepararSentencia.setString(3, avance.getFechaInicio());
+                prepararSentencia.setString(4, avance.getFechaFin());
+                prepararSentencia.setInt(5, avance.getIdEstudiante());
+                prepararSentencia.setInt(6, avance.getIdAvance());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = ((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int borrarAsociacionPreviaActividades(Avance avance){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "UPDATE actividad SET idAvance = null WHERE idAvance = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, avance.getIdAvance());
+                System.out.println("AAA "+prepararSentencia);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas >= 0) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int eliminarAvance(int idAvance){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+            String sentencia = "DELETE FROM avance WHERE idAvance =?";
+            PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+            prepararSentencia.setInt(1, idAvance);
+            int filasAfectadas = prepararSentencia.executeUpdate();
+            respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+            conexionBD.close();
+            }catch(SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;   
+    }
+    
+    public static int guardarCalificacion(Avance avance){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "UPDATE Avance SET idRubricaCalificacion = ?, retroalimentacion = ? WHERE idAvance = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, avance.getIdRubrica());
+                prepararSentencia.setString(2, avance.getRetroalimentacion());
+                prepararSentencia.setInt(3, avance.getIdAvance());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = ((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
 }
