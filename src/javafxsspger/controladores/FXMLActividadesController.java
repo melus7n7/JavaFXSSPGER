@@ -207,7 +207,7 @@ public class FXMLActividadesController implements Initializable {
     private void cargarActividadesDirector(int idTrabajoRecepcional){
         trabajosRecepcionales.clear();
         cargarInformacionTrabajosRecepcionales();
-        ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalDirector(idTrabajoRecepcional);
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalAcademico(idTrabajoRecepcional);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);

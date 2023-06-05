@@ -8,6 +8,7 @@ package javafxsspger.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -23,11 +24,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.modelo.dao.ActividadDAO;
 import javafxsspger.modelo.dao.TrabajoRecepcionalDAO;
 import javafxsspger.modelo.pojo.Academico;
+import javafxsspger.modelo.pojo.Actividad;
+import javafxsspger.modelo.pojo.ActividadRespuesta;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.TrabajoRecepcional;
 import javafxsspger.modelo.pojo.TrabajoRecepcionalRespuesta;
@@ -138,17 +143,17 @@ public class FXMLCronogramaActividadesController implements Initializable {
         eliminarActividades();
         try{
             TrabajoRecepcional trabajoRecepcional = cmbBoxTrabajosRecepcionales.getSelectionModel().getSelectedItem();
-            //TrabajoRecepcional trabajoRecepcional = cmbBoxTrabajosRecepcionales.getSelectionModel().getSelectedItem();
-            
-            
-            if(trabajoRecepcional == null){
+            LocalDate dateFechaFiltro = dtPickerFechaFiltro.getValue();
+            if(trabajoRecepcional == null || dateFechaFiltro == null){
                 Utilidades.mostrarDialogoSimple("Error cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione trabajo recepcional y fecha para continuar", Alert.AlertType.WARNING);                                            
             }else{
                int idTrabajoRecepcional=trabajoRecepcional.getIdTrabajoRecepcional();
+               String fechaFiltro = dateFechaFiltro.toString();
+               dtPickerFechaFiltro.setValue(null);
                if(usuarioAcademico!=null){
-                    //cargarActividadesDirector(idTrabajoRecepcional);
+                    cargarActividadesDirector(idTrabajoRecepcional, fechaFiltro);
                }else{
-                   //cargarActividadesEstudiante(idTrabajoRecepcional);
+                   cargarActividadesEstudiante(idTrabajoRecepcional, fechaFiltro);
                }
                
             }
@@ -159,6 +164,75 @@ public class FXMLCronogramaActividadesController implements Initializable {
     
     private void eliminarActividades(){
         vBoxListaActividades.getChildren().clear();
+    }
+    
+    private void cargarActividadesDirector(int idTrabajoRecepcional, String fechaFiltro){
+        trabajosRecepcionales.clear();
+        cargarInformacionTrabajosRecepcionales();
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorFechaYTrabajoRecepcionalAcademico(idTrabajoRecepcional,fechaFiltro);
+        switch(respuestaBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    mostrarActividades(respuestaBD.getActividades());
+                break;
+        }
+    }
+    
+    private void cargarActividadesEstudiante(int idTrabajoRecepcional,String fechaFiltro){
+        trabajosRecepcionales.clear();
+        cargarInformacionTrabajosRecepcionales();
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorFechaYTrabajoRecepcionalEstudiante(idTrabajoRecepcional,fechaFiltro,usuarioEstudiante.getIdEstudiante());
+        switch(respuestaBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    mostrarActividades(respuestaBD.getActividades());
+                break;
+        }
+    }
+    
+    private void mostrarActividades(ArrayList <Actividad> actividades){
+        if(usuarioAcademico!=null){
+            if(usuarioAcademico.isEsDirector() || usuarioAcademico.isEsProfesor()){
+            for (int i=0; i<actividades.size(); i++){
+                FXMLLoader accesoControlador = new FXMLLoader();
+                accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLActividadElemento.fxml"));
+                try{
+                    Pane pane = accesoControlador.load();
+                    FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
+                    elementoEnLista.inicializarActividadElementoAcademico(actividades.get(i), usuarioAcademico);
+                    vBoxListaActividades.getChildren().add(pane);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+            }
+        }else{
+            for (int i=0; i<actividades.size(); i++){
+            FXMLLoader accesoControlador = new FXMLLoader();
+            accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLActividadElemento.fxml"));
+            try{
+                    Pane pane = accesoControlador.load();
+                    FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
+                    elementoEnLista.inicializarActividadElementoEstudiante(actividades.get(i), usuarioEstudiante);
+                    System.out.println("ID ESTUDIANTE Actividades: "+this.usuarioEstudiante.getIdEstudiante());
+                    vBoxListaActividades.getChildren().add(pane);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @FXML
