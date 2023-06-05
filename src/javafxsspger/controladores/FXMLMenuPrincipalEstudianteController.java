@@ -17,11 +17,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.EstudianteDAO;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.Usuario;
+import javafxsspger.utils.Utilidades;
 
 
 public class FXMLMenuPrincipalEstudianteController implements Initializable {
@@ -38,6 +41,16 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
     private Button bttTrabajoRecepcional;
     @FXML
     private Button bttCronogramaActividades;
+    @FXML
+    private Label lblTitulo;
+    @FXML
+    private ImageView imgViewTrabajoRecepcional;
+    @FXML
+    private ImageView imgViewAnteproyectos;
+    @FXML
+    private ImageView imgViewActividades;
+    @FXML
+    private ImageView imgViewAvances;
     
     
     @Override
@@ -45,24 +58,6 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
         // TODO
     }    
     
-    public void inicializarInformacion(Usuario usuarioLogin){
-        Estudiante respuesta = EstudianteDAO.obtenerDetallesEstudiante(usuarioLogin.getIdUsuario());
-        respuesta.setIdUsuario(usuarioLogin.getIdUsuario());
-        respuesta.setNombre(usuarioLogin.getNombre());
-        respuesta.setApellidoPaterno(usuarioLogin.getApellidoPaterno());
-        respuesta.setApellidoMaterno(usuarioLogin.getApellidoMaterno());
-        respuesta.setIdTipoUsuario(usuarioLogin.getIdTipoUsuario());
-        this.usuarioEstudiante = respuesta;
-        lblSaludo.setText("Hola estudiante " + usuarioEstudiante.getNombre());
-        mostrarPermisos();
-    }
-    
-    public void inicializarInformacionConEstudiante(Estudiante usuarioEstudiante){
-        this.usuarioEstudiante = usuarioEstudiante;
-        lblSaludo.setText("Hola estudiante " + this.usuarioEstudiante.getNombre());
-        mostrarPermisos();
-    }
-
     @FXML
     private void clicActividades(ActionEvent event) {
         Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
@@ -108,15 +103,72 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
     private void clicAnteproyectos(ActionEvent event) {
     }
     
-    private void mostrarPermisos(){
-        if(usuarioEstudiante.getIdAnteproyecto() == 0){
-            bttActividades.setDisable(true);
-            bttAvances.setDisable(true);
-            bttCronogramaActividades.setDisable(true);
-            bttTrabajoRecepcional.setDisable(true);
-        }
+    @FXML
+    private void clicCronogramaActividades(MouseEvent event) {
     }
 
+    @FXML
+    private void clicCerrarSesion(MouseEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cerrar Sesión", "¿Desea cerrar la sesión actual?")){
+            Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
+            try {
+                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
+                Parent vista = accesoControlador.load();
+                escenarioBase.setScene(new Scene (vista));
+                escenarioBase.setTitle("Inicio Sesión");
+                escenarioBase.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
     
+    @FXML
+    private void clicTrabajoRecepcionalImagen(MouseEvent event) {
+        clicTrabajoRecepcional(new ActionEvent());
+    }
+
+    @FXML
+    private void clicAnteproyectosImagen(MouseEvent event) {
+        clicAnteproyectos(new ActionEvent());
+    }
+
+    @FXML
+    private void clicActividadesImagen(MouseEvent event) {
+        clicActividades(new ActionEvent());
+    }
+
+    @FXML
+    private void clicAvancesImagen(MouseEvent event) {
+        clicAvances(new ActionEvent());
+    }
+    public void inicializarInformacion(Usuario usuarioLogin){
+        Estudiante respuesta = EstudianteDAO.obtenerDetallesEstudiante(usuarioLogin.getIdUsuario());
+        respuesta.setIdUsuario(usuarioLogin.getIdUsuario());
+        respuesta.setNombre(usuarioLogin.getNombre());
+        respuesta.setApellidoPaterno(usuarioLogin.getApellidoPaterno());
+        respuesta.setApellidoMaterno(usuarioLogin.getApellidoMaterno());
+        respuesta.setIdTipoUsuario(usuarioLogin.getIdTipoUsuario());
+        this.usuarioEstudiante = respuesta;
+        lblSaludo.setText("Hola estudiante " + usuarioEstudiante.getNombre());
+        mostrarPermisos();
+    }
     
+    public void inicializarInformacionConEstudiante(Estudiante usuarioEstudiante){
+        this.usuarioEstudiante = usuarioEstudiante;
+        lblSaludo.setText("Hola estudiante " + this.usuarioEstudiante.getNombre());
+        mostrarPermisos();
+    }
+
+    private void mostrarPermisos(){
+        if(usuarioEstudiante.getIdAnteproyecto() != 0){
+            bttActividades.setDisable(false);
+            imgViewActividades.setDisable(false);
+            bttAvances.setDisable(false);
+            imgViewAvances.setDisable(false);
+            bttCronogramaActividades.setDisable(false);
+            bttTrabajoRecepcional.setDisable(false);
+            imgViewTrabajoRecepcional.setDisable(false);
+        }
+    }
 }
