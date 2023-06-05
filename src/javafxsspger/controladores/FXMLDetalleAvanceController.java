@@ -115,7 +115,7 @@ public class FXMLDetalleAvanceController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCalificacionAvance.fxml"));
             Parent vista = accesoControlador.load();
             FXMLCalificacionAvanceController calificacionAvance = accesoControlador.getController(); 
-            calificacionAvance.inicializarPantalla(avanceDetalle, usuarioAcademico);
+            calificacionAvance.inicializarPantalla(avanceDetalle, usuarioAcademico, notificacion);
             
             Stage escenarioDetalle = (Stage) lblCalificacion.getScene().getWindow();
             escenarioDetalle.setScene(new Scene (vista));
@@ -126,7 +126,8 @@ public class FXMLDetalleAvanceController implements Initializable {
         }
     }
     
-    public void inicializarDetalleAvanceAcademico(int idAvance, Academico usuarioAcademico){
+    public void inicializarDetalleAvanceAcademico(int idAvance, Academico usuarioAcademico, INotificacionAvances notificacion){
+        this.notificacion = notificacion;
         this.usuarioAcademico = usuarioAcademico;
         this.esAcademico = true;
         recuperarDetallesAvance(idAvance);
@@ -208,9 +209,9 @@ public class FXMLDetalleAvanceController implements Initializable {
                 Pane pane = accesoControlador.load();
                 FXMLActividadEnAvanceElementoController actividadElementoController = accesoControlador.getController();
                 if(esAcademico){
-                    actividadElementoController.cargarActividadAcademico(avanceDetalle.getActividades().get(i), usuarioAcademico);
+                    actividadElementoController.cargarActividadAcademico(avanceDetalle.getActividades().get(i), usuarioAcademico, notificacion);
                 }else{
-                    actividadElementoController.cargarActividadEstudiante(avanceDetalle.getActividades().get(i), usuarioEstudiante);
+                    actividadElementoController.cargarActividadEstudiante(avanceDetalle.getActividades().get(i), usuarioEstudiante, notificacion);
                 }
                 altoVBox += pane.getPrefHeight();
                 vBoxListaActividades.setPrefHeight(altoVBox);

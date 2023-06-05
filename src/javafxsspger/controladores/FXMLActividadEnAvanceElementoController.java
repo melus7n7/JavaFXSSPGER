@@ -18,9 +18,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionActividad;
+import javafxsspger.interfaces.INotificacionAvances;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.Estudiante;
@@ -33,6 +35,7 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
     private Academico usuarioAcademico;
     private boolean esAcademico;
     private INotificacionActividad notificacion;
+    private INotificacionAvances notificacionAvances;
     
     @FXML
     private Label lblNombreActividad;
@@ -51,7 +54,6 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
 
     @FXML
     private void clicVerMasActividad(ActionEvent event) {
-        Stage escenarioBase = (Stage)lblFechaCreacion.getScene().getWindow();
             try {
                 FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
                 Parent vista = accesoControlador.load();
@@ -61,12 +63,14 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
                 }else{
                     actividad.inicializarInformacionEstudiante(usuarioEstudiante, actividadActual);
                 }
+                Stage escenarioBase = (Stage)lblFechaCreacion.getScene().getWindow();
                 escenarioBase.setScene(new Scene (vista));
                 escenarioBase.setTitle("Actividades");
                 escenarioBase.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        notificacionAvances.cerrarPantalla();
     }
     
     @FXML
@@ -78,7 +82,8 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
         }
     }
     
-    public void cargarActividadAcademico(Actividad actividad, Academico usuarioAcademico){
+    public void cargarActividadAcademico(Actividad actividad, Academico usuarioAcademico, INotificacionAvances notificacionAvances){
+        this.notificacionAvances = notificacionAvances;
         this.usuarioAcademico = usuarioAcademico;
         this.actividadActual = actividad;
         this.esAcademico = true;
@@ -86,7 +91,8 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
         lblFechaCreacion.setText("Fecha Creación: " + actividad.getFechaCreacion());
     }
     
-    public void cargarActividadEstudiante(Actividad actividad, Estudiante usuarioEstudiante){
+    public void cargarActividadEstudiante(Actividad actividad, Estudiante usuarioEstudiante, INotificacionAvances notificacionAvances){
+        this.notificacionAvances = notificacionAvances;
         this.actividadActual = actividad;
         this.usuarioEstudiante = usuarioEstudiante;
         this.esAcademico = false;

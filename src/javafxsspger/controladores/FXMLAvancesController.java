@@ -105,13 +105,19 @@ public class FXMLAvancesController implements Initializable, INotificacionAvance
             irMenuPrincipalAcademico();
         }else{
             regresarMenuEstudiante();
-        }   
+        }
     }
     
     @Override
     public void notificarCargarAvances() {
         desdeCreacion = true;
         clicMostrarAvances(new ActionEvent());
+    }
+    
+    @Override
+    public void cerrarPantalla() {
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        escenarioBase.close();
     }
     
     private void irMenuPrincipalAcademico(){
@@ -235,7 +241,7 @@ public class FXMLAvancesController implements Initializable, INotificacionAvance
                 Pane pane = accesoControlador.load();
                 FXMLAvanceElementoController avanceElementoController = accesoControlador.getController();
                 if(esAcademico){
-                    avanceElementoController.incializarElementoAcademico(avances.get(i),academicoAvances);
+                    avanceElementoController.incializarElementoAcademico(avances.get(i),academicoAvances, this);
                 }else{
                     avanceElementoController.incializarElementoEstudiante(avances.get(i),estudianteAvances, this);
                 }
@@ -259,6 +265,5 @@ public class FXMLAvancesController implements Initializable, INotificacionAvance
         }
         return false;
     }
-
     
 }

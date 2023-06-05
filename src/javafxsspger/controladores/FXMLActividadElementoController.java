@@ -90,12 +90,6 @@ public class FXMLActividadElementoController implements Initializable {
                 }catch (IOException ex) {
                     ex.printStackTrace();
                 }
-            }else if(usuarioAcademico.isEsProfesor() && usuarioAcademico.isEsDirector()==false){
-        
-            
-            
-            
-            
             }
         }else{
             Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();

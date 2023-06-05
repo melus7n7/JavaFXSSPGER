@@ -30,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAvances;
 import javafxsspger.modelo.dao.AvanceDAO;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Avance;
@@ -43,6 +44,7 @@ public class FXMLCalificacionAvanceController implements Initializable {
     private Academico usuarioAcademico;
     private Avance avanceACalificar;
     private ObservableList<Calificacion> calificaciones;
+    private INotificacionAvances notificacionAvances;
     
     private String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     private String estiloNormal = "-fx-border-width: 0;";
@@ -85,7 +87,7 @@ public class FXMLCalificacionAvanceController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetalleAvance.fxml"));
             Parent vista = accesoControlador.load();
             FXMLDetalleAvanceController detalleAvance = accesoControlador.getController();
-            detalleAvance.inicializarDetalleAvanceAcademico(avanceACalificar.getIdAvance(),usuarioAcademico);
+            detalleAvance.inicializarDetalleAvanceAcademico(avanceACalificar.getIdAvance(),usuarioAcademico, notificacionAvances);
             
             Stage escenarioBase = (Stage) lblCalificacion.getScene().getWindow();
             escenarioBase.setScene(new Scene (vista));
@@ -96,7 +98,8 @@ public class FXMLCalificacionAvanceController implements Initializable {
         }
     }
     
-    public void inicializarPantalla(Avance avance, Academico usuarioAcademico){
+    public void inicializarPantalla(Avance avance, Academico usuarioAcademico, INotificacionAvances notificacionAvances){
+        this.notificacionAvances = notificacionAvances;
         this.avanceACalificar = avance;
         this.usuarioAcademico = usuarioAcademico;
         lblTitulo.setText(avanceACalificar.getTitulo());

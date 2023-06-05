@@ -50,7 +50,7 @@ public class FXMLAvanceElementoController implements Initializable {
             Parent vista = accesoControlador.load();
             FXMLDetalleAvanceController detalleAvance = accesoControlador.getController();
             if(esAcademico){
-                detalleAvance.inicializarDetalleAvanceAcademico(avance.getIdAvance(),usuarioAcademico);
+                detalleAvance.inicializarDetalleAvanceAcademico(avance.getIdAvance(),usuarioAcademico, notificacion);
             }else{
                 detalleAvance.inicializarDetalleAvanceEstudiante(avance.getIdAvance(),usuarioEstudiante, notificacion);
             }
@@ -64,7 +64,8 @@ public class FXMLAvanceElementoController implements Initializable {
         }
     }
     
-    public void incializarElementoAcademico(Avance avance, Academico academico){
+    public void incializarElementoAcademico(Avance avance, Academico academico, INotificacionAvances notificacion){
+        this.notificacion = notificacion;
         this.avance = avance;
         this.usuarioAcademico = academico;
         this.esAcademico = true;

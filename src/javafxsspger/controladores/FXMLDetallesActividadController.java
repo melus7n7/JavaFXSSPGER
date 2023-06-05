@@ -37,7 +37,9 @@ import javafxsspger.utils.Utilidades;
 public class FXMLDetallesActividadController implements Initializable {
 
     private Academico usuarioAcademico;
+    private Estudiante usuarioEstudiante;
     private Actividad actividad;
+    
     @FXML
     private TextArea txtAreaActividad;
     @FXML
@@ -89,7 +91,6 @@ public class FXMLDetallesActividadController implements Initializable {
         
     }
     
-    private Estudiante usuarioEstudiante;//MODIFICAR
     @FXML
     private void clicEditar(ActionEvent event) {
         System.out.println("Entra");
@@ -156,5 +157,5 @@ public class FXMLDetallesActividadController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+  
 }
