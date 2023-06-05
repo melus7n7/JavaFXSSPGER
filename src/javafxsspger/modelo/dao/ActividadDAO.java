@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javafxsspger.modelo.ConexionBD;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.ActividadRespuesta;
+import javafxsspger.modelo.pojo.Avance;
 import javafxsspger.utils.Constantes;
 
 /**
@@ -179,5 +180,93 @@ public class ActividadDAO {
             }
             return respuesta;
         }
+        
+    public static ActividadRespuesta obtenerActividades(int idEstudiante){
+        ActividadRespuesta respuesta = new ActividadRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String consulta = "SELECT idActividad, titulo, fechaCreacion, fechaInicio, fechaFinal FROM sspger.actividad WHERE idEstudiante = ? and idAvance is null";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idEstudiante);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Actividad> actividades = new ArrayList();
+                while(resultado.next()){
+                    Actividad actividad = new Actividad();
+                    actividad.setIdActividad(resultado.getInt("idActividad"));
+                    actividad.setTitulo(resultado.getString("titulo"));
+                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
+                    actividad.setFechaFinal(resultado.getString("fechaFinal"));
+                    actividades.add(actividad);
+                }
+                respuesta.setActividades(actividades);
+                conexionBD.close();
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                e.printStackTrace();
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static ActividadRespuesta obtenerActividadesPosiblesYDelAvance(Avance avance){
+        ActividadRespuesta respuesta = new ActividadRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String consulta = "SELECT idActividad, titulo, fechaCreacion, fechaInicio, fechaFinal, idAvance " +
+                    "FROM sspger.actividad WHERE idEstudiante = ? and idAvance is null or idAvance = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, avance.getIdEstudiante());
+                prepararSentencia.setInt(2, avance.getIdAvance());
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Actividad> actividades = new ArrayList();
+                while(resultado.next()){
+                    Actividad actividad = new Actividad();
+                    actividad.setIdActividad(resultado.getInt("idActividad"));
+                    actividad.setTitulo(resultado.getString("titulo"));
+                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
+                    actividad.setFechaFinal(resultado.getString("fechaFinal"));
+                    actividad.setIdAvance(resultado.getInt("idAvance"));
+                    actividades.add(actividad);
+                }
+                respuesta.setActividades(actividades);
+                conexionBD.close();
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                e.printStackTrace();
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static int agregarActividadAvance(int idActividad, int idAvance){
+        int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "UPDATE Actividad SET idAvance = ? WHERE idActividad = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAvance);
+                prepararSentencia.setInt(2, idActividad);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+                }catch(SQLException e){
+                    respuesta = Constantes.ERROR_CONSULTA;
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+    }
         
 }

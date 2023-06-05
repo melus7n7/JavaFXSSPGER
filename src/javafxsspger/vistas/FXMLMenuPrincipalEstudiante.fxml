@@ -10,12 +10,27 @@
 <AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLMenuPrincipalEstudianteController">
    <children>
       <Label fx:id="lblSaludo" layoutX="814.0" layoutY="64.0" prefHeight="55.0" prefWidth="182.0" text="Hola" />
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="728.0" layoutY="274.0" mnemonicParsing="false" onAction="#clicActividades" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Actividades" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttActividades" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="249.0" mnemonicParsing="false" onAction="#clicActividades" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Actividades" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="20.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="728.0" layoutY="403.0" mnemonicParsing="false" onAction="#clicAvances" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Avances" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttAvances" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="509.0" mnemonicParsing="false" onAction="#clicAvances" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Avances" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="bttTrabajoRecepcional" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="299.0" mnemonicParsing="false" onAction="#clicTrabajoRecepcional" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Trabajo Recepcional" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="bttCronogramaActividades" alignment="CENTER" contentDisplay="CENTER" layoutX="658.0" layoutY="369.0" mnemonicParsing="false" onAction="#clicCronogramaActividades" prefHeight="50.0" prefWidth="312.0" style="-fx-background-color: black;" text="Cronograma de Actividades" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="411.0" mnemonicParsing="false" onAction="#clicAnteproyectos" prefHeight="50.0" prefWidth="224.0" style="-fx-background-color: black;" text="Anteproyectos" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="20.0" />
          </font>

@@ -16,8 +16,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
+import javafxsspger.interfaces.INotificacionAvances;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Avance;
 import javafxsspger.modelo.pojo.Estudiante;
@@ -29,6 +31,7 @@ public class FXMLAvanceElementoController implements Initializable {
     private Academico usuarioAcademico;
     private Estudiante usuarioEstudiante;
     private boolean esAcademico;
+    private INotificacionAvances notificacion;
 
     @FXML
     private Label lblNombreAvance;
@@ -49,12 +52,13 @@ public class FXMLAvanceElementoController implements Initializable {
             if(esAcademico){
                 detalleAvance.inicializarDetalleAvanceAcademico(avance.getIdAvance(),usuarioAcademico);
             }else{
-                detalleAvance.inicializarDetalleAvanceEstudiante(avance.getIdAvance(),usuarioEstudiante);
+                detalleAvance.inicializarDetalleAvanceEstudiante(avance.getIdAvance(),usuarioEstudiante, notificacion);
             }
             Stage escenarioBase = new Stage();
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Detalles avance");
-            escenarioBase.show();
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.showAndWait();
         }catch(IOException ex){
             ex.printStackTrace();
         }
@@ -68,11 +72,13 @@ public class FXMLAvanceElementoController implements Initializable {
         lblFechaCreacion.setText(avance.getFechaCreacion());
     }
     
-    public void incializarElementoEstudiante(Avance avance, Estudiante estudiante){
+    public void incializarElementoEstudiante(Avance avance, Estudiante estudiante, INotificacionAvances notificacion){
+        this.notificacion = notificacion;
         this.avance = avance;
         this.usuarioEstudiante = estudiante;
         this.esAcademico = false;
         lblNombreAvance.setText(avance.getTitulo());
         lblFechaCreacion.setText(avance.getFechaCreacion());
     }
+    
 }

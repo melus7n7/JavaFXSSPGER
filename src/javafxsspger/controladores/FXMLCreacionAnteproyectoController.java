@@ -154,7 +154,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         inicializarCodirectores();
     }
     
-    public void inicializarCuerposAcademico(){
+    private void inicializarCuerposAcademico(){
         cuerposAcademicos = FXCollections.observableArrayList();
         CuerpoAcademicoRespuesta respuestaBD = CuerpoAcademicoDAO.recuperarCuerposAcademicos();
         switch(respuestaBD.getCodigoRespuesta()){
@@ -174,7 +174,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         }
     }
     
-    public void inicializarCodirectores (){
+    private void inicializarCodirectores (){
         AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesCodirectores(academicoCreacion);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
@@ -192,7 +192,8 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         }
     }
     
-    public void cargarDirectores (ArrayList <Academico> academicos){
+    private void cargarDirectores (ArrayList <Academico> academicos){
+        int altoVBox = 0;
         for (int i=0; i<academicos.size(); i++){
             FXMLLoader fmxlLoader = new FXMLLoader();
             fmxlLoader.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLCodirectorElemento.fxml"));
@@ -200,20 +201,25 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
                 Pane pane = fmxlLoader.load();
                 FXMLCodirectorElementoController elementoEnLista = fmxlLoader.getController();
                 elementoEnLista.setElementos(academicos.get(i), this, false);
+                altoVBox += pane.getPrefHeight();
+                vBoxListaCodirectores.setPrefHeight(altoVBox);
                 vBoxListaCodirectores.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
+        if(vBoxListaCodirectores.getPrefHeight() < scrPaneCajaCodirectores.getPrefHeight()){
+            vBoxListaCodirectores.setPrefHeight(scrPaneCajaCodirectores.getPrefHeight());
+        }
     }
     
-    public void inicializarDatos(){
+    private void inicializarDatos(){
         tiposAnteproyecto = FXCollections.observableArrayList();
         tiposAnteproyecto.addAll(Utilidades.obtenerTiposAnteproyecto());
         cmbBoxTipoAnteproyecto.setItems(tiposAnteproyecto);
     }
     
-    public void inicializarLGAC(int idCuerpoAcademico){
+    private void inicializarLGAC(int idCuerpoAcademico){
         lgacs = FXCollections.observableArrayList();
         LGACRespuesta lgacRespuesta = LGACDAO.recuperarLGAC(idCuerpoAcademico);
         switch(lgacRespuesta.getCodigoRespuesta()){
@@ -232,7 +238,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         }
     }
 
-    public void validarCamposRegistro(){
+    private void validarCamposRegistro(){
         establecerEstiloNormal();
         boolean camposValidos = true;
         
@@ -302,7 +308,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         }
     }
     
-    public void registrarAnteproyecto(Anteproyecto anteproyectoNuevo){
+    private void registrarAnteproyecto(Anteproyecto anteproyectoNuevo){
         Anteproyecto anteproyectoRespuesta = AnteproyectoDAO.guardarAnteproyecto(anteproyectoNuevo);
         switch(anteproyectoRespuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:

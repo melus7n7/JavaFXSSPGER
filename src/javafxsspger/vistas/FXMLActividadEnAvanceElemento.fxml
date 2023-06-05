@@ -24,5 +24,10 @@
             <Font name="SansSerif Regular" size="14.0" />
          </font>
       </Label>
+      <CheckBox fx:id="chcBoxAgregarActividad" layoutX="382.0" layoutY="44.0" mnemonicParsing="false" onAction="#clicAgregarActividad" text="Añadir" visible="false">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </CheckBox>
    </children>
 </Pane>

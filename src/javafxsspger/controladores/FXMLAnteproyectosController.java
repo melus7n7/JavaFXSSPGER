@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -53,6 +54,8 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     private Label lblTitulo;
     @FXML
     private Button btnAnteproyectosPropios;
+    @FXML
+    private ScrollPane scrPaneContenedorAnteproyectos;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -100,7 +103,8 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
             Stage escenarioBase = new Stage();
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Creación Anteproyecto");
-            escenarioBase.show();
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.showAndWait();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -204,6 +208,7 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     }
     
     private void mostrarElementos (ArrayList <Anteproyecto> anteproyectos){
+        int altoVBox = 0;
         for (int i=0; i<anteproyectos.size(); i++){
             FXMLLoader fmxlLoaderAnteproyecto = new FXMLLoader();
             fmxlLoaderAnteproyecto.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectoElemento.fxml"));
@@ -211,12 +216,16 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
                 elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), numeroPantalla, this, usuarioAcademico.getIdAcademico());
+                altoVBox += pane.getPrefHeight();
+                vBoxListaAnteproyectosPublicados.setPrefHeight(altoVBox);
                 vBoxListaAnteproyectosPublicados.getChildren().add(pane);
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
+        if(vBoxListaAnteproyectosPublicados.getPrefHeight() < scrPaneContenedorAnteproyectos.getPrefHeight()){
+            vBoxListaAnteproyectosPublicados.setPrefHeight(scrPaneContenedorAnteproyectos.getPrefHeight());
+        }
     }
 
-    
 }
