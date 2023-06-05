@@ -1,5 +1,5 @@
 /*
-*Autor: Montiel Salas Jesús Jacob
+*Autor: Montiel Salas Jesús Jacob, Martinez Aguilar Sulem
 *Fecha de creación: 20/05/2023
 *Fecha de modificación: 20/05/2023
 *Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de las Actividades
@@ -23,7 +23,7 @@ import javafxsspger.utils.Constantes;
  */
 public class ActividadDAO {
     
-    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcionalDirector(int idTrabajoRecepcional){
+    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcionalAcademico(int idTrabajoRecepcional){
         ActividadRespuesta respuesta = new ActividadRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD!=null){
@@ -108,50 +108,6 @@ public class ActividadDAO {
         return respuesta;
     }
     
-    public static ActividadRespuesta obtenerActividadesPorTrabajoRecepcionalProfesor(int idTrabajoRecepcional, int idAcademico){
-        ActividadRespuesta respuesta = new ActividadRespuesta();
-        Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
-            try{
-                String consulta = "SELECT  Usuario.nombreUsuario, Usuario.apellidoPaterno, Usuario.apellidoMaterno, Actividad.idActividad, Actividad.titulo,Actividad.descripcion, " +
-                "Actividad.fechaCreacion,Actividad.fechaInicio,Actividad.fechaFinal " +
-                "FROM sspger.ExperienciaEducativa " +
-                "INNER JOIN perteneceexperienciaeducativa ON perteneceexperienciaeducativa.idExperienciaEducativa = ExperienciaEducativa.idExperienciaEducativa     " +
-                "INNER JOIN estudiante ON estudiante.idEstudiante = perteneceexperienciaeducativa.idEstudiante      " +
-                "INNER JOIN usuario ON usuario.idUsuario = estudiante.idUsuario  " +
-                "INNER JOIN trabajorecepcional ON trabajorecepcional.idTrabajoRecepcional=estudiante.idTrabajoRecepcional" +
-                "INNER JOIN actividad ON estudiante.idEstudiante = actividad.idEstudiante " +
-                "where ExperienciaEducativa.idAcademico = ? AND trabajorecepcional.idTrabajoRecepcional = ?; ";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
-                prepararSentencia.setInt(1, idAcademico);
-                prepararSentencia.setInt(2, idTrabajoRecepcional);
-                ResultSet resultado = prepararSentencia.executeQuery();
-                ArrayList<Actividad> ActividadesConsulta = new ArrayList();
-                while(resultado.next()){
-                    Actividad actividad = new Actividad();
-                    actividad.setNombreEstudiante(resultado.getString("nombreUsuario"));
-                    actividad.setApellidoPaternoEstudiante(resultado.getString("apellidoPaterno"));
-                    actividad.setApellidoMaternoEstudiante(resultado.getString("apellidoMaterno"));
-                    actividad.setIdActividad(resultado.getInt("idActividad"));
-                    actividad.setTitulo(resultado.getString("titulo"));
-                    actividad.setDescripcion(resultado.getString("descripcion"));
-                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
-                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
-                    actividad.setFechaFinal(resultado.getString("fechaFinal"));
-                    ActividadesConsulta.add(actividad);
-                }
-                respuesta.setActividades(ActividadesConsulta);
-                conexionBD.close();
-                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
-            }catch(SQLException e){
-                e.printStackTrace();
-                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
-            } 
-        }else{
-            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
-        }
-        return respuesta;
-    }
     
     
     public static int guardarActividad(Actividad actividadNueva){
@@ -311,6 +267,95 @@ public class ActividadDAO {
                 respuesta = Constantes.ERROR_CONEXION;
             }
             return respuesta;
+    }
+    
+    public static ActividadRespuesta obtenerActividadesPorFechaYTrabajoRecepcionalAcademico(int idTrabajoRecepcional, String fechaFiltro){
+        ActividadRespuesta respuesta = new ActividadRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String consulta = "SELECT Usuario.nombreUsuario, Usuario.apellidoPaterno, Usuario.apellidoMaterno, Actividad.idActividad, Actividad.titulo,Actividad.descripcion, " +
+                "Actividad.fechaCreacion,Actividad.fechaInicio,Actividad.fechaFinal " +
+                "from Usuario  " +
+                "INNER JOIN Estudiante ON Usuario.idUsuario=Estudiante.idUsuario " +
+                "INNER JOIN Actividad ON Estudiante.idEstudiante=Actividad.idEstudiante " +
+                "INNER JOIN TrabajoRecepcional ON Actividad.idTrabajoRecepcional=TrabajoRecepcional.idTrabajoRecepcional " +
+                "where TrabajoRecepcional.idTrabajoRecepcional=? AND Actividad.fechaInicio <= ? AND Actividad.fechaFinal >= ?; ";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idTrabajoRecepcional);
+                prepararSentencia.setString(2, fechaFiltro);
+                prepararSentencia.setString(3, fechaFiltro);                
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Actividad> ActividadesConsulta = new ArrayList();
+                while(resultado.next()){
+                    Actividad actividad = new Actividad();
+                    actividad.setNombreEstudiante(resultado.getString("nombreUsuario"));
+                    actividad.setApellidoPaternoEstudiante(resultado.getString("apellidoPaterno"));
+                    actividad.setApellidoMaternoEstudiante(resultado.getString("apellidoMaterno"));
+                    actividad.setIdActividad(resultado.getInt("idActividad"));
+                    actividad.setTitulo(resultado.getString("titulo"));
+                    actividad.setDescripcion(resultado.getString("descripcion"));
+                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
+                    actividad.setFechaFinal(resultado.getString("fechaFinal"));
+                    ActividadesConsulta.add(actividad);
+                }
+                respuesta.setActividades(ActividadesConsulta);
+                conexionBD.close();
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                e.printStackTrace();
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static ActividadRespuesta obtenerActividadesPorFechaYTrabajoRecepcionalEstudiante(int idTrabajoRecepcional, String fechaFiltro, int idEstudiante){
+        ActividadRespuesta respuesta = new ActividadRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD!=null){
+            try{
+                String consulta = "SELECT Usuario.nombreUsuario, Usuario.apellidoPaterno, Usuario.apellidoMaterno, Actividad.idActividad, Actividad.titulo,Actividad.descripcion, " +
+                "Actividad.fechaCreacion,Actividad.fechaInicio,Actividad.fechaFinal " +
+                "from Usuario  " +
+                "INNER JOIN Estudiante ON Usuario.idUsuario=Estudiante.idUsuario " +
+                "INNER JOIN Actividad ON Estudiante.idEstudiante=Actividad.idEstudiante " +
+                "INNER JOIN TrabajoRecepcional ON Actividad.idTrabajoRecepcional=TrabajoRecepcional.idTrabajoRecepcional " +
+                "where TrabajoRecepcional.idTrabajoRecepcional=? AND Actividad.fechaInicio <= ? AND Actividad.fechaFinal >= ? AND Estudiante.idEstudiante=?; ";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idTrabajoRecepcional);
+                prepararSentencia.setString(2, fechaFiltro);
+                prepararSentencia.setString(3, fechaFiltro);                
+                prepararSentencia.setInt(4, idEstudiante);                
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Actividad> ActividadesConsulta = new ArrayList();
+                while(resultado.next()){
+                    Actividad actividad = new Actividad();
+                    actividad.setNombreEstudiante(resultado.getString("nombreUsuario"));
+                    actividad.setApellidoPaternoEstudiante(resultado.getString("apellidoPaterno"));
+                    actividad.setApellidoMaternoEstudiante(resultado.getString("apellidoMaterno"));
+                    actividad.setIdActividad(resultado.getInt("idActividad"));
+                    actividad.setTitulo(resultado.getString("titulo"));
+                    actividad.setDescripcion(resultado.getString("descripcion"));
+                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
+                    actividad.setFechaFinal(resultado.getString("fechaFinal"));
+                    ActividadesConsulta.add(actividad);
+                }
+                respuesta.setActividades(ActividadesConsulta);
+                conexionBD.close();
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                e.printStackTrace();
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
     }
         
 }

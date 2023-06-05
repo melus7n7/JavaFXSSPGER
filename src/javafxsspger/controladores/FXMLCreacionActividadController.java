@@ -123,8 +123,8 @@ public class FXMLCreacionActividadController implements Initializable {
             String fechaInicio = dtPickerFechaInicio.getValue().toString();
             String fechaFinal = dtPickerFechaFin.getValue().toString();
             System.out.println(fechaInicio+""+fechaFinal);
-            int idEstudiante=usuarioEstudiante.getIdEstudiante(); //MODIFICAR
-            int idTrabajoRecepcional=usuarioEstudiante.getIdTrabajoRecepcional(); //MODIFICAR
+            int idEstudiante=usuarioEstudiante.getIdEstudiante(); 
+            int idTrabajoRecepcional=usuarioEstudiante.getIdTrabajoRecepcional(); 
             
                 LocalDate fechaI = dtPickerFechaInicio.getValue();
                 LocalDate fechaF = dtPickerFechaFin.getValue();
@@ -136,8 +136,8 @@ public class FXMLCreacionActividadController implements Initializable {
                 actividadValidada.setDescripcion(descripcion);
                 actividadValidada.setFechaInicio(fechaInicio);
                 actividadValidada.setFechaFinal(fechaFinal);
-                actividadValidada.setIdEstudiante(idEstudiante); //MODIFICAR
-                actividadValidada.setIdTrabajoRecepcional(idTrabajoRecepcional); //MODIFICAR
+                actividadValidada.setIdEstudiante(idEstudiante); 
+                actividadValidada.setIdTrabajoRecepcional(idTrabajoRecepcional);
                 
                 if (fechaI.compareTo(fechaF) > 0) {
                     Utilidades.mostrarDialogoSimple("Fechas Invalidas", "La fecha ingresada no es válida. Ingrese una nueva fecha.", Alert.AlertType.WARNING);
