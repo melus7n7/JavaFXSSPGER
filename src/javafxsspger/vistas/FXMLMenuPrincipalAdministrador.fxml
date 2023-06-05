@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLMenuPrincipalAdministradorController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: #C2DEDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLMenuPrincipalAdministradorController">
    <children>
-      <Label fx:id="lblSaludo" layoutX="333.0" layoutY="97.0" text="Hola" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#116a7b" height="169.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1100.0" />
+      <Circle fill="WHITE" layoutX="90.0" layoutY="79.0" radius="55.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="lblSaludo" alignment="CENTER" layoutX="774.0" layoutY="119.0" prefHeight="30.0" prefWidth="263.0" text="Hola" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Italic" size="25.0" />
+         </font></Label>
+      <ImageView fitHeight="65.0" fitWidth="58.0" layoutX="66.0" layoutY="53.0" onMouseClicked="#clicCerrarSesion" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/salirSesion.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblTitulo" layoutX="297.0" layoutY="36.0" text="Menú Principal" textFill="WHITE">
+         <font>
+            <Font name="Trebuchet MS Bold" size="73.0" />
+         </font>
+      </Label>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="95.0" layoutY="416.0" mnemonicParsing="false" onAction="#clicLGAC" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="LGAC" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="25.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="605.0" layoutY="416.0" mnemonicParsing="false" onAction="#clicExperienciaEducativa" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Experiencias Educativas" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="25.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="95.0" layoutY="210.0" mnemonicParsing="false" onAction="#clicCuerposAcademicos" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Cuerpos Académicos" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="25.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="605.0" layoutY="210.0" mnemonicParsing="false" onAction="#clicCuentaInstitucional" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Cuentas institucionales" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="25.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="123.0" fitWidth="124.0" layoutX="203.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoCuerposAcademicos.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="190.0" layoutY="477.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoLGAC.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="123.0" fitWidth="110.0" layoutX="720.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoCuentas.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="116.0" fitWidth="130.0" layoutX="717.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoEE.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

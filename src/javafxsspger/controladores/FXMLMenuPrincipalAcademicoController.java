@@ -17,6 +17,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
@@ -46,6 +49,14 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     private Button bttAvances;
     @FXML
     private Button bttGenerarReporte;
+    @FXML
+    private AnchorPane imgViewAnteproyectos;
+    @FXML
+    private ImageView imgViewTrabajoRecepcional;
+    @FXML
+    private ImageView imgViewActividades;
+    @FXML
+    private ImageView imgViewAvances;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -153,14 +164,53 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     public void mostrarPermisos(){
         if(usuarioAcademico.isEsProfesor() || usuarioAcademico.isEsDirector()){
             bttAvances.setDisable(false);
+            imgViewAvances.setDisable(false);
             bttActividades.setDisable(false);
+            imgViewActividades.setDisable(false);
             bttGenerarReporte.setDisable(false);
             bttTrabajosRecepcionales.setDisable(false);
+            imgViewTrabajoRecepcional.setDisable(false);
             bttCronograma.setDisable(false);
         }
         if(usuarioAcademico.isEsDirector()){
             bttAsignar.setDisable(false);
         }
+    }
+
+    @FXML
+    private void clicCerrarSesion(MouseEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cerrar Sesión", "¿Desea cerrar la sesión actual?")){
+            Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+            try {
+                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
+                Parent vista = accesoControlador.load();
+                escenarioBase.setScene(new Scene (vista));
+                escenarioBase.setTitle("Inicio Sesión");
+                escenarioBase.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void clicTrabajoRecepcionalImage(MouseEvent event) {
+        clicTrabajosRecepcionales(new ActionEvent());
+    }
+
+    @FXML
+    private void clicAnteproyectosImage(MouseEvent event) {
+        clicAnteproyectos(new ActionEvent());
+    }
+
+    @FXML
+    private void clicActividadesImage(MouseEvent event) {
+        clicActividades(new ActionEvent());
+    }
+
+    @FXML
+    private void clicAvancesImage(MouseEvent event) {
+        clicAvances(new ActionEvent());
     }
 
     

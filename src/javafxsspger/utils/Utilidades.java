@@ -8,12 +8,14 @@ package javafxsspger.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.pojo.Calificacion;
 import javafxsspger.modelo.pojo.TipoAnteproyecto;
@@ -79,5 +81,14 @@ public class Utilidades {
        
        return calificaciones;
    }
+   
+   public static boolean mostrarDialogoConfirmacion(String titulo, String mensaje){
+        Alert alertaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        alertaConfirmacion.setTitle(titulo);
+        alertaConfirmacion.setContentText(mensaje);
+        alertaConfirmacion.setHeaderText(null);
+        Optional<ButtonType> botonClic = alertaConfirmacion.showAndWait();
+        return (botonClic.get() == ButtonType.OK);
+    }
    
 }

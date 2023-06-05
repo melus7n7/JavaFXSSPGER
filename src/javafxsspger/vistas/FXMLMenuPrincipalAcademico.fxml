@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -8,52 +9,79 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLMenuPrincipalAcademicoController">
+<AnchorPane id="AnchorPane" fx:id="imgViewAnteproyectos" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: #C2DEDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLMenuPrincipalAcademicoController">
    <children>
-      <Label fx:id="lblTitulo" layoutX="139.0" layoutY="29.0" text="Menú Principal">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#116a7b" height="169.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1100.0" />
+      <Label fx:id="lblTitulo" layoutX="288.0" layoutY="35.0" text="Menú Principal" textFill="WHITE">
          <font>
-            <Font name="Trebuchet MS Bold" size="51.0" />
+            <Font name="Trebuchet MS Bold" size="73.0" />
          </font>
       </Label>
-      <Button fx:id="bttTrabajosRecepcionales" alignment="CENTER" disable="true" layoutX="86.0" layoutY="200.0" mnemonicParsing="false" onAction="#clicTrabajosRecepcionales" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: black;" text="Trabajos Recepcionales" textFill="WHITE">
+      <Button fx:id="bttTrabajosRecepcionales" alignment="CENTER" disable="true" layoutX="93.0" layoutY="187.0" mnemonicParsing="false" onAction="#clicTrabajosRecepcionales" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Trabajos Recepcionales" textFill="WHITE">
          <font>
-            <Font name="SansSerif Regular" size="20.0" />
+            <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
-      <Button fx:id="bttActividades" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="718.0" layoutY="264.0" mnemonicParsing="false" onAction="#clicActividades" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Actividades" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttActividades" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="625.0" layoutY="247.0" mnemonicParsing="false" onAction="#clicActividades" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Actividades" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="SansSerif Regular" size="20.0" />
+            <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
-      <Button fx:id="bttCronograma" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="718.0" layoutY="188.0" mnemonicParsing="false" onAction="#clicCronogramaActividades" prefHeight="50.0" prefWidth="322.0" style="-fx-background-color: black;" text="Cronograma de Actividades" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttCronograma" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="609.0" layoutY="187.0" mnemonicParsing="false" onAction="#clicCronogramaActividades" prefHeight="50.0" prefWidth="371.0" style="-fx-background-color: #213555;" text="Cronograma de Actividades" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="SansSerif Regular" size="20.0" />
+            <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="408.0" mnemonicParsing="false" onAction="#clicAnteproyectos" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Anteproyectos" textAlignment="CENTER" textFill="WHITE">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="92.0" layoutY="386.0" mnemonicParsing="false" onAction="#clicAnteproyectos" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Anteproyectos" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="SansSerif Regular" size="20.0" />
+            <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
-      <Button fx:id="bttAsignar" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="98.0" layoutY="491.0" mnemonicParsing="false" onAction="#clicAsignarEstudiante" prefHeight="50.0" prefWidth="438.0" style="-fx-background-color: black;" text="Asignar estudiantes a un anteproyecto" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="bttAsignar" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="93.0" layoutY="445.0" mnemonicParsing="false" onAction="#clicAsignarEstudiante" prefHeight="86.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Asignar estudiantes a un anteproyecto" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
-            <Font name="SansSerif Regular" size="20.0" />
+            <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
-      <Button fx:id="bttAvances" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="718.0" layoutY="352.0" mnemonicParsing="false" onAction="#clicAvances" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Avances" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttAvances" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="625.0" layoutY="386.0" mnemonicParsing="false" onAction="#clicAvances" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Avances" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="SansSerif Regular" size="20.0" />
+            <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
-      <Label fx:id="lblNombreAcademico" alignment="CENTER" layoutX="569.0" layoutY="33.0" prefHeight="123.0" prefWidth="474.0" text="Hola XXX" wrapText="true">
+      <Label fx:id="lblNombreAcademico" alignment="CENTER" layoutX="564.0" layoutY="118.0" prefHeight="38.0" prefWidth="479.0" text="Hola XXX" textFill="WHITE" wrapText="true">
          <font>
-            <Font name="SansSerif Italic" size="20.0" />
+            <Font name="SansSerif Italic" size="25.0" />
          </font>
       </Label>
-      <Button fx:id="bttGenerarReporte" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="718.0" layoutY="437.0" mnemonicParsing="false" onAction="#clicGenerarReporte" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: black;" text="Generar Reporte" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttGenerarReporte" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="625.0" layoutY="451.0" mnemonicParsing="false" onAction="#clicGenerarReporte" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Generar Reporte" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="SansSerif Regular" size="20.0" />
+            <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
+      <Circle fill="WHITE" layoutX="92.0" layoutY="76.0" radius="55.0" stroke="BLACK" strokeType="INSIDE" />
+      <ImageView fitHeight="65.0" fitWidth="58.0" layoutX="65.0" layoutY="49.0" onMouseClicked="#clicCerrarSesion" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/salirSesion.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgViewTrabajoRecepcional" disable="true" fitHeight="101.0" fitWidth="103.0" layoutX="211.0" layoutY="253.0" onMouseClicked="#clicTrabajoRecepcionalImage" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoTrabajoRecepcional.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="94.0" fitWidth="91.0" layoutX="216.0" layoutY="545.0" onMouseClicked="#clicAnteproyectosImage" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoAnteproyectos.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgViewActividades" disable="true" fitHeight="77.0" fitWidth="78.0" layoutX="749.0" layoutY="297.0" onMouseClicked="#clicActividadesImage" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoActividad.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgViewAvances" disable="true" fitHeight="101.0" fitWidth="101.0" layoutX="744.0" layoutY="514.0" onMouseClicked="#clicAvancesImage" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoAvances.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
