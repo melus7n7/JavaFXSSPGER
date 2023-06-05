@@ -23,7 +23,7 @@ import javafxsspger.utils.Constantes;
 public class TrabajoRecepcionalDAO {
     
     
-    public static TrabajoRecepcionalRespuesta obtenerNombresTrabajosRecepcionalesAcademico(int idAcademico){
+    public static TrabajoRecepcionalRespuesta obtenerNombresTrabajosRecepcionalesDirector(int idAcademico){
         TrabajoRecepcionalRespuesta respuesta = new TrabajoRecepcionalRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
@@ -69,6 +69,41 @@ public class TrabajoRecepcionalDAO {
                 "INNER JOIN TrabajoRecepcional ON Estudiante.idTrabajoRecepcional=TrabajoRecepcional.idTrabajoRecepcional where Estudiante.idEstudiante=?; ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idEstudiante);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <TrabajoRecepcional> trabajosRecepcionalesConsulta = new ArrayList();
+                while(resultado.next()){
+                    TrabajoRecepcional trabajoRecepcional = new TrabajoRecepcional();
+                    trabajoRecepcional.setIdTrabajoRecepcional(resultado.getInt("idtrabajorecepcional"));
+                    trabajoRecepcional.setTitulo(resultado.getString("titulo"));       
+                    trabajosRecepcionalesConsulta.add(trabajoRecepcional);
+                }
+                respuesta.setTrabajosRecepcionales(trabajosRecepcionalesConsulta);
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            } 
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static TrabajoRecepcionalRespuesta obtenerNombresTrabajosRecepcionalesProfesor(int idAcademico){
+        TrabajoRecepcionalRespuesta respuesta = new TrabajoRecepcionalRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT trabajorecepcional.idtrabajorecepcional, trabajorecepcional.titulo " +
+                       "FROM sspger.ExperienciaEducativa      " +
+                       "INNER JOIN perteneceexperienciaeducativa ON perteneceexperienciaeducativa.idExperienciaEducativa = ExperienciaEducativa.idExperienciaEducativa     " +
+                       "INNER JOIN estudiante ON estudiante.idEstudiante = perteneceexperienciaeducativa.idEstudiante      " +
+                       "INNER JOIN usuario ON usuario.idUsuario = estudiante.idUsuario   "+
+                       "INNER JOIN trabajorecepcional ON trabajorecepcional.idTrabajoRecepcional=estudiante.idTrabajoRecepcional " +
+                       "where ExperienciaEducativa.idAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAcademico);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList <TrabajoRecepcional> trabajosRecepcionalesConsulta = new ArrayList();
                 while(resultado.next()){

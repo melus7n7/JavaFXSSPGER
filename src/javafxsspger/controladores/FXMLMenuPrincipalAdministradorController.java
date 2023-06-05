@@ -68,6 +68,18 @@ public class FXMLMenuPrincipalAdministradorController implements Initializable {
 
     @FXML
     private void clicCuerposAcademicos(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCuerposAcademicos.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCuerposAcademicosController cuerpoAcademico = accesoControlador.getController();
+            cuerpoAcademico.inicializarInformacionUsuario(usuarioAdmin); 
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Cuerpos Academicos");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

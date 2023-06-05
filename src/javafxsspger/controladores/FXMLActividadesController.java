@@ -71,36 +71,69 @@ public class FXMLActividadesController implements Initializable {
     private void cargarInformacionTrabajosRecepcionales(){
         trabajosRecepcionales=FXCollections.observableArrayList();
         TrabajoRecepcionalRespuesta trabajosRecepcionalesBD = new TrabajoRecepcionalRespuesta(); 
+        TrabajoRecepcionalRespuesta respuestaTotal = new TrabajoRecepcionalRespuesta();
+        respuestaTotal.setTrabajosRecepcionales(new ArrayList());
         if(usuarioAcademico!=null){
             if(usuarioAcademico.isEsDirector() && usuarioAcademico.isEsProfesor()){
-                //trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioAcademico.getIdAcademico());
-                //HashSet <TrabajoRecepcional> hashSet = new HashSet<TrabajoRecepcional>(trabajosRecepcionalesBD.getTrabajosRecepcionales());
-                //ArrayList<TrabajoRecepcional> lista = new ArrayList<>(hashSet);
                 System.out.println("Es director y profesor");
+                TrabajoRecepcionalRespuesta trabajosRecepcionalesProfesor = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesProfesor(this.usuarioAcademico.getIdAcademico());                                                 
+                TrabajoRecepcionalRespuesta trabajosRecepcionalesDirector = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesDirector(this.usuarioAcademico.getIdAcademico()); 
+                respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesProfesor.getTrabajosRecepcionales());
+                respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesDirector.getTrabajosRecepcionales());
+                if(trabajosRecepcionalesProfesor.getCodigoRespuesta()==Constantes.OPERACION_EXITOSA && trabajosRecepcionalesDirector.getCodigoRespuesta()==Constantes.OPERACION_EXITOSA){
+                    respuestaTotal.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                }else{
+                    respuestaTotal.setCodigoRespuesta(Constantes.ERROR_CONSULTA);                
+                }
             }else if(usuarioAcademico.isEsDirector()){
-                trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesAcademico(this.usuarioAcademico.getIdAcademico());                 
-            System.out.println("Eres Director");            
+                trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesDirector(this.usuarioAcademico.getIdAcademico());           
+                respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesBD.getTrabajosRecepcionales());    
+                respuestaTotal.setCodigoRespuesta(trabajosRecepcionalesBD.getCodigoRespuesta());
             }else if(usuarioAcademico.isEsProfesor()){
-                //MODIFICAR
-                System.out.println("Eres Profesor");            
+                trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesProfesor(this.usuarioAcademico.getIdAcademico()); 
+                respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesBD.getTrabajosRecepcionales());                
+                respuestaTotal.setCodigoRespuesta(trabajosRecepcionalesBD.getCodigoRespuesta());
             }
         }else{    
-            trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioEstudiante.getIdEstudiante());                 
-            System.out.println("Eres estudiante");
+            trabajosRecepcionalesBD = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesEstudiante(this.usuarioEstudiante.getIdEstudiante());                      
+            respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesBD.getTrabajosRecepcionales());
+            respuestaTotal.setCodigoRespuesta(trabajosRecepcionalesBD.getCodigoRespuesta());
         }
+            
+        ArrayList<TrabajoRecepcional> listaSinDuplicados = new ArrayList();
+            for(TrabajoRecepcional trabajorecepcional: respuestaTotal.getTrabajosRecepcionales()){
+                if(!estaRepetido(trabajorecepcional, listaSinDuplicados)){
+                    listaSinDuplicados.add(trabajorecepcional);
+                }
+            }
+        respuestaTotal.setTrabajosRecepcionales(listaSinDuplicados);
+        cargarComboBox(respuestaTotal);
         
-        switch(trabajosRecepcionalesBD.getCodigoRespuesta()){
-            case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
-            break;
-        case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
-             break;
-        case Constantes.OPERACION_EXITOSA:
-            trabajosRecepcionales.addAll(trabajosRecepcionalesBD.getTrabajosRecepcionales());
-            cmbBoxTrabajosRecepcionales.setItems(trabajosRecepcionales);
-            break;
+    }
+    
+    private void cargarComboBox(TrabajoRecepcionalRespuesta respuestaTotal){
+        System.out.println("CODIGO"+respuestaTotal.getCodigoRespuesta());
+        switch(respuestaTotal.getCodigoRespuesta()){
+               case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                trabajosRecepcionales.addAll(respuestaTotal.getTrabajosRecepcionales());
+                cmbBoxTrabajosRecepcionales.setItems(trabajosRecepcionales);
+                break;
+            }
+    }
+    
+    private boolean estaRepetido(TrabajoRecepcional trabajo, ArrayList<TrabajoRecepcional> trabajosrecepcionales){
+        for(TrabajoRecepcional trabajoRecepcionalLista: trabajosrecepcionales){
+            if(trabajo.getIdTrabajoRecepcional()== trabajoRecepcionalLista.getIdTrabajoRecepcional()){
+                return true;
+            }
         }
+        return false;
     }
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante){
@@ -155,12 +188,8 @@ public class FXMLActividadesController implements Initializable {
                 Utilidades.mostrarDialogoSimple("Error cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                                            
             }else{
                int idTrabajoRecepcional=trabajoRecepcional.getIdTrabajoRecepcional();
-               System.out.println("Trabajo Recepcional selec"+idTrabajoRecepcional);
-               System.out.println("Trabajo Recepcional seleccionado es: "+idTrabajoRecepcional);
-               System.out.println("Trabajo Recepcional selec"+idTrabajoRecepcional);
-               System.out.println("Trabajo Recepcional selec"+idTrabajoRecepcional);
                if(usuarioAcademico!=null){
-                   cargarActividadesAcademico(idTrabajoRecepcional);
+                    cargarActividadesDirector(idTrabajoRecepcional);
                }else{
                    cargarActividadesEstudiante(idTrabajoRecepcional);
                }
@@ -175,11 +204,12 @@ public class FXMLActividadesController implements Initializable {
         vBoxListaActividades.getChildren().clear();
     }
     
-    private void cargarActividadesAcademico(int idTrabajoRecepcional){
+    
+    
+    private void cargarActividadesDirector(int idTrabajoRecepcional){
         trabajosRecepcionales.clear();
         cargarInformacionTrabajosRecepcionales();
-        ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalAcademico(idTrabajoRecepcional);
-
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalDirector(idTrabajoRecepcional);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);

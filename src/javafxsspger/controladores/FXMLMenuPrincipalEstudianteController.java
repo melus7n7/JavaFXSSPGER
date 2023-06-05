@@ -97,15 +97,24 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
 
     @FXML
     private void clicCronogramaActividades(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCronogramaActividades.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCronogramaActividadesController cronogramaActividades = accesoControlador.getController();
+            cronogramaActividades.inicializarInformacionEstudiante(usuarioEstudiante); 
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Cronograma de Actividades");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
     private void clicAnteproyectos(ActionEvent event) {
     }
     
-    @FXML
-    private void clicCronogramaActividades(MouseEvent event) {
-    }
 
     @FXML
     private void clicCerrarSesion(MouseEvent event) {

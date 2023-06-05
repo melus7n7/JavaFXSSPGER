@@ -95,24 +95,14 @@ public class FXMLCreacionActividadController implements Initializable {
     
     private void cerrarVentana(){
         Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
-        try {
-            if(esEdicion){
-                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
-                Parent vista = accesoControlador.load();
-                FXMLDetallesActividadController DetallesActividad = accesoControlador.getController();
-                DetallesActividad.inicializarInformacionEstudiante(usuarioEstudiante, this.actividad); 
-                escenarioBase.setScene(new Scene (vista));
-                escenarioBase.setTitle("Detalles de Actividad");
-                escenarioBase.show();
-            }else{
-                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividades.fxml"));
-                Parent vista = accesoControlador.load();
-                FXMLActividadesController Actividades = accesoControlador.getController();
-                Actividades.inicializarInformacionEstudiante(usuarioEstudiante); 
-                escenarioBase.setScene(new Scene (vista));
-                escenarioBase.setTitle("Actividades");
-                escenarioBase.show();
-            }
+        try {            
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividades.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLActividadesController Actividades = accesoControlador.getController();
+            Actividades.inicializarInformacionEstudiante(usuarioEstudiante); 
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Actividades");
+            escenarioBase.show();            
         } catch (IOException ex) {
             ex.printStackTrace();
         }
