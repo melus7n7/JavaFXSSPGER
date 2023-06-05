@@ -1,8 +1,8 @@
 /*
-*Autor: Montiel Salas Jacob
+*Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 03/06/2023
 *Fecha de modificación: 03/06/2023
-*Descripción: Controlador de la vista del detalle de un avance
+*Descripción: Controlador de la vista del detalle de una actividad
 */
 package javafxsspger.controladores;
 
