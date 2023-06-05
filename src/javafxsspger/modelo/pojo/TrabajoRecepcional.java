@@ -28,6 +28,9 @@ public class TrabajoRecepcional {
     private int idEstado; 
     private int idLGAC;
     private int codigoRespuesta;
+    
+    private int idAcademico;
+    private String nombreDirector;
 
     public TrabajoRecepcional() {
     }
@@ -167,6 +170,22 @@ public class TrabajoRecepcional {
 
     public void setCodigoRespuesta(int codigoRespuesta) {
         this.codigoRespuesta = codigoRespuesta;
+    }
+
+    public int getIdAcademico() {
+        return idAcademico;
+    }
+
+    public String getNombreDirector() {
+        return nombreDirector;
+    }
+
+    public void setIdAcademico(int idAcademico) {
+        this.idAcademico = idAcademico;
+    }
+
+    public void setNombreDirector(String nombreDirector) {
+        this.nombreDirector = nombreDirector;
     }
     
     @Override
