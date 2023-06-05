@@ -1,8 +1,8 @@
 /*
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 20/05/2023
-*Fecha de modificación: 30/05/2023
-*Descripción: Controlador de la vista de Actividades para el Academico
+*Fecha de modificación: 05/06/2023
+*Descripción: Controlador de la vista de Actividades
 */
 package javafxsspger.controladores;
 
@@ -99,7 +99,6 @@ public class FXMLActividadesController implements Initializable {
             respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesBD.getTrabajosRecepcionales());
             respuestaTotal.setCodigoRespuesta(trabajosRecepcionalesBD.getCodigoRespuesta());
         }
-            
         ArrayList<TrabajoRecepcional> listaSinDuplicados = new ArrayList();
             for(TrabajoRecepcional trabajorecepcional: respuestaTotal.getTrabajosRecepcionales()){
                 if(!estaRepetido(trabajorecepcional, listaSinDuplicados)){
@@ -108,7 +107,6 @@ public class FXMLActividadesController implements Initializable {
             }
         respuestaTotal.setTrabajosRecepcionales(listaSinDuplicados);
         cargarComboBox(respuestaTotal);
-        
     }
     
     private void cargarComboBox(TrabajoRecepcionalRespuesta respuestaTotal){
@@ -245,7 +243,6 @@ public class FXMLActividadesController implements Initializable {
     
     private void mostrarActividades(ArrayList <Actividad> actividades){
         if(usuarioAcademico!=null){
-            //ACADEMICO
             if(usuarioAcademico.isEsDirector() || usuarioAcademico.isEsProfesor()){
             for (int i=0; i<actividades.size(); i++){
                 FXMLLoader accesoControlador = new FXMLLoader();
@@ -261,7 +258,6 @@ public class FXMLActividadesController implements Initializable {
             }
             }
         }else{
-            //ESTUDIANTE
             for (int i=0; i<actividades.size(); i++){
             FXMLLoader accesoControlador = new FXMLLoader();
             accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLActividadElemento.fxml"));

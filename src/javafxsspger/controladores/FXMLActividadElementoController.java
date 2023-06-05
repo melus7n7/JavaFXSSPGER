@@ -21,6 +21,7 @@ import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.Estudiante;
+import javafxsspger.utils.Utilidades;
 
 /**
  * FXML Controller class
@@ -58,8 +59,8 @@ public class FXMLActividadElementoController implements Initializable {
         this.idActividad=actividadElemento.getIdActividad();
         lblTituloActividad.setText(actividadElemento.getTitulo());
         lblNombreEstudiante.setText(actividadElemento.getNombreEstudiante()+" "+actividadElemento.getApellidoPaternoEstudiante()+" "+actividadElemento.getApellidoMaternoEstudiante());
-        lblFechaInicio.setText(actividadElemento.getFechaInicio());
-        lblFechaFinal.setText(actividadElemento.getFechaFinal());
+        lblFechaInicio.setText(Utilidades.darFormatofechas(actividadElemento.getFechaInicio()));
+        lblFechaFinal.setText(Utilidades.darFormatofechas(actividadElemento.getFechaFinal()));
     }
     
     public void inicializarActividadElementoEstudiante(Actividad actividadElemento, Estudiante usuarioEstudiante){
@@ -68,8 +69,8 @@ public class FXMLActividadElementoController implements Initializable {
         this.idActividad=actividadElemento.getIdActividad();
         lblTituloActividad.setText(actividadElemento.getTitulo());
         lblNombreEstudiante.setText(actividadElemento.getNombreEstudiante()+" "+actividadElemento.getApellidoPaternoEstudiante()+" "+actividadElemento.getApellidoMaternoEstudiante());
-        lblFechaInicio.setText(actividadElemento.getFechaInicio());
-        lblFechaFinal.setText(actividadElemento.getFechaFinal());
+        lblFechaInicio.setText(Utilidades.darFormatofechas(actividadElemento.getFechaInicio()));
+        lblFechaFinal.setText(Utilidades.darFormatofechas(actividadElemento.getFechaFinal()));
     }
     
     @FXML

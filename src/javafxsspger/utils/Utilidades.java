@@ -7,6 +7,8 @@
 package javafxsspger.utils;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -90,5 +92,13 @@ public class Utilidades {
         Optional<ButtonType> botonClic = alertaConfirmacion.showAndWait();
         return (botonClic.get() == ButtonType.OK);
     }
+   
+   public static String darFormatofechas(String fechaAnterior){
+       DateTimeFormatter formatoOriginal = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatoDeseado = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fecha = LocalDate.parse(fechaAnterior, formatoOriginal);
+        String fechaFormateada = fecha.format(formatoDeseado);
+        return fechaFormateada;
+   }
    
 }

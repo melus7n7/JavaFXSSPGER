@@ -1,7 +1,7 @@
 /*
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 03/06/2023
-*Fecha de modificación: 03/06/2023
+*Fecha de modificación: 05/06/2023
 *Descripción: Controlador de la vista del detalle de una actividad
 */
 package javafxsspger.controladores;
@@ -78,17 +78,9 @@ public class FXMLDetallesActividadController implements Initializable {
         lblNombreEstudiante.setText(actividad.getNombreEstudiante()+" "+actividad.getApellidoPaternoEstudiante()+" "+actividad.getApellidoMaternoEstudiante());
         txtAreaActividad.setText(actividad.getDescripcion());
         txtAreaActividad.setEditable(false);
-        DateTimeFormatter formatoOriginal = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter formatoDeseado = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fecha = LocalDate.parse(actividad.getFechaInicio(), formatoOriginal);
-        String fechaInicio = fecha.format(formatoDeseado);
-        lblFechaInicio.setText(fechaInicio);
-        fecha = LocalDate.parse(actividad.getFechaFinal(), formatoOriginal);
-        String fechaFinal = fecha.format(formatoDeseado);
-        lblFechaFinal.setText(fechaFinal);
-        fecha = LocalDate.parse(actividad.getFechaCreacion(), formatoOriginal);
-        String fechaCreacion = fecha.format(formatoDeseado);
-        lblFechaCreacion.setText(fechaCreacion);
+        lblFechaInicio.setText(Utilidades.darFormatofechas(actividad.getFechaInicio()));
+        lblFechaFinal.setText(Utilidades.darFormatofechas(actividad.getFechaFinal()));
+        lblFechaCreacion.setText(Utilidades.darFormatofechas(actividad.getFechaCreacion()));
         
     }
 
