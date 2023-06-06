@@ -92,7 +92,7 @@ public class FXMLCuerposAcademicosController implements Initializable {
             FXMLCreacionCuerpoAcademicoController cuerpoAcademico = accesoControlador.getController();
             cuerpoAcademico.inicializarInformacion(usuarioAdmin);
             escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("");
+            escenarioBase.setTitle("Crear Cuerpo Academico");
             escenarioBase.show();
         }catch(IOException ex){
             ex.printStackTrace();

@@ -34,8 +34,6 @@ public class FXMLLGACElementoController implements Initializable {
     private CheckBox chcBoxLGAC;
     @FXML
     private Label lblNombreLGAC;
-    @FXML
-    private Label lblDescripcion;
     
     private Usuario usuarioAdmin;
     private LGAC lgacElemento;
@@ -70,19 +68,4 @@ public class FXMLLGACElementoController implements Initializable {
         }
     }
 
-    @FXML
-    private void clicModificar(ActionEvent event) {
-        Stage escenarioBase = (Stage)lblNombreLGAC.getScene().getWindow();
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionLGAC.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLCreacionLGACController lgac = accesoControlador.getController();
-            lgac.inicializarInformacion(usuarioAdmin);
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("");
-            escenarioBase.show();
-        }catch(IOException ex){
-            ex.printStackTrace();
-        }
-    }
 }

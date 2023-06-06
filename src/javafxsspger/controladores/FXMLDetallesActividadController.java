@@ -113,7 +113,7 @@ public class FXMLDetallesActividadController implements Initializable {
         String formatoDeFecha = "yyyy-MM-dd";
         LocalDate fechaCreacion = LocalDate.parse(actividad.getFechaCreacion(), DateTimeFormatter.ofPattern(formatoDeFecha));
         if(fechaActual.isAfter(fechaCreacion.plusDays(1))){
-            Utilidades.mostrarDialogoSimple("Tiempo limite de modificación expirado", "No se puede modificar la actividad después de un día de ser creada", Alert.AlertType.INFORMATION);                    
+            Utilidades.mostrarDialogoSimple("Tiempo limite de modificación expirado", "No se puede modificar la actividad después de un día de ser creada", Alert.AlertType.WARNING);                    
          }else{
             Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
             try {

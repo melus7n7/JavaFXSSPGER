@@ -77,11 +77,9 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
     }    
 
     public void inicializarInformacionEdicion(Usuario usuarioAdmin, boolean esEdicion,CuerpoAcademico cuerpoAcademicoAnterior){
-        System.out.println("LGACIDAnetrior "+cuerpoAcademicoAnterior.getIdCuerpoAcademico());        
         this.usuarioAdmin=usuarioAdmin;
         this.esEdicion=esEdicion;
         this.cuerpoAcademico=cuerpoAcademicoAnterior;
-        System.out.println("LGACID "+cuerpoAcademico.getIdCuerpoAcademico());                
         cargarInformacionConsolidacion();
         txtAreaClaveCuerpoAcademico.setText(cuerpoAcademicoAnterior.getClaveCuerpoAcademico());
         txtAreaNombreCuerpoAcademico.setText(cuerpoAcademicoAnterior.getNombre());
@@ -222,7 +220,6 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
                 Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error de LGAC", "LGAC", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 break;
