@@ -81,6 +81,7 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
         this.esEdicion=esEdicion;
         this.cuerpoAcademico=cuerpoAcademicoAnterior;
         cargarInformacionConsolidacion();
+        lblTitulo.setText("Modificación de Cuerpo Académico");
         txtAreaClaveCuerpoAcademico.setText(cuerpoAcademicoAnterior.getClaveCuerpoAcademico());
         txtAreaNombreCuerpoAcademico.setText(cuerpoAcademicoAnterior.getNombre());
         txtAreaDescripcionCuerpoAcademico.setText(cuerpoAcademicoAnterior.getDescripcion());
