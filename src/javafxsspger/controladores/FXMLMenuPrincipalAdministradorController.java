@@ -60,10 +60,34 @@ public class FXMLMenuPrincipalAdministradorController implements Initializable {
 
     @FXML
     private void clicLGAC(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLLGACS.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLLGACSController lgac = accesoControlador.getController();
+            lgac.inicializarInformacionUsuario(usuarioAdmin); 
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("LGACS");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
     private void clicExperienciaEducativa(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLExperienciasEducativas.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLExperienciasEducativasController expEdu = accesoControlador.getController();
+            expEdu.inicializarInformacionUsuario(usuarioAdmin); 
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Experiencias Educativas Disponibles");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

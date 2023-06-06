@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="1020.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.vistas.FXMLExperienciaEducativaElementoController">
+   <children>
+      <Label fx:id="lblNombreExperienciaEducativa" layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="356.0" text="Nombre de la Experiencia Educativa:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNombreAcademico" layoutX="21.0" layoutY="46.0" prefHeight="17.0" prefWidth="246.0" text="Nombre del Académico:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblPeriodoEscolar" layoutX="393.0" layoutY="14.0" prefHeight="17.0" prefWidth="322.0" text="Nombre del Periodo Escolar:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="862.0" layoutY="28.0" mnemonicParsing="false" onAction="#clicVerDetallesExperienciaEducativa" prefHeight="33.0" prefWidth="131.0" style="-fx-background-color: black;" text="Ver más" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

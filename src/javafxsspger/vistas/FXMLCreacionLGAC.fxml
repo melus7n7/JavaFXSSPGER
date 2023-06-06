@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLCreacionLGACController">
+   <children>
+      <ImageView fitHeight="69.0" fitWidth="67.0" layoutX="62.0" layoutY="20.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#clicRegresarLGACS" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblTituloLGAC" layoutX="142.0" layoutY="24.0" text="Creacion de LGAC">
+         <font>
+            <Font name="Trebuchet MS" size="50.0" />
+         </font>
+      </Label>
+      <Label layoutX="62.0" layoutY="97.0" text="Nombre de la LGAC">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="62.0" layoutY="202.0" text="Descripción: ">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="503.0" layoutY="548.0" mnemonicParsing="false" onAction="#clicCancelarLGAC" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: black;" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="792.0" layoutY="548.0" mnemonicParsing="false" onAction="#clicGuardarLGAC" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: black;" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <TextArea fx:id="txtAreaNombreLGAC" layoutX="62.0" layoutY="127.0" prefHeight="50.0" prefWidth="950.0" />
+      <TextArea fx:id="txtAreaDescripcionLGAC" layoutX="62.0" layoutY="233.0" prefHeight="200.0" prefWidth="950.0" />
+   </children>
+</AnchorPane>

@@ -1,7 +1,7 @@
 /*
-*Autor: Martínez Aguilar Sulem
+*Autor: Mongeote Tlachy Daniel
 *Fecha de creación: 20/05/2023
-*Fecha de modificación: 20/05/2023
+*Fecha de modificación: 06/06/2023
 *Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de las LGAC
 */
 package javafxsspger.modelo.dao;
@@ -75,6 +75,72 @@ public class LGACDAO {
         return lgacRespuesta;
     }
     
+    public static int guardarLGAC(LGAC lgacNueva){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "Insert into LGAC(nombre, descripcion) " + 
+                                   "VALUES (?, ?);";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, lgacNueva.getNombreLGAC());
+                prepararSentencia.setString(2, lgacNueva.getDescripcion());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                    respuesta = Constantes.ERROR_CONSULTA;
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+    }
     
+    public static int eliminarLGAC(int idLGAC){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "DELETE FROM LGAC WHERE idLGAC = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idLGAC);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                    respuesta = Constantes.ERROR_CONSULTA;
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;   
+        }
+    
+    public static int modificarLGAC(LGAC modificarLGAC){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = " UPDATE LGAC SET nombre = ?, descripción = ? "+
+                        "WHERE idLGAC = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, modificarLGAC.getNombreLGAC());
+                prepararSentencia.setString(2, modificarLGAC.getDescripcion());
+                prepararSentencia.setInt(3, modificarLGAC.getIdLGAC());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                    respuesta = Constantes.ERROR_CONSULTA;
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+        }
 }
 

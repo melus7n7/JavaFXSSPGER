@@ -1,13 +1,13 @@
-
-package javafxsspger.controladores;
-
-import java.io.IOException;
-import java.net.URL;/*
+/*
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 03/06/2023
 *Fecha de modificación: 05/06/2023
 *Descripción: Controlador de la vista del detalle de una actividad
 */
+package javafxsspger.controladores;
+
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;

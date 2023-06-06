@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLExperienciasEducativasController">
+   <children>
+      <ScrollPane fx:id="vBoxListaEE" layoutX="34.0" layoutY="107.0" prefHeight="517.0" prefWidth="1032.0" />
+      <Label fx:id="lblTitulo" layoutX="85.0" layoutY="35.0" text="Experiencias Educativas Disponibles">
+         <font>
+            <Font name="Trebuchet MS Bold" size="50.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="47.0" fitWidth="54.0" layoutX="32.0" layoutY="42.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
