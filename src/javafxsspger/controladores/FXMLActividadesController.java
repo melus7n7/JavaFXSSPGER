@@ -40,11 +40,6 @@ import javafxsspger.modelo.pojo.TrabajoRecepcionalRespuesta;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author monti
- */
 public class FXMLActividadesController implements Initializable {
     
     private Academico usuarioAcademico;
@@ -265,7 +260,6 @@ public class FXMLActividadesController implements Initializable {
                     Pane pane = accesoControlador.load();
                     FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
                     elementoEnLista.inicializarActividadElementoEstudiante(actividades.get(i), usuarioEstudiante);
-                    System.out.println("ID ESTUDIANTE Actividades: "+this.usuarioEstudiante.getIdEstudiante());
                     vBoxListaActividades.getChildren().add(pane);
                 }catch(IOException e){
                     e.printStackTrace();

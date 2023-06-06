@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLEntregaController">
+   <children>
+      <Label layoutX="560.0" layoutY="443.0" text="Retroalimentación:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="178.0" layoutY="540.0" text="Nivel de satisfacción: ">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNivelSatisfaccion" alignment="CENTER" layoutX="52.0" layoutY="575.0" prefHeight="31.0" prefWidth="465.0" style="-fx-padding: 5; -fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDescripcion" alignment="TOP_LEFT" layoutX="52.0" layoutY="143.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="304.0" prefWidth="465.0" style="-fx-background-color: white; -fx-padding: 5;" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="79.0" fitWidth="81.0" layoutX="52.0" layoutY="20.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="148.0" layoutY="31.0" text="Entrega de Actividad">
+         <font>
+            <Font name="Trebuchet MS Bold" size="50.0" />
+         </font>
+      </Label>
+      <Label layoutX="52.0" layoutY="115.0" text="Descripción de la entrega:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="94.0" layoutY="469.0" text="Calificación: ">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCalificacion" alignment="CENTER" layoutX="64.0" layoutY="499.0" prefHeight="31.0" prefWidth="172.0" style="-fx-padding: 5; -fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaEtiqueta" layoutX="310.0" layoutY="471.0" text="Fecha Entrega:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaEntrega" alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="500.0" prefHeight="27.0" prefWidth="245.0" style="-fx-padding: 5; -fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="bttEntregar" layoutX="553.0" layoutY="582.0" mnemonicParsing="false" onAction="#clicEntregar" prefHeight="34.0" prefWidth="161.0" style="-fx-background-color: black;" text="Entregar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="bttCalificarEntrega" layoutX="549.0" layoutY="583.0" mnemonicParsing="false" onAction="#clicCalificarEntrega" prefHeight="34.0" prefWidth="161.0" style="-fx-background-color: black;" text="Calificar Entrega" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="555.0" layoutY="108.0" text="Documentos:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrPaneContenedorDocumentos" layoutX="552.0" layoutY="130.0" prefHeight="307.0" prefWidth="499.0">
+         <content>
+            <VBox fx:id="vBoxListaDocumentos" prefHeight="304.0" prefWidth="484.0" />
+         </content>
+      </ScrollPane>
+      <Label fx:id="lblRetroalimentacion" alignment="TOP_LEFT" layoutX="555.0" layoutY="466.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="95.0" prefWidth="499.0" style="-fx-background-color: white; -fx-padding: 5;" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
