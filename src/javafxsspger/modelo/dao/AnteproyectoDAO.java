@@ -426,4 +426,26 @@ public class AnteproyectoDAO {
         return respuesta;
     }
     
+    public static int eliminarAnteproyectoDePublicados(int idAnteproyecto){
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String sentencia = "UPDATE anteproyecto SET idEstado = ? WHERE idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt (1, Constantes.PENDIENTE);
+                prepararSentencia.setInt (2, idAnteproyecto);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            }catch (SQLException e){
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
+            }
+        }else{
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
 }

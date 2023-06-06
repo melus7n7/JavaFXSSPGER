@@ -67,6 +67,7 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
     private File archivoElegido;
     private Anteproyecto anteproyectoModificacion;
     private INotificacionAnteproyectos notificacion;
+    private Academico usuarioAcademico;
     
     private String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     private String estiloNormal = "-fx-border-width: 0;";
@@ -140,7 +141,7 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
-            detallesAnteproyecto.inicializarInformacion(anteproyectoModificacion.getIdAnteproyecto(), Constantes.ES_PROPIO, notificacion, anteproyectoModificacion.getIdDirector());
+            detallesAnteproyecto.inicializarInformacion(anteproyectoModificacion.getIdAnteproyecto(), Constantes.ES_PROPIO, notificacion, usuarioAcademico);
             
             Stage escenarioFormulario = (Stage) lblDirector.getScene().getWindow();
             escenarioFormulario.setScene(new Scene (vista));
@@ -178,7 +179,8 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         codirectoresAnteproyecto.remove(posicion);
     }
     
-    public void iniciarPantalla(Anteproyecto anteproyectoModificacion, INotificacionAnteproyectos notificacion){
+    public void iniciarPantalla(Anteproyecto anteproyectoModificacion, INotificacionAnteproyectos notificacion, Academico usuarioAcademico){
+        this.usuarioAcademico = usuarioAcademico;
         this.notificacion = notificacion;
         this.anteproyectoModificacion = anteproyectoModificacion;
         inicializarAnteproyecto();

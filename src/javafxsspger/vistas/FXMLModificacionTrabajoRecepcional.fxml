@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLModificacionTrabajoRecepcionalController">
+   <children>
+      <Label fx:id="lblDirector" alignment="CENTER" layoutX="646.0" layoutY="88.0" prefHeight="36.0" prefWidth="405.0" text="Director: " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="854.0" layoutY="586.0" mnemonicParsing="false" onAction="#clicGuardarCambios" prefHeight="43.0" prefWidth="217.0" style="-fx-background-color: black;" text="Guardar cambios" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="113.0" layoutY="18.0" text="Modificación del trabajo recepcional">
+         <font>
+            <Font name="Trebuchet MS Bold" size="50.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="69.0" fitWidth="67.0" layoutX="33.0" layoutY="14.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="55.0" layoutY="86.0" text="Nombre del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="179.0" text="Descripción del anteproyecto:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="714.0" layoutY="477.0" text="Documento del trabajo recepcional:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="652.0" layoutY="315.0" text="Tipo:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbBoxTipoAnteproyecto" layoutX="699.0" layoutY="312.0" prefHeight="27.0" prefWidth="376.0" />
+      <Label layoutX="624.0" layoutY="266.0" text="LGAC:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="bttDocumento" layoutX="632.0" layoutY="579.0" mnemonicParsing="false" onAction="#clicAdjuntarDocumento" prefHeight="27.0" prefWidth="159.0" style="-fx-background-color: DIMGRAY;" text="Adjuntar Documento" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblNombreDocumento" alignment="CENTER" layoutX="626.0" layoutY="510.0" prefHeight="58.0" prefWidth="455.0" style="-fx-background-color: white;" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAreaNombreTrabajo" layoutX="45.0" layoutY="108.0" prefHeight="58.0" prefWidth="565.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="txtAreaDescripcionTrabajo" layoutX="45.0" layoutY="204.0" prefHeight="121.0" prefWidth="565.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="61.0" layoutY="436.0" text="Codirectores:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrPaneCajaCodirectores" layoutX="45.0" layoutY="456.0" prefHeight="172.0" prefWidth="565.0">
+         <content>
+            <VBox fx:id="vBoxListaCodirectores" prefHeight="171.0" prefWidth="551.0" />
+         </content>
+      </ScrollPane>
+      <Label alignment="CENTER" layoutX="651.0" layoutY="123.0" prefHeight="27.0" prefWidth="165.0" text="Fecha de creación:" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblLGAC" alignment="CENTER" layoutX="696.0" layoutY="254.0" prefHeight="43.0" prefWidth="376.0" style="-fx-background-color: white;" text="lgac" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCuerpoAcademico" alignment="CENTER" layoutX="790.0" layoutY="199.0" prefHeight="43.0" prefWidth="284.0" style="-fx-background-color: white;" text="cuerpoacademico" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="329.0" text="Estudiantes actuales:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrPaneCajaCodirectores1" layoutX="45.0" layoutY="358.0" prefHeight="70.0" prefWidth="565.0">
+         <content>
+            <VBox fx:id="vBoxListaEstudiantes" prefHeight="70.0" prefWidth="551.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="676.0" layoutY="359.0" prefHeight="27.0" prefWidth="176.0" text="Estudiantes máximos:" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEstudiantesMaximos" alignment="CENTER" layoutX="868.0" layoutY="354.0" prefHeight="36.0" prefWidth="105.0" style="-fx-background-color: white;" text="0" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="824.0" layoutY="397.0" text="Estado:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEstado" alignment="CENTER" layoutX="733.0" layoutY="428.0" prefHeight="36.0" prefWidth="230.0" style="-fx-background-color: white;" text="Estado" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imgViewFlechaAnteriorEstado" fitHeight="43.0" fitWidth="40.0" layoutX="682.0" layoutY="426.0" onMouseClicked="#clicAnteriorEstado" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/imagenBotonCambiarEstado.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgViewSiguienteEstado" fitHeight="43.0" fitWidth="40.0" layoutX="979.0" layoutY="426.0" onMouseClicked="#clicSiguienteEstado" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../recursos/imagenBotonCambiarEstado.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblCreacion" alignment="CENTER" layoutX="651.0" layoutY="153.0" prefHeight="27.0" prefWidth="165.0" style="-fx-background-color: white;" text="FechaCreacion" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="632.0" layoutY="207.0" prefHeight="27.0" prefWidth="165.0" text="Cuerpo Académico:" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="875.0" layoutY="125.0" prefHeight="27.0" prefWidth="176.0" text="Fecha de aprobación:" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaAprobacion" alignment="CENTER" layoutX="878.0" layoutY="154.0" prefHeight="27.0" prefWidth="165.0" style="-fx-background-color: white;" text="FechaAprobacion" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

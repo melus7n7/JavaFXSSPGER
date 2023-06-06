@@ -1,5 +1,5 @@
 /*
-*Autor: Martínez Aguilar Sulem
+*Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
 *Fecha de creación: 20/05/2023
 *Fecha de modificación: 20/05/2023
 *Descripción: POJO de un cuerpo académico
@@ -18,6 +18,15 @@ public class CuerpoAcademico {
     
     private int idConsolidacion;
     private String nivelConsolidacion;
+    private int idAcademico;
+
+    public int getIdAcademico() {
+        return idAcademico;
+    }
+
+    public void setIdAcademico(int idAcademico) {
+        this.idAcademico = idAcademico;
+    }
     
     private ArrayList <LGAC> lgacs;
     

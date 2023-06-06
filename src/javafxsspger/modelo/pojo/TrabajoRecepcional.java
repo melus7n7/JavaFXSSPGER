@@ -6,6 +6,8 @@
 */
 package javafxsspger.modelo.pojo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author monti
@@ -31,6 +33,8 @@ public class TrabajoRecepcional {
     
     private int idAcademico;
     private String nombreDirector;
+    
+    private ArrayList<Academico> codirectores;
 
     public TrabajoRecepcional() {
     }
@@ -186,6 +190,14 @@ public class TrabajoRecepcional {
 
     public void setNombreDirector(String nombreDirector) {
         this.nombreDirector = nombreDirector;
+    }
+
+    public ArrayList<Academico> getCodirectores() {
+        return codirectores;
+    }
+
+    public void setCodirectores(ArrayList<Academico> codirectores) {
+        this.codirectores = codirectores;
     }
     
     @Override

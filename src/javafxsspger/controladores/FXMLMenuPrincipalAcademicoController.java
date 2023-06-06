@@ -200,6 +200,10 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
         if(usuarioAcademico.isEsDirector()){
             bttAsignar.setDisable(false);
         }
+        if(usuarioAcademico.isEsCoordinador()){
+            bttTrabajosRecepcionales.setDisable(false);
+            bttGenerarReporte.setDisable(false);
+        }
     }
 
     @FXML

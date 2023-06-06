@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javafxsspger.modelo.ConexionBD;
+import javafxsspger.modelo.pojo.Academico;
+import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.modelo.pojo.TrabajoRecepcional;
 import javafxsspger.modelo.pojo.TrabajoRecepcionalRespuesta;
 import javafxsspger.utils.Constantes;
@@ -178,6 +180,92 @@ public class TrabajoRecepcionalDAO {
             }
         }else{
             respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static TrabajoRecepcional recuperarDetallesTrabajoRecepcional(int idTrabajoRecepcional){
+        TrabajoRecepcional respuesta = new TrabajoRecepcional();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT trabajorecepcional.idTrabajoRecepcional, trabajorecepcional.idAnteproyecto, trabajorecepcional.titulo, trabajorecepcional.descripcion, trabajorecepcional.fechaCreacion, trabajorecepcional.fechaAprobacion, " +
+                    "trabajorecepcional.noEstudiantesMaximos, trabajorecepcional.documento, trabajorecepcional.nombreDocumento, " +
+                    "trabajorecepcional.idCuerpoAcademico, trabajorecepcional.idTipoAnteproyecto, trabajorecepcional.idLGAC, trabajorecepcional.idEstado, " +
+                    "usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno, cuerpoacademico.nombre AS nombreCA, tipoanteproyecto.tipoanteproyecto, lgac.nombre AS nombreLGAC " +
+                    "FROM sspger.trabajorecepcional " +
+                    "INNER JOIN LGAC on LGAC.idLGAC = trabajorecepcional.idLGAC " +
+                    "INNER JOIN cuerpoacademico ON cuerpoacademico.idCuerpoAcademico = trabajorecepcional.idCuerpoAcademico " +
+                    "INNER JOIN tipoanteproyecto ON tipoAnteproyecto.idTipoAnteproyecto = trabajorecepcional.idTipoAnteproyecto " +
+                    "INNER JOIN encargadostrabajorecepcional ON encargadostrabajorecepcional.idTrabajoRecepcional = trabajorecepcional.idTrabajoRecepcional " +
+                    "INNER JOIN academico ON academico.idAcademico = encargadostrabajorecepcional.idAcademico " +
+                    "INNER JOIN usuario ON academico.idUsuario = usuario.idUsuario " +
+                    "WHERE encargadostrabajorecepcional.esDirector = 1 AND encargadostrabajorecepcional.idAcademico = academico.idAcademico " +
+                    "AND trabajorecepcional.idTrabajoRecepcional = ? ";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idTrabajoRecepcional);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if(resultado.next()){
+                    respuesta.setIdTrabajoRecepcional(idTrabajoRecepcional);
+                    respuesta.setTitulo(resultado.getString("titulo"));
+                    respuesta.setDescripcion(resultado.getString("descripcion"));
+                    respuesta.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    respuesta.setFechaAprobacion(resultado.getString("fechaAprobacion"));
+                    respuesta.setNoEstudiantesMaximos(resultado.getInt("noEstudiantesMaximos"));
+                    respuesta.setDocumento(resultado.getBytes("documento"));
+                    respuesta.setNombreDocumento(resultado.getString("nombreDocumento"));
+                    
+                    respuesta.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
+                    respuesta.setIdTipoAnteproyecto(resultado.getInt("idTipoAnteproyecto"));
+                    respuesta.setIdLGAC(resultado.getInt("idLGAC"));
+                    
+                    String nombreCompleto = resultado.getString("nombreUsuario") + " " + resultado.getString("apellidoPaterno") + " " + resultado.getString("apellidoMaterno");
+                    respuesta.setNombreDirector(nombreCompleto);
+                    
+                    respuesta.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                    respuesta.setIdEstado(resultado.getInt("idEstado"));
+                    
+                }
+                
+                ArrayList <Academico> codirectores = new ArrayList();
+                String consultaCodirectores = "SELECT academico.idAcademico, usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno " +
+                    "FROM sspger.academico " +
+                    "INNER JOIN encargadostrabajorecepcional ON encargadostrabajorecepcional.idAcademico = academico.idAcademico " +
+                    "INNER JOIN usuario ON usuario.idUsuario = academico.idUsuario " +
+                    "WHERE encargadostrabajorecepcional.esDirector = 0 AND encargadostrabajorecepcional.idAcademico = academico.idAcademico " +
+                    " AND encargadostrabajorecepcional.idTrabajoRecepcional = ?";
+                PreparedStatement prepararSentenciaCodirectores = conexionBD.prepareStatement(consultaCodirectores);
+                prepararSentenciaCodirectores.setInt(1, idTrabajoRecepcional);
+                ResultSet resultadoCodirectores = prepararSentenciaCodirectores.executeQuery();
+                while(resultadoCodirectores.next()){
+                    Academico codirector = new Academico();
+                    codirector.setIdAcademico(resultadoCodirectores.getInt("idAcademico"));
+                    String nombreCompleto = resultadoCodirectores.getString("nombreUsuario") + " " + resultadoCodirectores.getString("apellidoPaterno") + " " + resultadoCodirectores.getString("apellidoMaterno");
+                    codirector.setNombre(resultadoCodirectores.getString("nombreUsuario"));
+                    codirector.setApellidoPaterno(resultadoCodirectores.getString("apellidoPaterno"));
+                    codirector.setApellidoMaterno(resultadoCodirectores.getString("apellidoMaterno"));
+                    codirector.setNombreCompleto(nombreCompleto);
+                    codirectores.add(codirector);
+                }
+                respuesta.setCodirectores(codirectores);
+                
+                String consultaDirector = "SELECT idAcademico FROM sspger.encargadostrabajorecepcional " +
+                    "WHERE esDirector = 1 and idTrabajoRecepcional = ?";
+                PreparedStatement prepararSentenciaDirector = conexionBD.prepareStatement(consultaDirector);
+                prepararSentenciaDirector.setInt(1, idTrabajoRecepcional);
+                ResultSet resultadoDirector = prepararSentenciaDirector.executeQuery();
+                if(resultadoDirector.next()){
+                    respuesta.setIdAcademico(resultadoDirector.getInt("idAcademico"));
+                }
+                
+                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException ex){
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                ex.printStackTrace();
+            }
+        }else{
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return respuesta;
     }

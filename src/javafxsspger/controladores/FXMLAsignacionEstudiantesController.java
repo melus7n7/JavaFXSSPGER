@@ -169,7 +169,7 @@ public class FXMLAsignacionEstudiantesController implements Initializable {
     private void cargarDetallesAnteproyecto(){
         lblEstudiantesMaximos.setText(anteproyectoAsignar.getNoEstudiantesMaximo()+"");
         lblNombreAnteproyecto.setText(anteproyectoAsignar.getTitulo());
-        lblFecha.setText(anteproyectoAsignar.getFechaAprobacion());
+        lblFecha.setText(Utilidades.darFormatofechas(anteproyectoAsignar.getFechaAprobacion()));
     }
     
     private void cargarDetallesEstudiantesAsignados(){

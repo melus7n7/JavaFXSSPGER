@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLModificarIntegrantesCuerpoAcademicoController">
+   <children>
+      <Button layoutX="101.0" layoutY="107.0" mnemonicParsing="false" onAction="#clicEscogerResponsable" prefHeight="50.0" prefWidth="351.0" style="-fx-background-color: black;" text="Escoger como Responsable" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="69.0" fitWidth="67.0" layoutX="34.0" layoutY="20.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="101.0" layoutY="25.0" text="Modificación Integrantes Cuerpo Académico">
+         <font>
+            <Font name="Trebuchet MS" size="50.0" />
+         </font>
+      </Label>
+      <Button layoutX="468.0" layoutY="107.0" mnemonicParsing="false" onAction="#clicEliminarCuerpoAcademico" prefHeight="50.0" prefWidth="351.0" style="-fx-background-color: black;" text="Eliminar de Cuerpo Academico" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblViewAcademicos" layoutX="34.0" layoutY="205.0" prefHeight="430.0" prefWidth="1058.0">
+        <columns>
+          <TableColumn fx:id="tblColumnNombreAcademico" prefWidth="522.0" text="Nombre completo" />
+          <TableColumn fx:id="tblColumnPuestoAcademico" prefWidth="535.0" text="Puesto" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

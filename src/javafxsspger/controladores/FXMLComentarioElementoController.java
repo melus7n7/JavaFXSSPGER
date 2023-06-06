@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafxsspger.modelo.pojo.Comentario;
+import javafxsspger.utils.Utilidades;
 
 
 public class FXMLComentarioElementoController implements Initializable {
@@ -32,7 +33,7 @@ public class FXMLComentarioElementoController implements Initializable {
 
     public void setComentario(Comentario comentario){
         lblAutor.setText("Por: " + comentario.getNombreAcademico());
-        lblFecha.setText("Fecha: " + comentario.getFechaCreacion().toString());
+        lblFecha.setText("Fecha: " + Utilidades.darFormatofechas(comentario.getFechaCreacion().toString()));
         txtAreaComentario.setText(comentario.getTexto());
     }
     

@@ -104,8 +104,8 @@ public class FXMLCalificacionAvanceController implements Initializable {
         this.usuarioAcademico = usuarioAcademico;
         lblTitulo.setText(avanceACalificar.getTitulo());
         lblDescripcion.setText(avanceACalificar.getDescripcion());
-        lblFechaInicio.setText(avanceACalificar.getFechaInicio());
-        lblFechaFin.setText(avanceACalificar.getFechaFin());
+        lblFechaInicio.setText(Utilidades.darFormatofechas(avanceACalificar.getFechaInicio()));
+        lblFechaFin.setText(Utilidades.darFormatofechas(avanceACalificar.getFechaFin()));
         txtAreaRetroalimentacion.setText(avanceACalificar.getRetroalimentacion());
         cargarActividades();
         cargarRubricaCalificaciones();

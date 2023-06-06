@@ -26,6 +26,7 @@ import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.utils.Utilidades;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionAnteproyectos;
+import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.TrabajoRecepcional;
 import javafxsspger.utils.Constantes;
@@ -34,7 +35,7 @@ import javafxsspger.utils.Constantes;
 public class FXMLAnteproyectoElementoController implements Initializable {
 
     private int idAnteproyecto;
-    private int idAcademico;
+    private Academico usuarioAcademico;
     private int numeroPantalla;
     private INotificacionAnteproyectos interfazNotificacion;
     private Anteproyecto anteproyectoElemento;
@@ -73,7 +74,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
             FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController();
             switch(tipoUsuario){
                 case Constantes.ACADEMICO:
-                    detallesAnteproyecto.inicializarInformacion(idAnteproyecto, numeroPantalla, interfazNotificacion, idAcademico);
+                    detallesAnteproyecto.inicializarInformacion(idAnteproyecto, numeroPantalla, interfazNotificacion, usuarioAcademico);
                     break;
                 case Constantes.INVITADO:
                     detallesAnteproyecto.inicializarInformacionInvitado(idAnteproyecto, usuarioEstudiante);
@@ -112,12 +113,28 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     
     @FXML
     private void clicVerMasTrabajoRecepcional(ActionEvent event) {
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetalleTrabajoRecepcional.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLDetalleTrabajoRecepcionalController trabajo = accesoControlador.getController();
+            Academico academico = new Academico();
+            academico.setIdAcademico(usuarioAcademico.getIdAcademico());
+            trabajo.inicializarPantallaAcademico(idAnteproyecto, academico);
+            
+            Stage escenarioBase = new Stage();
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Asignación Anteproyectos");
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
-    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+    public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, Academico usuarioAcademico){
+        this.usuarioAcademico = usuarioAcademico;
         this.tipoUsuario = Constantes.ACADEMICO;
         this.anteproyectoElemento = anteproyectoElemento;
-        this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
         this.numeroPantalla = numeroPantalla;
@@ -126,27 +143,31 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         
         switch(this.numeroPantalla){
             case Constantes.ES_PUBLICADO:
-                lblFecha.setText(anteproyectoElemento.getFechaAprobacion() + " ");
+                lblFecha.setText(Utilidades.darFormatofechas(anteproyectoElemento.getFechaAprobacion()) + " ");
                 break;
             case Constantes.ES_POR_CORREGIR:
                 lblFechaEtiqueta.setText("Fecha creación:");
-                lblFecha.setText(anteproyectoElemento.getFechaCreacion() + " ");
+                lblFecha.setText(Utilidades.darFormatofechas(anteproyectoElemento.getFechaCreacion()) + " ");
                 break;
             case Constantes.ES_PROPIO:
-                lblFecha.setText(anteproyectoElemento.getFechaAprobacion() + " ");
+                if(anteproyectoElemento.getFechaAprobacion() == null){
+                    lblFecha.setText("Pendiente por aprobación");
+                }else{
+                    lblFecha.setText(Utilidades.darFormatofechas(anteproyectoElemento.getFechaAprobacion()) + " ");
+                }
                 lblNombreDirectorEtiqueta.setText("Fecha creación:");
-                lblNombreDirector.setText(anteproyectoElemento.getFechaCreacion() + " ");
+                lblNombreDirector.setText(Utilidades.darFormatofechas(anteproyectoElemento.getFechaCreacion()) + " ");
                 break;
             case Constantes.ES_ASIGNAR_ESTUDIANTES:
-                lblFecha.setText(anteproyectoElemento.getFechaAprobacion() + " ");
+                lblFecha.setText(Utilidades.darFormatofechas(anteproyectoElemento.getFechaAprobacion()) + " ");
                 lblNombreDirector.setVisible(false);
                 lblNombreDirectorEtiqueta.setVisible(false);
                 bttVerMas.setVisible(false);
                 bttAsignar.setVisible(true);
-        }
+        }/*
         if(lblFecha.getText().equals("null ")){
             lblFecha.setText("Pendiente por aprobación");
-        }
+        }*/
     }
     
     public void setElementoAnteproyectoPublicados(Anteproyecto anteproyectoElemento, int tipoUsuario, Estudiante estudiante){
@@ -156,15 +177,17 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
         lblNombreAnteproyecto.setText(anteproyectoElemento.getTitulo());
         lblNombreDirector.setText(anteproyectoElemento.getNombreDirector());
-        lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+        lblFecha.setText(Utilidades.darFormatofechas(anteproyectoElemento.getFechaAprobacion()));
     }
     
-    public void setTrabajoRecepcional(TrabajoRecepcional trabajo){
+    public void setTrabajoRecepcional(TrabajoRecepcional trabajo, Academico academico){
+        this.usuarioAcademico = academico;
+        this.idAnteproyecto = trabajo.getIdTrabajoRecepcional();
         lblEtiquetaNombre.setText("Nombre del trabajo recepcional:");
         lblNombreAnteproyecto.setText(trabajo.getTitulo());
         lblNombreDirectorEtiqueta.setVisible(false);
         lblNombreDirector.setVisible(false);
-        lblFecha.setText(trabajo.getFechaAprobacion());
+        lblFecha.setText(Utilidades.darFormatofechas(trabajo.getFechaAprobacion()));
         bttMostrarTrabajo.setVisible(true);
     }
 

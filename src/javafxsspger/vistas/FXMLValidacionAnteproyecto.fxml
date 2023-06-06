@@ -12,7 +12,7 @@
    <children>
       <Label layoutX="126.0" layoutY="24.0" text="Validación de un anteproyecto">
          <font>
-            <Font name="Trebuchet MS" size="50.0" />
+            <Font name="Trebuchet MS Bold" size="50.0" />
          </font>
       </Label>
       <ImageView fitHeight="95.0" fitWidth="83.0" layoutX="26.0" layoutY="5.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true" rotate="180.0">
@@ -125,7 +125,7 @@
             <Font name="SansSerif Bold Italic" size="16.0" />
          </font>
       </Label>
-      <TextArea fx:id="txtAreaComentario" layoutX="627.0" layoutY="141.0" prefHeight="396.0" prefWidth="449.0">
+      <TextArea fx:id="txtAreaComentario" layoutX="627.0" layoutY="141.0" prefHeight="396.0" prefWidth="449.0" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font></TextArea>

@@ -1,6 +1,6 @@
 /*
-*Autor: Mongeote Tlachy Daniel
-*Fecha de creación: 20/05/2023
+*Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob, Mongeote Tlachy Daniel
+*Fecha de creación: 06/06/2023
 *Fecha de modificación: 06/06/2023
 *Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de las LGAC
 */
@@ -75,21 +75,69 @@ public class LGACDAO {
         return lgacRespuesta;
     }
     
-    public static int guardarLGAC(LGAC lgacNueva){
+    public static LGACRespuesta recuperarPosiblesLGACEdicion(int idCuerpoAcademico){
+        LGACRespuesta lgacRespuesta = new LGACRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT LGAC.idLGAC, LGAC.nombre, LGAC.idCuerpoAcademico FROM LGAC WHERE LGAC.idCuerpoAcademico = ? OR LGAC.idCuerpoAcademico IS NULL;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <LGAC> lgacs = new ArrayList();
+                while(resultado.next()){
+                    LGAC lgac = new LGAC();
+                    lgac.setIdLGAC(resultado.getInt("idLGAC"));
+                    lgac.setNombreLGAC(resultado.getString("nombre"));
+                    lgac.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
+                    lgacs.add(lgac);
+                }
+                lgacRespuesta.setLGACs(lgacs);
+                lgacRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                lgacRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            }
+        }else{
+            lgacRespuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return lgacRespuesta;
+    }
+    
+    public static int actualizarLGAC(int idCuerpoAcademico, int idLGAC){
             int respuesta;
             Connection conexionBD = ConexionBD.abrirConexionBD();
             if(conexionBD!=null){
                 try{
-                String sentencia = "Insert into LGAC(nombre, descripcion) " + 
-                                   "VALUES (?, ?);";
+                String sentencia = "UPDATE LGAC SET idCuerpoAcademico = ? WHERE LGAC.idLGAC = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setString(1, lgacNueva.getNombreLGAC());
-                prepararSentencia.setString(2, lgacNueva.getDescripcion());
+                prepararSentencia.setInt(1,idCuerpoAcademico);     
+                prepararSentencia.setInt(2,idLGAC);     
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
                 conexionBD.close();
                 }catch(SQLException e){
-                    e.printStackTrace();
+                    respuesta = Constantes.ERROR_CONSULTA;
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+        }
+    
+    public static int eliminarLGACDeCuerpoAcademico(int idCuerpoAcademico){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "UPDATE  LGAC SET LGAC.idCuerpoAcademico = null Where LGAC.idCuerpoAcademico =?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1,idCuerpoAcademico);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+                }catch(SQLException e){
                     respuesta = Constantes.ERROR_CONSULTA;
                 }
             }else{
@@ -97,6 +145,7 @@ public class LGACDAO {
             }
             return respuesta;
     }
+    
     
     public static int eliminarLGAC(int idLGAC){
             int respuesta;
@@ -142,5 +191,28 @@ public class LGACDAO {
             }
             return respuesta;
         }
+
+        public static int guardarLGAC(LGAC lgacNueva){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "Insert into LGAC(nombre, descripcion) " + 
+                                   "VALUES (?, ?);";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, lgacNueva.getNombreLGAC());
+                prepararSentencia.setString(2, lgacNueva.getDescripcion());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                    respuesta = Constantes.ERROR_CONSULTA;
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+    }
 }
 

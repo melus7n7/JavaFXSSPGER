@@ -28,6 +28,7 @@ import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionAnteproyectos;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
 import javafxsspger.modelo.dao.ComentarioDAO;
+import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.modelo.pojo.Comentario;
 import javafxsspger.utils.Constantes;
@@ -37,8 +38,11 @@ import javafxsspger.utils.Utilidades;
 public class FXMLValidacionAnteproyectoController implements Initializable {
 
     private Anteproyecto anteproyectoValidacion;
-    private int idAcademico;
+    private Academico academico;
     private INotificacionAnteproyectos interfazNotificacion;
+    
+    private String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
+    private String estiloNormal = "-fx-border-width: 0;";
     
     @FXML
     private TextArea txtAreaDescripcion;
@@ -100,7 +104,7 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
-            detallesAnteproyecto.inicializarInformacion(anteproyectoValidacion.getIdAnteproyecto(), Constantes.ES_POR_CORREGIR, interfazNotificacion, anteproyectoValidacion.getIdDirector());
+            detallesAnteproyecto.inicializarInformacion(anteproyectoValidacion.getIdAnteproyecto(), Constantes.ES_POR_CORREGIR, interfazNotificacion, academico);
             
             Stage escenarioFormulario = (Stage) lblCodirectores.getScene().getWindow();
             escenarioFormulario.setScene(new Scene (vista));
@@ -112,8 +116,8 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
     
     }
     
-    public void inicializarInformacion (Anteproyecto anteproyectoValidacion, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
-        this.idAcademico = idAcademico;
+    public void inicializarInformacion (Anteproyecto anteproyectoValidacion, INotificacionAnteproyectos interfazNotificacion, Academico academico){
+        this.academico = academico;
         this.interfazNotificacion = interfazNotificacion;
         this.anteproyectoValidacion = anteproyectoValidacion;
         cargarDatos();
@@ -129,7 +133,7 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
         lblTipoAnteproyecto.setText(anteproyectoValidacion.getTipoAnteproyecto());
         lblNoEstudiantesMaximo.setText(""+anteproyectoValidacion.getNoEstudiantesMaximo());
         lblNombreDocumento.setText(anteproyectoValidacion.getNombreDocumento());
-        lblFechaCreacion.setText(anteproyectoValidacion.getFechaCreacion());
+        lblFechaCreacion.setText(Utilidades.darFormatofechas(anteproyectoValidacion.getFechaCreacion()));
     }
     
     private void cerrarVentana(){
@@ -169,20 +173,37 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
                             "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    guardarComentario();
+                    validarCampos();
                 break;
         }
     }
     
-    private void guardarComentario(){
-        Comentario comentarioNuevo = new Comentario();
-        comentarioNuevo.setTexto(txtAreaComentario.getText().replaceAll("\n", System.getProperty("line.separator")));
-        comentarioNuevo.setIdAcademico(idAcademico);
-        comentarioNuevo.setIdAnteproyecto(anteproyectoValidacion.getIdAnteproyecto());
+    private void validarCampos(){
+        txtAreaComentario.setStyle(estiloNormal);
+        boolean camposValidos = true;
         
-        //Validación
+        String retroalimentacion = txtAreaComentario.getText().replaceAll("\n", System.getProperty("line.separator"));
         
-        int codigoRespuesta = ComentarioDAO.guardarComentario(comentarioNuevo);
+        if(retroalimentacion.isEmpty()){
+            camposValidos = false;
+            txtAreaComentario.setStyle(estiloError);
+        }
+        
+        if(camposValidos){
+            Comentario comentarioNuevo = new Comentario();
+            comentarioNuevo.setTexto(retroalimentacion);
+            comentarioNuevo.setIdAcademico(academico.getIdAcademico());
+            comentarioNuevo.setIdAnteproyecto(anteproyectoValidacion.getIdAnteproyecto());
+            
+            guardarComentario(comentarioNuevo);
+        }else{
+            Utilidades.mostrarDialogoSimple("Complete todos los campos", 
+                "Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.WARNING);
+        }
+    }
+    
+    private void guardarComentario(Comentario comentarioValidado){
+        int codigoRespuesta = ComentarioDAO.guardarComentario(comentarioValidado);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error de conexión", 

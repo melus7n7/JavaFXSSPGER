@@ -1,7 +1,7 @@
 /*
-*Autor: Martínez Aguilar Sulem
-*Fecha de creación: 14/05/2023
-*Fecha de modificación: 16/05/2023
+*Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
+*Fecha de creación: 06/06/2023
+*Fecha de modificación: 06/06/2023
 *Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los académicos
 */
 package javafxsspger.modelo.dao;
@@ -111,4 +111,92 @@ public class AcademicoDAO {
         }
         return academicosRespuesta;
     }
+    
+    public static AcademicoRespuesta obtenerPosiblesAcademicosCuerpoAcademico(int idCuerpoAcademico){
+        AcademicoRespuesta academicosRespuesta = new AcademicoRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = " SELECT CONCAT(Usuario.nombreUsuario, ' ', Usuario.apellidoPaterno, ' ', Usuario.apellidoMaterno) AS 'Nombre completo', Academico.idCuerpoAcademico, Academico.idAcademico  " +
+                "FROM Usuario    " +
+                "INNER JOIN Academico ON Academico.idUsuario = Usuario.idUsuario " +
+                "Where Academico.idCuerpoAcademico is null OR Academico.idCuerpoAcademico= ? ";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <Academico> academicos = new ArrayList();
+                while(resultado.next()){
+                    Academico academico = new Academico();
+                    academico.setIdAcademico(resultado.getInt("idAcademico"));
+                    academico.setNombreCompleto(resultado.getString("Nombre completo"));
+                    if(resultado.getInt("idCuerpoAcademico")==idCuerpoAcademico){
+                        academico.setPuesto("Es Responsable de Cuerpo Academico");
+                    }else{
+                        academico.setPuesto("Es Academico, no pertenece al Cuerpo Academico");
+                    }
+                    academico.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
+                    academicos.add(academico);
+                }
+                academicosRespuesta.setAcademicos(academicos);
+                academicosRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                academicosRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            }
+        }else{
+            academicosRespuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return academicosRespuesta;
+    }
+    
+    public static int eliminarResponsable(int idCuerpoAcademico){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "UPDATE academico SET idCuerpoAcademico = NULL WHERE Academico.idCuerpoAcademico = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+                
+                }catch(SQLException e){
+                    respuesta = Constantes.ERROR_CONSULTA;
+                    e.printStackTrace();
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+                    
+        }
+    
+    public static int hacerResponsable(int idAcademico, int idCuerpoAcademico){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "UPDATE academico SET idCuerpoAcademico = ? WHERE Academico.idAcademico = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
+                prepararSentencia.setInt(2, idAcademico);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+                
+                }catch(SQLException e){
+                    respuesta = Constantes.ERROR_CONSULTA;
+                    e.printStackTrace();
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+                    
+        }
+    
+    
+    
 }

@@ -231,7 +231,7 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
                 switch(tipoUsuario){
                     case Constantes.ACADEMICO:
-                        elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), numeroPantalla, this, usuarioAcademico.getIdAcademico());
+                        elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), numeroPantalla, this, usuarioAcademico);
                         break;
                     case Constantes.INVITADO:
                         elementoEnLista.setElementoAnteproyectoPublicados(anteproyectos.get(i), tipoUsuario, null);

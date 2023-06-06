@@ -85,7 +85,7 @@
             <Font name="SansSerif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextArea fx:id="txtAreaRetroalimentacion" layoutX="574.0" layoutY="355.0" prefHeight="223.0" prefWidth="499.0" />
+      <TextArea fx:id="txtAreaRetroalimentacion" layoutX="574.0" layoutY="355.0" prefHeight="223.0" prefWidth="499.0" wrapText="true" />
       <Button fx:id="bttCalificar" layoutX="742.0" layoutY="593.0" mnemonicParsing="false" onAction="#clicCalificarAvance" prefHeight="34.0" prefWidth="161.0" style="-fx-background-color: black;" text="Calificar Avance" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
