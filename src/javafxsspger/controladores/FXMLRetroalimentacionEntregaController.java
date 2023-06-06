@@ -93,13 +93,14 @@ public class FXMLRetroalimentacionEntregaController implements Initializable {
     }
     
     private void validarCampos(){
-        if(cmbBoxCalificacion.getSelectionModel().getSelectedItem()!=null && txtAreaRetroalimentacion.getText()!=null){
+        if(cmbBoxCalificacion.getSelectionModel().getSelectedItem()==null || txtAreaRetroalimentacion.getText().isEmpty()){
+            Utilidades.mostrarDialogoSimple("Campos invalidos","Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.ERROR);        
+            
+        }else{
             Calificacion calificacion = cmbBoxCalificacion.getSelectionModel().getSelectedItem();
             entrega.setIdRubrica(calificacion.getIdRubricaCalificacion());
             entrega.setRetroalimentacion(txtAreaRetroalimentacion.getText());
             actualizarEntrega(entrega);
-        }else{
-            Utilidades.mostrarDialogoSimple("Campos invalidos","Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.ERROR);        
         }
     }
     
