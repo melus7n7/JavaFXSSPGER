@@ -164,10 +164,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
                 lblNombreDirectorEtiqueta.setVisible(false);
                 bttVerMas.setVisible(false);
                 bttAsignar.setVisible(true);
-        }/*
-        if(lblFecha.getText().equals("null ")){
-            lblFecha.setText("Pendiente por aprobación");
-        }*/
+        }
     }
     
     public void setElementoAnteproyectoPublicados(Anteproyecto anteproyectoElemento, int tipoUsuario, Estudiante estudiante){

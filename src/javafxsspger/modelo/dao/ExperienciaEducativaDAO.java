@@ -23,7 +23,7 @@ import javafxsspger.utils.Constantes;
  * @author danie
  */
 public class ExperienciaEducativaDAO {
-    
+    /*
     public static ExperienciaEducativaRespuesta recuperarExperienciaEducativa(int idMateria){
         ExperienciaEducativaRespuesta expEduRespuesta = new ExperienciaEducativaRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
@@ -124,5 +124,5 @@ public class ExperienciaEducativaDAO {
             respuesta = Constantes.ERROR_CONEXION;
         }
         return respuesta;
-    }
+    }*/
 }

@@ -69,7 +69,7 @@ public class FXMLDetallesExperienciaEducativaController implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
+    /*
      public void inicializarInformacionAdministrador(Usuario usuarioAdministrador, ExperienciaEducativa experienciaEducativa){
        this.usuarioAdministrador = usuarioAdministrador;
        cargarInformacionExperienciaEducativa();
@@ -120,6 +120,6 @@ public class FXMLDetallesExperienciaEducativaController implements Initializable
     @FXML
     private void clicModificarIntegrantes(ActionEvent event) {
         
-    }
+    }*/
     
 }

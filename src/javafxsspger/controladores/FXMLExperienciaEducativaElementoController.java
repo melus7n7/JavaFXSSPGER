@@ -60,7 +60,7 @@ public class FXMLExperienciaEducativaElementoController implements Initializable
         this.expEduElemento = expEdu;
         //lblNombreExperienciaEducativa.setText(expEdu.getNombreExperienciaEducativa());
     }
-    
+    /*
     @FXML
     private void clicVerDetallesExperienciaEducativa(ActionEvent event) {
         if(usuarioAdmin!=null){
@@ -92,5 +92,5 @@ public class FXMLExperienciaEducativaElementoController implements Initializable
                 ex.printStackTrace();
             }
         }
-    }
+    }*/
 }

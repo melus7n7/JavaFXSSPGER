@@ -49,7 +49,7 @@ public class FXMLExperienciasEducativasController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
+/*
     private void cargarExperienciasEducativas(){
         ExperienciaEducativaRespuesta respuestaBD = ExperienciaEducativaDAO.recuperarExperienciaEducativa(0);
         switch(respuestaBD.getCodigoRespuesta()){
@@ -99,5 +99,5 @@ public class FXMLExperienciasEducativasController implements Initializable {
     
     public void inicializarInformacionUsuario(Usuario usuarioAdmin){
         this.usuarioAdmin=usuarioAdmin;
-    }
+    }*/
 }

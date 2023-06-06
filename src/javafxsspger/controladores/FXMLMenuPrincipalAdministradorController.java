@@ -75,7 +75,7 @@ public class FXMLMenuPrincipalAdministradorController implements Initializable {
     }
 
     @FXML
-    private void clicExperienciaEducativa(ActionEvent event) {
+    private void clicExperienciaEducativa(ActionEvent event) {/*
         Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
         try {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLExperienciasEducativas.fxml"));
@@ -87,7 +87,7 @@ public class FXMLMenuPrincipalAdministradorController implements Initializable {
             escenarioBase.show();
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
 
     @FXML
