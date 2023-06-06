@@ -112,7 +112,7 @@ public class AcademicoDAO {
         return academicosRespuesta;
     }
     
-    public static AcademicoRespuesta obtenerPosiblesAcademicos(int idCuerpoAcademico){
+    public static AcademicoRespuesta obtenerPosiblesAcademicosCuerpoAcademico(int idCuerpoAcademico){
         AcademicoRespuesta academicosRespuesta = new AcademicoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
@@ -129,7 +129,6 @@ public class AcademicoDAO {
                     Academico academico = new Academico();
                     academico.setIdAcademico(resultado.getInt("idAcademico"));
                     academico.setNombreCompleto(resultado.getString("Nombre completo"));
-                    System.out.println("IDCA |"+resultado.getInt("idCuerpoAcademico"));
                     if(resultado.getInt("idCuerpoAcademico")==idCuerpoAcademico){
                         academico.setPuesto("Es Responsable de Cuerpo Academico");
                     }else{
