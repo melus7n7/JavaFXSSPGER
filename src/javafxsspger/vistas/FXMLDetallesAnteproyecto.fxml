@@ -136,6 +136,11 @@
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Button>
+      <Button fx:id="bttEliminarPublicados" layoutX="25.0" layoutY="603.0" mnemonicParsing="false" onAction="#clicEliminarPublicados" prefHeight="30.0" prefWidth="235.0" style="-fx-background-color: red;" text="Eliminar de la lista de publicados" textFill="WHITE" visible="false">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+      </Button>
    </children>
    <padding>
       <Insets left="5.0" top="5.0" />

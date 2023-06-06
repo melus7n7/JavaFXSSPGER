@@ -96,7 +96,7 @@ public class FXMLAnteproyectosParaAsignarController implements Initializable {
             try{
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
-                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), Constantes.ES_ASIGNAR_ESTUDIANTES, null, usuarioAcademico.getIdAcademico());
+                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), Constantes.ES_ASIGNAR_ESTUDIANTES, null, usuarioAcademico);
                 altoVBox += pane.getPrefHeight();
                 vBoxListaAnteproyectos.setPrefHeight(altoVBox);
                 vBoxListaAnteproyectos.getChildren().add(pane);

@@ -7,14 +7,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="447.0" style="-fx-background-color: THISTLE; -fx-border-color: silver; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLComentarioElementoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="445.0" style="-fx-background-color: THISTLE; -fx-border-color: silver; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLComentarioElementoController">
    <children>
       <Label fx:id="lblAutor" layoutX="10.0" layoutY="5.0" prefHeight="14.0" prefWidth="231.0" text="Por: ">
          <font>
             <Font name="SansSerif Regular" size="11.0" />
          </font>
       </Label>
-      <Label fx:id="lblFecha" alignment="CENTER_RIGHT" layoutX="310.0" layoutY="4.0" prefHeight="14.0" prefWidth="135.0" text="Fecha: " textAlignment="RIGHT">
+      <Label fx:id="lblFecha" alignment="CENTER_RIGHT" layoutX="302.0" layoutY="5.0" prefHeight="14.0" prefWidth="135.0" text="Fecha: " textAlignment="RIGHT">
          <font>
             <Font name="SansSerif Regular" size="11.0" />
          </font>

@@ -23,6 +23,7 @@ import javafxsspger.interfaces.INotificacionAvances;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Avance;
 import javafxsspger.modelo.pojo.Estudiante;
+import javafxsspger.utils.Utilidades;
 
 
 public class FXMLAvanceElementoController implements Initializable {
@@ -70,7 +71,7 @@ public class FXMLAvanceElementoController implements Initializable {
         this.usuarioAcademico = academico;
         this.esAcademico = true;
         lblNombreAvance.setText(avance.getTitulo());
-        lblFechaCreacion.setText(avance.getFechaCreacion());
+        lblFechaCreacion.setText(Utilidades.darFormatofechas(avance.getFechaCreacion()));
     }
     
     public void incializarElementoEstudiante(Avance avance, Estudiante estudiante, INotificacionAvances notificacion){
@@ -79,7 +80,7 @@ public class FXMLAvanceElementoController implements Initializable {
         this.usuarioEstudiante = estudiante;
         this.esAcademico = false;
         lblNombreAvance.setText(avance.getTitulo());
-        lblFechaCreacion.setText(avance.getFechaCreacion());
+        lblFechaCreacion.setText(Utilidades.darFormatofechas(avance.getFechaCreacion()));
     }
     
 }

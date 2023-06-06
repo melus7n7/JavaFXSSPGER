@@ -191,8 +191,8 @@ public class TrabajoRecepcionalDAO {
             try{
                 String consulta = "SELECT trabajorecepcional.idTrabajoRecepcional, trabajorecepcional.idAnteproyecto, trabajorecepcional.titulo, trabajorecepcional.descripcion, trabajorecepcional.fechaCreacion, trabajorecepcional.fechaAprobacion, " +
                     "trabajorecepcional.noEstudiantesMaximos, trabajorecepcional.documento, trabajorecepcional.nombreDocumento, " +
-                    "trabajorecepcional.idCuerpoAcademico, trabajorecepcional.idTipoAnteproyecto, trabajorecepcional.idLGAC, " +
-                    "usuario.nombreUsuario, cuerpoacademico.nombre AS nombreCA, tipoanteproyecto.tipoanteproyecto, lgac.nombre AS nombreLGAC " +
+                    "trabajorecepcional.idCuerpoAcademico, trabajorecepcional.idTipoAnteproyecto, trabajorecepcional.idLGAC, trabajorecepcional.idEstado, " +
+                    "usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno, cuerpoacademico.nombre AS nombreCA, tipoanteproyecto.tipoanteproyecto, lgac.nombre AS nombreLGAC " +
                     "FROM sspger.trabajorecepcional " +
                     "INNER JOIN LGAC on LGAC.idLGAC = trabajorecepcional.idLGAC " +
                     "INNER JOIN cuerpoacademico ON cuerpoacademico.idCuerpoAcademico = trabajorecepcional.idCuerpoAcademico " +
@@ -200,12 +200,13 @@ public class TrabajoRecepcionalDAO {
                     "INNER JOIN encargadostrabajorecepcional ON encargadostrabajorecepcional.idTrabajoRecepcional = trabajorecepcional.idTrabajoRecepcional " +
                     "INNER JOIN academico ON academico.idAcademico = encargadostrabajorecepcional.idAcademico " +
                     "INNER JOIN usuario ON academico.idUsuario = usuario.idUsuario " +
-                    "WHERE encargadostrabajorecepcional.esDirector = '1' AND encargadostrabajorecepcional.idAcademico = academico.idAcademico " +
+                    "WHERE encargadostrabajorecepcional.esDirector = 1 AND encargadostrabajorecepcional.idAcademico = academico.idAcademico " +
                     "AND trabajorecepcional.idTrabajoRecepcional = ? ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idTrabajoRecepcional);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 if(resultado.next()){
+                    respuesta.setIdTrabajoRecepcional(idTrabajoRecepcional);
                     respuesta.setTitulo(resultado.getString("titulo"));
                     respuesta.setDescripcion(resultado.getString("descripcion"));
                     respuesta.setFechaCreacion(resultado.getString("fechaCreacion"));
@@ -232,7 +233,7 @@ public class TrabajoRecepcionalDAO {
                     "INNER JOIN encargadostrabajorecepcional ON encargadostrabajorecepcional.idAcademico = academico.idAcademico " +
                     "INNER JOIN usuario ON usuario.idUsuario = academico.idUsuario " +
                     "WHERE encargadostrabajorecepcional.esDirector = 0 AND encargadostrabajorecepcional.idAcademico = academico.idAcademico " +
-                    " AND encargadostrabajorecepcional.i = ?";
+                    " AND encargadostrabajorecepcional.idTrabajoRecepcional = ?";
                 PreparedStatement prepararSentenciaCodirectores = conexionBD.prepareStatement(consultaCodirectores);
                 prepararSentenciaCodirectores.setInt(1, idTrabajoRecepcional);
                 ResultSet resultadoCodirectores = prepararSentenciaCodirectores.executeQuery();

@@ -169,14 +169,14 @@ public class FXMLDetalleAvanceController implements Initializable {
         lblDescripcion.setText(avanceDetalle.getDescripcion());
         lblCalificacion.setText(avanceDetalle.getPuntajeSatisfaccion()+"");
         lblNivelSatisfaccion.setText(avanceDetalle.getNivelSatisfaccion());
-        lblFechaInicio.setText(avanceDetalle.getFechaInicio());
-        lblFechaFin.setText(avanceDetalle.getFechaFin());
         txtAreaRetroalimentacion.setText(avanceDetalle.getRetroalimentacion());
         if(avanceDetalle.getActividades() != null && !avanceDetalle.getActividades().isEmpty()){
+            lblFechaInicio.setText(Utilidades.darFormatofechas(avanceDetalle.getFechaInicio()));
+            lblFechaFin.setText(Utilidades.darFormatofechas(avanceDetalle.getFechaFin()));
             cargarActividades();
             calcularPorcentajeCompletado();
         }else{
-            lblPorcentaje.setText("No hay actividades ...");
+            lblPorcentaje.setText("No hay actividades");
             lblFechaInicio.setText("--/--/----");
             lblFechaFin.setText("--/--/----");
         }

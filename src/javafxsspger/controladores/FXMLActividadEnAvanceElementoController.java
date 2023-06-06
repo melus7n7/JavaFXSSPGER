@@ -26,6 +26,7 @@ import javafxsspger.interfaces.INotificacionAvances;
 import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.Estudiante;
+import javafxsspger.utils.Utilidades;
 
 
 public class FXMLActividadEnAvanceElementoController implements Initializable {
@@ -88,7 +89,7 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
         this.actividadActual = actividad;
         this.esAcademico = true;
         lblNombreActividad.setText(actividad.getTitulo());
-        lblFechaCreacion.setText("Fecha Creación: " + actividad.getFechaCreacion());
+        lblFechaCreacion.setText("Fecha Creación: " + Utilidades.darFormatofechas(actividad.getFechaCreacion()));
     }
     
     public void cargarActividadEstudiante(Actividad actividad, Estudiante usuarioEstudiante, INotificacionAvances notificacionAvances){
@@ -97,7 +98,7 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
         this.usuarioEstudiante = usuarioEstudiante;
         this.esAcademico = false;
         lblNombreActividad.setText(actividad.getTitulo());
-        lblFechaCreacion.setText("Fecha Creación: " + actividad.getFechaCreacion());
+        lblFechaCreacion.setText("Fecha Creación: " + Utilidades.darFormatofechas(actividad.getFechaCreacion()));
     }
     
     public void cargarActividadCreacionAvance(Actividad actividad, INotificacionActividad notificacion, boolean estaSeleccionado){
@@ -107,13 +108,13 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
         chcBoxAgregarActividad.setVisible(true);
         chcBoxAgregarActividad.setSelected(estaSeleccionado);
         lblNombreActividad.setText(actividad.getTitulo());
-        lblFechaCreacion.setText("Fecha Creación: " + actividad.getFechaCreacion());
+        lblFechaCreacion.setText("Fecha Creación: " + Utilidades.darFormatofechas(actividad.getFechaCreacion()));
     }
 
     public void incializarElementoParaCalificacion(Actividad actividad){
         this.actividadActual = actividad;
         lblNombreActividad.setText(actividad.getTitulo());
-        lblFechaCreacion.setText("Fecha Creación: " + actividad.getFechaCreacion());
+        lblFechaCreacion.setText("Fecha Creación: " + Utilidades.darFormatofechas(actividad.getFechaCreacion()));
         bttVerMasActividad.setVisible(false);
     }
     

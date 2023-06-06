@@ -16,9 +16,9 @@
             <Font name="SansSerif Bold Italic" size="16.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="scrPaneCajaCodirectores" layoutX="37.0" layoutY="466.0" prefHeight="167.0" prefWidth="555.0">
+      <ScrollPane fx:id="scrPaneCajaCodirectores" layoutX="32.0" layoutY="464.0" prefHeight="167.0" prefWidth="565.0">
          <content>
-            <VBox fx:id="vBoxListaCodirectores" prefHeight="156.0" prefWidth="550.0" />
+            <VBox fx:id="vBoxListaCodirectores" prefHeight="174.0" prefWidth="550.0" />
          </content>
       </ScrollPane>
       <Label layoutX="262.0" layoutY="444.0" text="Codirectores:">
@@ -95,7 +95,7 @@
       </Label>
       <ScrollPane fx:id="scrPaneContenedorComentarios" layoutX="604.0" layoutY="132.0" prefHeight="269.0" prefWidth="460.0">
          <content>
-            <VBox fx:id="vBoxComentarios" prefHeight="269.0" prefWidth="455.0" />
+            <VBox fx:id="vBoxComentarios" prefHeight="276.0" prefWidth="445.0" />
          </content>
       </ScrollPane>
       <Label layoutX="618.0" layoutY="107.0" text="Comentarios:">
