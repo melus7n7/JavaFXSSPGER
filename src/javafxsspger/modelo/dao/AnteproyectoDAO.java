@@ -105,7 +105,7 @@ public class AnteproyectoDAO {
         return respuesta;
     }
     
-    public static AnteproyectoRespuesta obtenerAnteproyectosPorCorregir(){
+    public static AnteproyectoRespuesta obtenerAnteproyectosPorCorregir(Academico academico){
         AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
@@ -118,9 +118,10 @@ public class AnteproyectoDAO {
                     "INNER JOIN academico ON encargadosanteproyecto.idAcademico = encargadosanteproyecto.idAcademico " +
                     "INNER JOIN usuario ON academico.idUsuario = usuario.idUsuario " +
                     "WHERE encargadosanteproyecto.esDirector = '1' AND encargadosanteproyecto.idAcademico = academico.idAcademico " +
-                    "AND anteproyecto.noEstudiantesAsignados <= 0 AND anteproyecto.idEstado = 1 " +
+                    "AND anteproyecto.noEstudiantesAsignados <= 0 AND anteproyecto.idEstado = 1 AND anteproyecto.idCuerpoAcademico = ? " +
                     "ORDER BY usuario.nombreUsuario ASC ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, academico.getIdCuerpoAcademico());
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList <Anteproyecto> anteproyectosConsulta = new ArrayList();
                 while(resultado.next()){

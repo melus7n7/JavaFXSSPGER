@@ -6,25 +6,32 @@
 */
 package javafxsspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.AvanceDAO;
 import javafxsspger.modelo.dao.EstudianteDAO;
+import javafxsspger.modelo.dao.TrabajoRecepcionalDAO;
 import javafxsspger.modelo.pojo.Academico;
+import javafxsspger.modelo.pojo.Avance;
 import javafxsspger.modelo.pojo.AvanceRespuesta;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.EstudianteRespuesta;
 import javafxsspger.modelo.pojo.TrabajoRecepcional;
+import javafxsspger.modelo.pojo.TrabajoRecepcionalRespuesta;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
@@ -53,34 +60,35 @@ public class FXMLTrabajosRecepcionalesController implements Initializable {
     
     public void inicializarPantallaAcademico(Academico usuarioAcademico){
         this.usuarioAcademico = usuarioAcademico;
+        cargarTrabajosRecepcionales();
     }
     
     private void cargarTrabajosRecepcionales(){
-        /*trabajosRecepcionales = FXCollections.observableArrayList();
-        EstudianteRespuesta respuesta = new EstudianteRespuesta();
+        trabajosRecepcionales = FXCollections.observableArrayList();
+        TrabajoRecepcionalRespuesta respuesta = new TrabajoRecepcionalRespuesta();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
-        if(academicoAvances.isEsProfesor()){
-            respuesta = EstudianteDAO.recuperarEstudiantesProfesor(academicoAvances.getIdAcademico());
+        if(usuarioAcademico.isEsProfesor()){
+            respuesta = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesProfesor(usuarioAcademico.getIdAcademico());
         }
-        if(academicoAvances.isEsDirector()){
-            respuesta = EstudianteDAO.recuperarEstudiantesDirector(academicoAvances.getIdAcademico());
+        if(usuarioAcademico.isEsDirector()){
+            respuesta = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesDirector(usuarioAcademico.getIdAcademico());
         }
-        if(academicoAvances.isEsDirector() && academicoAvances.isEsProfesor()){
-            EstudianteRespuesta respuesta1 = EstudianteDAO.recuperarEstudiantesProfesor(academicoAvances.getIdAcademico());
-            EstudianteRespuesta respuesta2 =  EstudianteDAO.recuperarEstudiantesDirector(academicoAvances.getIdAcademico());
-            EstudianteRespuesta respuestaTotal = new EstudianteRespuesta();
+        if(usuarioAcademico.isEsDirector() && usuarioAcademico.isEsProfesor()){
+            TrabajoRecepcionalRespuesta respuesta1 = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesProfesor(usuarioAcademico.getIdAcademico());
+            TrabajoRecepcionalRespuesta respuesta2 =  TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesDirector(usuarioAcademico.getIdAcademico());
+            TrabajoRecepcionalRespuesta respuestaTotal = new TrabajoRecepcionalRespuesta();
             if(respuesta1.getCodigoRespuesta()== Constantes.OPERACION_EXITOSA && respuesta2.getCodigoRespuesta()== Constantes.OPERACION_EXITOSA){
                 respuestaTotal.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
-                respuestaTotal.setEstudiantes(new ArrayList());
-                respuestaTotal.getEstudiantes().addAll(respuesta1.getEstudiantes());
-                respuestaTotal.getEstudiantes().addAll(respuesta2.getEstudiantes());
-                ArrayList<Estudiante> listaSinDuplicados = new ArrayList();
-                for(Estudiante estudiante: respuestaTotal.getEstudiantes()){
-                    if(!estaRepetido(estudiante, listaSinDuplicados)){
-                        listaSinDuplicados.add(estudiante);
+                respuestaTotal.setTrabajosRecepcionales(new ArrayList());
+                respuestaTotal.getTrabajosRecepcionales().addAll(respuesta1.getTrabajosRecepcionales());
+                respuestaTotal.getTrabajosRecepcionales().addAll(respuesta2.getTrabajosRecepcionales());
+                ArrayList<TrabajoRecepcional> listaSinDuplicados = new ArrayList();
+                for(TrabajoRecepcional trabajo: respuestaTotal.getTrabajosRecepcionales()){
+                    if(!estaRepetido(trabajo, listaSinDuplicados)){
+                        listaSinDuplicados.add(trabajo);
                     }
                 }
-                respuestaTotal.setEstudiantes(listaSinDuplicados);
+                respuestaTotal.setTrabajosRecepcionales(listaSinDuplicados);
             }else{
                 respuestaTotal.setCodigoRespuesta(Constantes.ERROR_CONEXION);
             }
@@ -96,26 +104,37 @@ public class FXMLTrabajosRecepcionalesController implements Initializable {
                             "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                estudiantes.addAll(respuesta.getEstudiantes());
-                cmbBoxEstudiante.setItems(estudiantes);
-                break;
-        }*/
-    }
-    
-    private void recuperarAvances(Estudiante estudiante){
-        AvanceRespuesta avancesBD = AvanceDAO.obtenerAvances(estudiante.getIdEstudiante());
-        switch(avancesBD.getCodigoRespuesta()){
-            case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                //cargarAvances(avancesBD.getAvances());
+                cargarTrabajosRecepcionales(respuesta.getTrabajosRecepcionales());
                 break;
         }
+    }
+    
+    private void cargarTrabajosRecepcionales (ArrayList<TrabajoRecepcional> trabajos){
+        int altoVBox = 0;
+        for (int i=0; i<trabajos.size(); i++){
+            try{
+                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectoElemento.fxml"));
+                Pane pane = accesoControlador.load();
+                FXMLAnteproyectoElementoController trabajoController = accesoControlador.getController();
+                trabajoController.setTrabajoRecepcional(trabajos.get(i));
+                altoVBox += pane.getPrefHeight();
+                vBoxListaTrabajos.setPrefHeight(altoVBox);
+                vBoxListaTrabajos.getChildren().add(pane);
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+        if(vBoxListaTrabajos.getPrefHeight() < scrPaneContenedorTrabajos.getPrefHeight()){
+            vBoxListaTrabajos.setPrefHeight(scrPaneContenedorTrabajos.getPrefHeight());
+        }
+    }
+    
+    private boolean estaRepetido(TrabajoRecepcional trabajoComprobar, ArrayList<TrabajoRecepcional> trabajos){
+        for(TrabajoRecepcional trabajo: trabajos){
+            if(trabajo.getIdTrabajoRecepcional()== trabajoComprobar.getIdTrabajoRecepcional()){
+                return true;
+            }
+        }
+        return false;
     }
 }

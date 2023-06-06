@@ -20,12 +20,12 @@
             <Image url="@../recursos/flecha.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnAnteproyectosPropios" layoutX="303.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPropiosPublicados" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: black;" text="Anteproyectos Propios" textFill="WHITE">
+      <Button fx:id="btnAnteproyectosPropios" layoutX="296.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPropiosPublicados" prefHeight="40.0" prefWidth="276.0" style="-fx-background-color: black;" text="Anteproyectos Propios" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnAnteproyectoPorCorregir" layoutX="621.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPorCorregir" prefHeight="40.0" prefWidth="245.0" style="-fx-background-color: black;" text="Anteproyectos Por Corregir" textFill="WHITE">
+      <Button fx:id="btnAnteproyectoPorCorregir" layoutX="596.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicAnteproyectosPorCorregir" prefHeight="40.0" prefWidth="270.0" style="-fx-background-color: black;" text="Anteproyectos No Publicados" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>

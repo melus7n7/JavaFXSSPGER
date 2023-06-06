@@ -162,7 +162,8 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     public void setTrabajoRecepcional(TrabajoRecepcional trabajo){
         lblEtiquetaNombre.setText("Nombre del trabajo recepcional:");
         lblNombreAnteproyecto.setText(trabajo.getTitulo());
-        lblNombreDirector.setText(trabajo.getNombreDirector());
+        lblNombreDirectorEtiqueta.setVisible(false);
+        lblNombreDirector.setVisible(false);
         lblFecha.setText(trabajo.getFechaAprobacion());
         bttMostrarTrabajo.setVisible(true);
     }

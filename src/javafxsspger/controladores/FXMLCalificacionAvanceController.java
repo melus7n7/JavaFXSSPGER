@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 03/06/2023
-*Fecha de modificación: 04/06/2023
+*Fecha de modificación: 06/06/2023
 *Descripción: Controlador de la vista de la calificación del avance
 */
 package javafxsspger.controladores;
@@ -168,9 +168,9 @@ public class FXMLCalificacionAvanceController implements Initializable {
         lblCalificacion.setStyle(estiloNormal + ";-fx-background-color: white;");
         
         Calificacion calificacion = cmbNivelSatisfaccion.getSelectionModel().getSelectedItem();
-        if(calificacion.getIdRubricaCalificacion() == Constantes.ID_CALIFICACION_PENDIENTE){
-            cmbNivelSatisfaccion.setStyle(estiloError);
-            lblCalificacion.setStyle(estiloError + ";-fx-background-color: white;");
+        String retroalimentacion = txtAreaRetroalimentacion.getText().replaceAll("\n", System.getProperty("line.separator"));
+        if(retroalimentacion.isEmpty()){
+            txtAreaRetroalimentacion.setStyle(estiloError);
             camposCompletos = false;
         }
         
@@ -178,12 +178,12 @@ public class FXMLCalificacionAvanceController implements Initializable {
             Avance avanceValidado = new Avance();
             avanceValidado.setIdAvance(avanceACalificar.getIdAvance());
             avanceValidado.setIdRubrica(calificacion.getIdRubricaCalificacion());
-            avanceValidado.setRetroalimentacion(txtAreaRetroalimentacion.getText().replaceAll("\n", System.getProperty("line.separator")));
+            avanceValidado.setRetroalimentacion(retroalimentacion);
             
             guardarCalificacion(avanceValidado);
         }else{
-            Utilidades.mostrarDialogoSimple("Calificación no especificada", 
-                "El avance no ha sido calificado. Debe calificarlo para continuar", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Retroalimentación no especificada", 
+                "El avance no ha sido retroalimentado. Debe retroalimentarlo para continuar", Alert.AlertType.ERROR);
         }
         
     }

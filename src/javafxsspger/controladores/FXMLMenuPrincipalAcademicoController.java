@@ -115,6 +115,19 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     
     @FXML
     private void clicTrabajosRecepcionales(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLTrabajosRecepcionales.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLTrabajosRecepcionalesController trabajos = accesoControlador.getController();
+            trabajos.inicializarPantallaAcademico(usuarioAcademico);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Trabajos Recepcionales");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

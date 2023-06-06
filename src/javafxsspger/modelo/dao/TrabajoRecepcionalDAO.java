@@ -28,7 +28,7 @@ public class TrabajoRecepcionalDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT trabajorecepcional.idtrabajorecepcional, trabajorecepcional.titulo, encargadostrabajorecepcional.idAcademico " +
+                String consulta = "SELECT trabajorecepcional.idtrabajorecepcional, trabajorecepcional.titulo, encargadostrabajorecepcional.idAcademico, TrabajoRecepcional.fechaAprobacion " +
                 "FROM sspger.trabajorecepcional " +
                 "INNER JOIN encargadostrabajorecepcional ON trabajorecepcional.idtrabajorecepcional = encargadostrabajorecepcional.idtrabajorecepcional " +
                 "INNER JOIN academico ON encargadostrabajorecepcional.idtrabajorecepcional = encargadostrabajorecepcional.idtrabajorecepcional " +
@@ -42,7 +42,8 @@ public class TrabajoRecepcionalDAO {
                 while(resultado.next()){
                     TrabajoRecepcional trabajoRecepcional = new TrabajoRecepcional();
                     trabajoRecepcional.setIdTrabajoRecepcional(resultado.getInt("idtrabajorecepcional"));
-                    trabajoRecepcional.setTitulo(resultado.getString("titulo"));       
+                    trabajoRecepcional.setTitulo(resultado.getString("titulo"));     
+                    trabajoRecepcional.setFechaAprobacion(resultado.getString("fechaAprobacion"));
                     trabajosRecepcionalesConsulta.add(trabajoRecepcional);
                 }
                 respuesta.setTrabajosRecepcionales(trabajosRecepcionalesConsulta);
@@ -63,7 +64,7 @@ public class TrabajoRecepcionalDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT TrabajoRecepcional.idTrabajoRecepcional, TrabajoRecepcional.titulo " +
+                String consulta = "SELECT TrabajoRecepcional.idTrabajoRecepcional, TrabajoRecepcional.titulo, TrabajoRecepcional.fechaAprobacion " +
                 "from Usuario " +
                 "INNER JOIN Estudiante ON Usuario.idUsuario=Estudiante.idUsuario " +
                 "INNER JOIN TrabajoRecepcional ON Estudiante.idTrabajoRecepcional=TrabajoRecepcional.idTrabajoRecepcional where Estudiante.idEstudiante=?; ";
@@ -74,7 +75,8 @@ public class TrabajoRecepcionalDAO {
                 while(resultado.next()){
                     TrabajoRecepcional trabajoRecepcional = new TrabajoRecepcional();
                     trabajoRecepcional.setIdTrabajoRecepcional(resultado.getInt("idtrabajorecepcional"));
-                    trabajoRecepcional.setTitulo(resultado.getString("titulo"));       
+                    trabajoRecepcional.setTitulo(resultado.getString("titulo")); 
+                    trabajoRecepcional.setFechaAprobacion(resultado.getString("fechaAprobacion"));
                     trabajosRecepcionalesConsulta.add(trabajoRecepcional);
                 }
                 respuesta.setTrabajosRecepcionales(trabajosRecepcionalesConsulta);
@@ -95,7 +97,7 @@ public class TrabajoRecepcionalDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT trabajorecepcional.idtrabajorecepcional, trabajorecepcional.titulo " +
+                String consulta = "SELECT trabajorecepcional.idtrabajorecepcional, trabajorecepcional.titulo, TrabajoRecepcional.fechaAprobacion " +
                        "FROM sspger.ExperienciaEducativa      " +
                        "INNER JOIN perteneceexperienciaeducativa ON perteneceexperienciaeducativa.idExperienciaEducativa = ExperienciaEducativa.idExperienciaEducativa     " +
                        "INNER JOIN estudiante ON estudiante.idEstudiante = perteneceexperienciaeducativa.idEstudiante      " +
@@ -109,7 +111,8 @@ public class TrabajoRecepcionalDAO {
                 while(resultado.next()){
                     TrabajoRecepcional trabajoRecepcional = new TrabajoRecepcional();
                     trabajoRecepcional.setIdTrabajoRecepcional(resultado.getInt("idtrabajorecepcional"));
-                    trabajoRecepcional.setTitulo(resultado.getString("titulo"));       
+                    trabajoRecepcional.setTitulo(resultado.getString("titulo"));  
+                    trabajoRecepcional.setFechaAprobacion(resultado.getString("fechaAprobacion"));
                     trabajosRecepcionalesConsulta.add(trabajoRecepcional);
                 }
                 respuesta.setTrabajosRecepcionales(trabajosRecepcionalesConsulta);

@@ -185,7 +185,7 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     
     private void cargarElementosPorCorregir(){
         vBoxListaAnteproyectosPublicados.getChildren().clear();
-        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPorCorregir();
+        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPorCorregir(usuarioAcademico);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin Conexion", 
