@@ -59,7 +59,7 @@ public class FXMLModificarIntegrantesCuerpoAcademicoController implements Initia
 
     private void cargarInformacionTabla(){
         academicos = FXCollections.observableArrayList();
-        AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesAcademicos(cuerpoAcademico.getIdCuerpoAcademico());
+        AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesAcademicosCuerpoAcademico(cuerpoAcademico.getIdCuerpoAcademico());
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
@@ -141,9 +141,12 @@ public class FXMLModificarIntegrantesCuerpoAcademicoController implements Initia
     @FXML
     private void clicEliminarCuerpoAcademico(ActionEvent event) {
         Academico AcademicoSeleccionado= tblViewAcademicos.getSelectionModel().getSelectedItem();
-        if(AcademicoSeleccionado!=null && cuerpoAcademico.getIdCuerpoAcademico()==AcademicoSeleccionado.getIdAcademico()){
+        if(AcademicoSeleccionado!=null){
+            if(cuerpoAcademico.getIdAcademico()==AcademicoSeleccionado.getIdAcademico()){
             eliminarResponsable(cuerpoAcademico.getIdCuerpoAcademico());
-        
+            }else{
+                Utilidades.mostrarDialogoSimple("Este academico no pertenece al Cuerpo Academico", "No se puede modificar al académico seleccionado", Alert.AlertType.WARNING);                
+            }
         }else{
             Utilidades.mostrarDialogoSimple("Seleccione a un academico", "Escoger académico para su modificación", Alert.AlertType.WARNING);
         }
