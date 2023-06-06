@@ -180,18 +180,7 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
 
     @FXML
     private void clicRegresarCuerposAcademicos(MouseEvent event) {
-        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCuerposAcademicos.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLCuerposAcademicosController cuerposAcademicos = accesoControlador.getController();
-            cuerposAcademicos.inicializarInformacionUsuario(usuarioAdmin);
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("");
-            escenarioBase.show();
-        }catch(IOException ex){
-            ex.printStackTrace();
-        }
+        cerrarVentana();
     }
 
     @FXML
@@ -227,7 +216,6 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
     }
     
     private void eliminarLGACCuerpoAcademico(CuerpoAcademico cuerpoAcademico){
-        System.out.println("LGACID "+cuerpoAcademico.getIdCuerpoAcademico());
         int codigoRespuesta = LGACDAO.eliminarLGACDeCuerpoAcademico(cuerpoAcademico.getIdCuerpoAcademico());
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
@@ -237,8 +225,22 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
                 Utilidades.mostrarDialogoSimple("Error de LGAC", "LGAC", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("LGAC modificada", "LGACMODIFICADA", Alert.AlertType.INFORMATION);
                 break;
+        }
+    }
+    
+    private void cerrarVentana(){
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCuerposAcademicos.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLCuerposAcademicosController cuerpoAcademico = accesoControlador.getController();
+            cuerpoAcademico.inicializarInformacionUsuario(usuarioAdmin); 
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Cuerpos Academicos");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
     
@@ -258,8 +260,12 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
                 Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Cuerpo academico añadido con exito", "El cuerpo académico ha sido creado con éxito", Alert.AlertType.INFORMATION);
-                //cerrarVentana();
+                if(esEdicion){
+                    Utilidades.mostrarDialogoSimple("Cuerpo academico modificado con exito", "El cuerpo académico ha sido modificado con éxito", Alert.AlertType.INFORMATION);                    
+                }else{
+                    Utilidades.mostrarDialogoSimple("Cuerpo academico añadido con exito", "El cuerpo académico ha sido creado con éxito", Alert.AlertType.INFORMATION);
+                }
+                cerrarVentana();
                 break;
         }
     }

@@ -25,11 +25,12 @@ public class CuerpoAcademicoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT CuerpoAcademico.idCuerpoAcademico, CuerpoAcademico.nombre, CuerpoAcademico.claveCuerpoAcademico, CuerpoAcademico.descripcion, "
-                        + "CuerpoAcademico.areaConocimiento, " +
-                           "CuerpoAcademico.idConsolidacion, Consolidacion.nivelConsolidacion " +
-                           "from CuerpoAcademico "
-                        + "INNER JOIN Consolidacion ON CuerpoAcademico.idConsolidacion = Consolidacion.idConsolidacion ";
+                String consulta = "SELECT CuerpoAcademico.idCuerpoAcademico, CuerpoAcademico.nombre, CuerpoAcademico.claveCuerpoAcademico, CuerpoAcademico.descripcion,  " +
+                "CuerpoAcademico.areaConocimiento,  Academico.idAcademico, " +
+                "CuerpoAcademico.idConsolidacion, Consolidacion.nivelConsolidacion    " +
+                "from CuerpoAcademico   " +
+                "INNER JOIN Consolidacion ON CuerpoAcademico.idConsolidacion = Consolidacion.idConsolidacion " +
+                "LEFT JOIN Academico ON CuerpoAcademico.idCuerpoAcademico=Academico.idCuerpoAcademico ORDER BY Cuerpoacademico.nombre ASC";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList <CuerpoAcademico> cuerposAcademicos = new ArrayList();
@@ -42,6 +43,7 @@ public class CuerpoAcademicoDAO {
                     cuerpoAcademico.setAreaConocimiento(resultado.getString("areaConocimiento"));
                     cuerpoAcademico.setIdConsolidacion(resultado.getInt("idConsolidacion"));
                     cuerpoAcademico.setNivelConsolidacion(resultado.getString("nivelConsolidacion"));
+                    cuerpoAcademico.setIdAcademico(resultado.getInt("idAcademico"));
                     cuerposAcademicos.add(cuerpoAcademico);
                 }
                 cuerposAcademicosRespuesta.setCuerposAcademicos(cuerposAcademicos);

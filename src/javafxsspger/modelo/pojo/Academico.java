@@ -16,7 +16,32 @@ public class Academico extends Usuario{
     private boolean esProfesor;
     private boolean esResponsableCA;
     private boolean esCoordinador;
+    private String nombreCompleto;
+    private String puesto;
 
+    
+
+    public Academico(int idAcademico, String noPersonal, int idCuerpoAcademico, int idAnteproyecto, boolean esDirector, boolean esProfesor, boolean esResponsableCA, boolean esCoordinador, String nombreCompleto, String puesto) {
+        this.idAcademico = idAcademico;
+        this.noPersonal = noPersonal;
+        this.idCuerpoAcademico = idCuerpoAcademico;
+        this.idAnteproyecto = idAnteproyecto;
+        this.esDirector = esDirector;
+        this.esProfesor = esProfesor;
+        this.esResponsableCA = esResponsableCA;
+        this.esCoordinador = esCoordinador;
+        this.nombreCompleto = nombreCompleto;
+        this.puesto = puesto;
+    }
+
+    public String getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
+    }
+    
     public Academico(int idUsuario, String nombre, int tipoUsuario) {
         super(idUsuario, nombre, tipoUsuario);
     }
@@ -24,6 +49,87 @@ public class Academico extends Usuario{
     public Academico (){
     }
 
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public int getIdTipoUsuario() {
+        return idTipoUsuario;
+    }
+
+    public void setIdTipoUsuario(int idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
+    }
+
+    public int getCodigoRespuesta() {
+        return codigoRespuesta;
+    }
+
+    public void setCodigoRespuesta(int codigoRespuesta) {
+        this.codigoRespuesta = codigoRespuesta;
+    }
+
+    public String getNombreTipoUsuario() {
+        return nombreTipoUsuario;
+    }
+
+    public void setNombreTipoUsuario(String nombreTipoUsuario) {
+        this.nombreTipoUsuario = nombreTipoUsuario;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    
     public int getIdAcademico() {
         return idAcademico;
     }
