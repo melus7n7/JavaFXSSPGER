@@ -26,6 +26,7 @@ import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.utils.Utilidades;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionAnteproyectos;
+import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.TrabajoRecepcional;
 import javafxsspger.utils.Constantes;
 
@@ -37,6 +38,8 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     private int numeroPantalla;
     private INotificacionAnteproyectos interfazNotificacion;
     private Anteproyecto anteproyectoElemento;
+    private int tipoUsuario;
+    private Estudiante usuarioEstudiante;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -67,9 +70,17 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         try {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController(); 
-            detallesAnteproyecto.inicializarInformacion(idAnteproyecto, numeroPantalla, interfazNotificacion, idAcademico);
-            
+            FXMLDetallesAnteproyectoController detallesAnteproyecto = accesoControlador.getController();
+            switch(tipoUsuario){
+                case Constantes.ACADEMICO:
+                    detallesAnteproyecto.inicializarInformacion(idAnteproyecto, numeroPantalla, interfazNotificacion, idAcademico);
+                    break;
+                case Constantes.INVITADO:
+                    detallesAnteproyecto.inicializarInformacionInvitado(idAnteproyecto, usuarioEstudiante);
+                    break;
+                case Constantes.ESTUDIANTE:
+                    
+            }
             Stage escenarioFormulario = new Stage();
             escenarioFormulario.setScene(new Scene (vista));
             escenarioFormulario.setTitle("Detalles Anteproyecto");
@@ -104,6 +115,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     }
     
     public void setElementoAnteproyecto (Anteproyecto anteproyectoElemento, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+        this.tipoUsuario = Constantes.ACADEMICO;
         this.anteproyectoElemento = anteproyectoElemento;
         this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
@@ -111,7 +123,6 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         this.numeroPantalla = numeroPantalla;
         lblNombreAnteproyecto.setText(anteproyectoElemento.getTitulo());
         lblNombreDirector.setText(anteproyectoElemento.getNombreDirector());
-        idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
         
         switch(this.numeroPantalla){
             case Constantes.ES_PUBLICADO:
@@ -138,6 +149,16 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         }
     }
     
+    public void setElementoAnteproyectoPublicados(Anteproyecto anteproyectoElemento, int tipoUsuario, Estudiante estudiante){
+        this.usuarioEstudiante = estudiante;
+        this.tipoUsuario = tipoUsuario;
+        this.anteproyectoElemento = anteproyectoElemento;
+        this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();
+        lblNombreAnteproyecto.setText(anteproyectoElemento.getTitulo());
+        lblNombreDirector.setText(anteproyectoElemento.getNombreDirector());
+        lblFecha.setText(anteproyectoElemento.getFechaAprobacion());
+    }
+    
     public void setTrabajoRecepcional(TrabajoRecepcional trabajo){
         lblEtiquetaNombre.setText("Nombre del trabajo recepcional:");
         lblNombreAnteproyecto.setText(trabajo.getTitulo());
@@ -146,6 +167,4 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         bttMostrarTrabajo.setVisible(true);
     }
 
-    
-    
 }

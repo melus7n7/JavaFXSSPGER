@@ -34,6 +34,7 @@ import javafxsspger.modelo.dao.AnteproyectoDAO;
 import javafxsspger.modelo.pojo.Anteproyecto;
 import javafxsspger.modelo.pojo.AnteproyectoRespuesta;
 import javafxsspger.modelo.pojo.Academico;
+import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.Usuario;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
@@ -42,7 +43,9 @@ import javafxsspger.utils.Utilidades;
 public class FXMLAnteproyectosController implements Initializable, INotificacionAnteproyectos {
 
     private Academico usuarioAcademico;
+    private Estudiante usuarioEstudiante;
     private int numeroPantalla;
+    private int tipoUsuario;
     
     @FXML
     private VBox vBoxListaAnteproyectosPublicados;
@@ -56,6 +59,8 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     private Button btnAnteproyectosPropios;
     @FXML
     private ScrollPane scrPaneContenedorAnteproyectos;
+    @FXML
+    private Button bttCrearAnteproyecto;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -112,18 +117,16 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
 
     @FXML
     private void clicRegresarMenuPrincipal(MouseEvent event) {
-        Stage escenarioBase = (Stage)vBoxListaAnteproyectosPublicados.getScene().getWindow();
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAcademico.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLMenuPrincipalAcademicoController menuPrincipalAcademico = accesoControlador.getController();
-            menuPrincipalAcademico.inicializarInformacionConAcademico(usuarioAcademico);
-            
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Menú Principal");
-            escenarioBase.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        switch(tipoUsuario){
+            case Constantes.ACADEMICO:
+                regresarMenuPrincipalAcademico();
+                break;
+            case Constantes.ESTUDIANTE:
+                regresarMenuPrincipalEstudiante();
+                break;
+            case Constantes.INVITADO:
+                regresarInicioSesion();
+                break;
         }
     }
 
@@ -143,10 +146,21 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     }
     
     public void inicializarInformacion(Academico usuarioAcademico){
+        this.tipoUsuario = Constantes.ACADEMICO;
         this.usuarioAcademico = usuarioAcademico;
         if(!usuarioAcademico.isEsResponsableCA()){
             btnAnteproyectoPorCorregir.setVisible(false);
         }
+        cargarElementosPublicados();
+    }
+    
+    
+    public void mostrarPantallaPublicados(int tipoUsuario, Estudiante estudiante){
+        this.usuarioEstudiante = estudiante;
+        this.tipoUsuario = tipoUsuario;
+        btnAnteproyectoPorCorregir.setVisible(false);
+        btnAnteproyectosPropios.setVisible(false);
+        bttCrearAnteproyecto.setVisible(false);
         cargarElementosPublicados();
     }
     
@@ -215,7 +229,17 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
             try{
                 Pane pane = fmxlLoaderAnteproyecto.load();
                 FXMLAnteproyectoElementoController elementoEnLista = fmxlLoaderAnteproyecto.getController();
-                elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), numeroPantalla, this, usuarioAcademico.getIdAcademico());
+                switch(tipoUsuario){
+                    case Constantes.ACADEMICO:
+                        elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), numeroPantalla, this, usuarioAcademico.getIdAcademico());
+                        break;
+                    case Constantes.INVITADO:
+                        elementoEnLista.setElementoAnteproyectoPublicados(anteproyectos.get(i), tipoUsuario, null);
+                        break;
+                    case Constantes.ESTUDIANTE:
+                        elementoEnLista.setElementoAnteproyectoPublicados(anteproyectos.get(i), tipoUsuario, usuarioEstudiante);
+                        break;
+                }
                 altoVBox += pane.getPrefHeight();
                 vBoxListaAnteproyectosPublicados.setPrefHeight(altoVBox);
                 vBoxListaAnteproyectosPublicados.getChildren().add(pane);
@@ -227,5 +251,47 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
             vBoxListaAnteproyectosPublicados.setPrefHeight(scrPaneContenedorAnteproyectos.getPrefHeight());
         }
     }
-
+    
+    private void regresarMenuPrincipalAcademico(){
+        Stage escenarioBase = (Stage)vBoxListaAnteproyectosPublicados.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAcademico.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLMenuPrincipalAcademicoController menuPrincipalAcademico = accesoControlador.getController();
+            menuPrincipalAcademico.inicializarInformacionConAcademico(usuarioAcademico);
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menú Principal");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void regresarInicioSesion(){
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+            try {
+                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
+                Parent vista = accesoControlador.load();
+                escenarioBase.setScene(new Scene (vista));
+                escenarioBase.setTitle("Inicio Sesión");
+                escenarioBase.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+    }
+    
+    private void regresarMenuPrincipalEstudiante(){
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalEstudiante.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLMenuPrincipalEstudianteController menuPrincipalEstudiante = accesoControlador.getController();
+            menuPrincipalEstudiante.inicializarInformacionConEstudiante(usuarioEstudiante);
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menú Principal");
+            escenarioBase.show();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+    }
 }

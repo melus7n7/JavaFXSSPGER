@@ -24,6 +24,7 @@ import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.EstudianteDAO;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.modelo.pojo.Usuario;
+import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
 
@@ -113,6 +114,19 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
 
     @FXML
     private void clicAnteproyectos(ActionEvent event) {
+        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectos.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAnteproyectosController anteproyectos = accesoControlador.getController();
+            anteproyectos.mostrarPantallaPublicados(Constantes.ESTUDIANTE, usuarioEstudiante);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Anteproyectos");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 

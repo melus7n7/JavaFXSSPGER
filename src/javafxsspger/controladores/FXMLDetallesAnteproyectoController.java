@@ -29,6 +29,7 @@ import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionAnteproyectos;
 import javafxsspger.modelo.dao.AnteproyectoDAO;
 import javafxsspger.modelo.pojo.Anteproyecto;
+import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
@@ -40,6 +41,8 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     private Anteproyecto anteproyectoDetalle;
     private int numeroPantalla;
     private INotificacionAnteproyectos interfazNotificacion;
+    private boolean esInvitado;
+    private Estudiante estudiante;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -75,6 +78,7 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     }
     
     public void inicializarInformacion (int idAnteproyectoDetalles, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, int idAcademico){
+        this.esInvitado = false;
         this.idAcademico = idAcademico;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyectoDetalle = idAnteproyectoDetalles;
@@ -88,6 +92,13 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
                 break;
         }
         cargarElemento();
+    }
+    
+    public void inicializarInformacionInvitado(int idAnteproyectoDetalle, Estudiante estudiante){
+        this.estudiante = estudiante;
+       this.esInvitado = true;
+       this.idAnteproyectoDetalle = idAnteproyectoDetalle;
+       cargarElemento();
     }
         
     private void cargarElemento(){
@@ -128,7 +139,10 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
                 break;
         }
         if(anteproyectoRespuesta.getIdEstado() == Constantes.APROBADO){
-            System.out.println("ESTA EN " + anteproyectoRespuesta.getIdEstado() );
+            bttModificar.setVisible(false);
+        }
+        if(esInvitado){
+            bttIniciarProcesoValidacion.setVisible(false);
             bttModificar.setVisible(false);
         }
     }

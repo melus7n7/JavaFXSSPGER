@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 05/05/2023
+*Fecha de modificación: 05/06/2023
 *Descripción: Controlador de la vista del inicio de sesión
 */
 package javafxsspger.controladores;
@@ -41,7 +41,7 @@ public class FXMLInicioSesionController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
 
     @FXML
@@ -53,6 +53,23 @@ public class FXMLInicioSesionController implements Initializable {
             lblCamposVacios.setVisible(true);
         }else{
             validarCredenciales(usuario, password);
+        }
+    }
+    
+    @FXML
+    private void clicEntrarComoInvitado(ActionEvent event) {
+        Stage escenarioBase = (Stage) txtFieldUsuario.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectos.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAnteproyectosController anteproyectos = accesoControlador.getController();
+            anteproyectos.mostrarPantallaPublicados(Constantes.INVITADO, null);
+            
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Anteproyectos");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
     
@@ -148,5 +165,6 @@ public class FXMLInicioSesionController implements Initializable {
             ex.printStackTrace();
         }
     }
+
     
 }
