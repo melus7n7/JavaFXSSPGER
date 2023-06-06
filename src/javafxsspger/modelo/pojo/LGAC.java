@@ -11,7 +11,23 @@ public class LGAC {
     private int idLGAC;
     private String nombreLGAC;
     private String descripcion;
+    private int idCuerpoAcademico;
 
+    public LGAC(int idLGAC, String nombreLGAC, String descripcion, int idCuerpoAcademico) {
+        this.idLGAC = idLGAC;
+        this.nombreLGAC = nombreLGAC;
+        this.descripcion = descripcion;
+        this.idCuerpoAcademico = idCuerpoAcademico;
+    }
+
+    public int getIdCuerpoAcademico() {
+        return idCuerpoAcademico;
+    }
+
+    public void setIdCuerpoAcademico(int idCuerpoAcademico) {
+        this.idCuerpoAcademico = idCuerpoAcademico;
+    }
+    
     public LGAC() {
     }
 
