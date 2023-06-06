@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javafxsspger.modelo.ConexionBD;
+import static javafxsspger.modelo.dao.EntregaDAO.guardarEntrega;
 import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.ActividadRespuesta;
 import javafxsspger.modelo.pojo.Avance;
@@ -117,7 +118,7 @@ public class ActividadDAO {
                 try{
                 String sentencia = "Insert into Actividad(titulo, descripcion, fechaCreacion, fechaInicio, fechaFinal, idEstudiante, idTrabajoRecepcional) "+
                                    "VALUES (?,?,CURDATE(),?,?,?,?);";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia,PreparedStatement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setString(1, actividadNueva.getTitulo());
                 prepararSentencia.setString(2, actividadNueva.getDescripcion());
                 prepararSentencia.setString(3, actividadNueva.getFechaInicio());
@@ -126,6 +127,16 @@ public class ActividadDAO {
                 prepararSentencia.setInt(6, actividadNueva.getIdTrabajoRecepcional());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                
+                ResultSet generatedKeys = prepararSentencia.getGeneratedKeys();
+                if (generatedKeys.next() && respuesta==Constantes.OPERACION_EXITOSA) {
+                    int idActividad = generatedKeys.getInt(1);
+                    String consultaEntrega = "INSERT INTO entrega (idActividad) VALUES (?)";
+                    PreparedStatement prepararSentenciaEntrega = conexionBD.prepareStatement(consultaEntrega);
+                    prepararSentenciaEntrega.setInt(1, idActividad);
+                    prepararSentenciaEntrega.executeUpdate();
+                    respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                }
                 conexionBD.close();
                 }catch(SQLException e){
                     respuesta = Constantes.ERROR_CONSULTA;

@@ -1,13 +1,13 @@
-/*
+
+package javafxsspger.controladores;
+
+import java.io.IOException;
+import java.net.URL;/*
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 03/06/2023
 *Fecha de modificación: 05/06/2023
 *Descripción: Controlador de la vista del detalle de una actividad
 */
-package javafxsspger.controladores;
-
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -88,7 +88,22 @@ public class FXMLDetallesActividadController implements Initializable {
 
     @FXML
     private void clicVerEntrega(ActionEvent event) {
-        
+        Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
+            try {
+                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLEntrega.fxml"));
+                Parent vista = accesoControlador.load();
+                FXMLEntregaController entrega = accesoControlador.getController(); 
+                if(usuarioAcademico!=null){
+                    entrega.inicializarInformacionAcademico(usuarioAcademico, actividad);
+                }else{
+                    entrega.inicializarInformacionEstudiante(usuarioEstudiante, actividad);                
+                }
+                escenarioBase.setScene(new Scene (vista));
+                escenarioBase.setTitle("Entrega de la Actividad");
+                escenarioBase.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
     }
     
     @FXML
@@ -98,10 +113,8 @@ public class FXMLDetallesActividadController implements Initializable {
         String formatoDeFecha = "yyyy-MM-dd";
         LocalDate fechaCreacion = LocalDate.parse(actividad.getFechaCreacion(), DateTimeFormatter.ofPattern(formatoDeFecha));
         if(fechaActual.isAfter(fechaCreacion.plusDays(1))){
-            System.out.println("if");
             Utilidades.mostrarDialogoSimple("Tiempo limite de modificación expirado", "No se puede modificar la actividad después de un día de ser creada", Alert.AlertType.INFORMATION);                    
          }else{
-            System.out.println("else");
             Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
             try {
                 FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionActividad.fxml"));
