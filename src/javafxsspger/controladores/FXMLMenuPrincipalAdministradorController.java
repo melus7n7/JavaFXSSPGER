@@ -39,7 +39,7 @@ public class FXMLMenuPrincipalAdministradorController implements Initializable {
 
     public void inicializarInformacion(Usuario usuarioAdmin){
         this.usuarioAdmin = usuarioAdmin;
-        lblSaludo.setText("Hola administrador " + this.usuarioAdmin.getNombre());
+        lblSaludo.setText("Hola administrador");
     }
 
     @FXML
