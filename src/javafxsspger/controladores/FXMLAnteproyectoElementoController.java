@@ -180,7 +180,8 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         lblFecha.setText(Utilidades.darFormatofechas(anteproyectoElemento.getFechaAprobacion()));
     }
     
-    public void setTrabajoRecepcional(TrabajoRecepcional trabajo){
+    public void setTrabajoRecepcional(TrabajoRecepcional trabajo, Academico academico){
+        this.usuarioAcademico = academico;
         this.idAnteproyecto = trabajo.getIdTrabajoRecepcional();
         lblEtiquetaNombre.setText("Nombre del trabajo recepcional:");
         lblNombreAnteproyecto.setText(trabajo.getTitulo());

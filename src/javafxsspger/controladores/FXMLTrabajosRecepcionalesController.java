@@ -116,7 +116,7 @@ public class FXMLTrabajosRecepcionalesController implements Initializable {
                 FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLAnteproyectoElemento.fxml"));
                 Pane pane = accesoControlador.load();
                 FXMLAnteproyectoElementoController trabajoController = accesoControlador.getController();
-                trabajoController.setTrabajoRecepcional(trabajos.get(i));
+                trabajoController.setTrabajoRecepcional(trabajos.get(i), usuarioAcademico);
                 altoVBox += pane.getPrefHeight();
                 vBoxListaTrabajos.setPrefHeight(altoVBox);
                 vBoxListaTrabajos.getChildren().add(pane);
