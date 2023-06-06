@@ -30,9 +30,11 @@ import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.interfaces.INotificacionLGAC;
 import javafxsspger.modelo.dao.ConsolidacionDAO;
+import javafxsspger.modelo.dao.CuerpoAcademicoDAO;
 import javafxsspger.modelo.dao.LGACDAO;
 import javafxsspger.modelo.pojo.Consolidacion;
 import javafxsspger.modelo.pojo.ConsolidacionRespuesta;
+import javafxsspger.modelo.pojo.CuerpoAcademico;
 import javafxsspger.modelo.pojo.LGAC;
 import javafxsspger.modelo.pojo.LGACRespuesta;
 import javafxsspger.modelo.pojo.Usuario;
@@ -46,7 +48,8 @@ import javafxsspger.utils.Utilidades;
  */
 public class FXMLCreacionCuerpoAcademicoController implements Initializable, INotificacionLGAC {
 
-    
+    boolean esEdicion=false;
+    CuerpoAcademico cuerpoAcademico;
     private ArrayList <LGAC> lgacCuerpoAcademico;
     @FXML
     private TextArea txtAreaClaveCuerpoAcademico;
@@ -73,8 +76,34 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
         lgacCuerpoAcademico = new ArrayList();
     }    
 
+    public void inicializarInformacionEdicion(Usuario usuarioAdmin, boolean esEdicion,CuerpoAcademico cuerpoAcademicoAnterior){
+        System.out.println("LGACIDAnetrior "+cuerpoAcademicoAnterior.getIdCuerpoAcademico());        
+        this.usuarioAdmin=usuarioAdmin;
+        this.esEdicion=esEdicion;
+        this.cuerpoAcademico=cuerpoAcademicoAnterior;
+        System.out.println("LGACID "+cuerpoAcademico.getIdCuerpoAcademico());                
+        cargarInformacionConsolidacion();
+        txtAreaClaveCuerpoAcademico.setText(cuerpoAcademicoAnterior.getClaveCuerpoAcademico());
+        txtAreaNombreCuerpoAcademico.setText(cuerpoAcademicoAnterior.getNombre());
+        txtAreaDescripcionCuerpoAcademico.setText(cuerpoAcademicoAnterior.getDescripcion());
+        txtAreaAreaConocimiento.setText(cuerpoAcademicoAnterior.getAreaConocimiento());
+        int posicionConsolidacion=obtenerPosicionComboConsolidacion(cuerpoAcademicoAnterior.getIdConsolidacion());
+        cmbBoxConsolidacion.getSelectionModel().select(posicionConsolidacion);
+        inicializarLGAC();
+    }
+    
+    private int obtenerPosicionComboConsolidacion(int idConsolidacion){
+        for (int i = 0; i < consolidaciones.size(); i++) {
+            if(consolidaciones.get(i).getIdConsolidacion()==idConsolidacion)
+                return i;
+        }
+        return 0;
+    }
+    
+    
     public void inicializarInformacion(Usuario usuarioAdmin){
         this.usuarioAdmin=usuarioAdmin;
+        this.cuerpoAcademico= new CuerpoAcademico();        
         inicializarLGAC();
         cargarInformacionConsolidacion();
     }
@@ -102,7 +131,12 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
    
     
     private void inicializarLGAC(){
-        LGACRespuesta respuestaBD = LGACDAO.recuperarPosiblesLGACCreacion();
+        LGACRespuesta respuestaBD;
+        if(esEdicion){
+            respuestaBD = LGACDAO.recuperarPosiblesLGACEdicion(cuerpoAcademico.getIdCuerpoAcademico()); 
+        }else{
+            respuestaBD = LGACDAO.recuperarPosiblesLGACCreacion();           
+        }
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin Conexion", 
@@ -126,13 +160,15 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
             fmxlLoader.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLLGACElemento.fxml"));
             try{
                 Pane pane = fmxlLoader.load();
-               
-                System.out.println(lgac.get(i).getIdCuerpoAcademico());
                 FXMLLGACElementoController elementoEnLista = fmxlLoader.getController();
-                elementoEnLista.setElementos(lgac.get(i), this, false);
+                elementoEnLista.setElementos(lgac.get(i), this, (lgac.get(i).getIdCuerpoAcademico() > 0) ? true : false);
+                if(lgac.get(i).getIdCuerpoAcademico() > 0){  
+                    notificarAñadirLGAC(lgac.get(i));
+                }
                 altoVBox += pane.getPrefHeight();
                 vBoxListaLGAC.setPrefHeight(altoVBox);
                 vBoxListaLGAC.getChildren().add(pane);
+                System.out.println(lgac.get(i).getIdCuerpoAcademico());
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -160,6 +196,7 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
 
     @FXML
     private void clicGuardarCuerpoAcademico(ActionEvent event) {
+        
         validarCampos();
     }
 
@@ -175,11 +212,56 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
     }
 
     private void validarCampos(){
-        String claveCA = txtAreaClaveCuerpoAcademico.getText();
-        String nombreCA = txtAreaNombreCuerpoAcademico.getText();
-        String descripcionCA = txtAreaDescripcionCuerpoAcademico.getText();
-        String areaConocimiento = txtAreaAreaConocimiento.getText();
-        //Consolidacion consolidacion = cmbBoxConsolidacion.getSelectionModel().getSelectedItem();
+        if(lgacCuerpoAcademico.isEmpty() || txtAreaClaveCuerpoAcademico.getText().isEmpty() || txtAreaNombreCuerpoAcademico.getText().isEmpty() || txtAreaDescripcionCuerpoAcademico.getText().isEmpty()
+                || txtAreaAreaConocimiento.getText().isEmpty() || cmbBoxConsolidacion.getSelectionModel().getSelectedIndex()==-1){
+            Utilidades.mostrarDialogoSimple("Seleccionar al menos una LGAC y llenar los demas datos", "Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.WARNING);
+        }else{
+            cuerpoAcademico.setClaveCuerpoAcademico(txtAreaClaveCuerpoAcademico.getText());
+            cuerpoAcademico.setNombre(txtAreaNombreCuerpoAcademico.getText());
+            cuerpoAcademico.setDescripcion(txtAreaDescripcionCuerpoAcademico.getText());
+            cuerpoAcademico.setAreaConocimiento(txtAreaAreaConocimiento.getText());
+            cuerpoAcademico.setIdConsolidacion(cmbBoxConsolidacion.getSelectionModel().getSelectedItem().getIdConsolidacion());
+             registrarCuerpoAcademico(cuerpoAcademico);
+        }
+        
+    }
+    
+    private void eliminarLGACCuerpoAcademico(CuerpoAcademico cuerpoAcademico){
+        System.out.println("LGACID "+cuerpoAcademico.getIdCuerpoAcademico());
+        int codigoRespuesta = LGACDAO.eliminarLGACDeCuerpoAcademico(cuerpoAcademico.getIdCuerpoAcademico());
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error de LGAC", "LGAC", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("LGAC modificada", "LGACMODIFICADA", Alert.AlertType.INFORMATION);
+                break;
+        }
+    }
+    
+    private void registrarCuerpoAcademico(CuerpoAcademico cuerpoAcademico){
+        int codigoRespuesta;
+        if(esEdicion){
+            eliminarLGACCuerpoAcademico(cuerpoAcademico);
+            codigoRespuesta = CuerpoAcademicoDAO.actualizarCuerpoAcademico(cuerpoAcademico, lgacCuerpoAcademico);
+        }else{
+            codigoRespuesta = CuerpoAcademicoDAO.guardarCuerpoAcademico(cuerpoAcademico, lgacCuerpoAcademico);
+        }
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("Cuerpo academico añadido con exito", "El cuerpo académico ha sido creado con éxito", Alert.AlertType.INFORMATION);
+                //cerrarVentana();
+                break;
+        }
     }
    
     

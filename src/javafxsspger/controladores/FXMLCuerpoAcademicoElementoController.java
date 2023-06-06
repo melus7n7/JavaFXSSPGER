@@ -66,7 +66,7 @@ public class FXMLCuerpoAcademicoElementoController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLCreacionCuerpoAcademico.fxml"));
             Parent vista = accesoControlador.load();
             FXMLCreacionCuerpoAcademicoController cuerpoAcademico = accesoControlador.getController();
-            cuerpoAcademico.inicializarInformacion(usuarioAdmin);
+            cuerpoAcademico.inicializarInformacionEdicion(usuarioAdmin, true, cuerpoAcademicoElemento);
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("");
             escenarioBase.show();

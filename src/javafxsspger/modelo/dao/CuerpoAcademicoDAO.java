@@ -12,8 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javafxsspger.modelo.ConexionBD;
+import static javafxsspger.modelo.dao.LGACDAO.actualizarLGAC;
 import javafxsspger.modelo.pojo.CuerpoAcademico;
 import javafxsspger.modelo.pojo.CuerpoAcademicoRespuesta;
+import javafxsspger.modelo.pojo.LGAC;
 import javafxsspger.utils.Constantes;
 
 public class CuerpoAcademicoDAO {
@@ -54,4 +56,66 @@ public class CuerpoAcademicoDAO {
         }
         return cuerposAcademicosRespuesta;
     }
+    
+    public static int guardarCuerpoAcademico(CuerpoAcademico cuerpoAcademicoNuevo,ArrayList <LGAC> lgacCuerpoAcademico){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "INSERT INTO cuerpoacademico (claveCuerpoAcademico, nombre, descripcion, areaConocimiento, idConsolidacion) "
+                        + "VALUES (?,?,?,?,?);";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia,PreparedStatement.RETURN_GENERATED_KEYS);
+                prepararSentencia.setString(1, cuerpoAcademicoNuevo.getClaveCuerpoAcademico());
+                prepararSentencia.setString(2, cuerpoAcademicoNuevo.getNombre());
+                prepararSentencia.setString(3, cuerpoAcademicoNuevo.getDescripcion());
+                prepararSentencia.setString(4, cuerpoAcademicoNuevo.getAreaConocimiento());
+                prepararSentencia.setInt(5, cuerpoAcademicoNuevo.getIdConsolidacion());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                ResultSet generatedKeys = prepararSentencia.getGeneratedKeys();
+                if (generatedKeys.next() && respuesta==Constantes.OPERACION_EXITOSA) {
+                    int idCuerpoAcademico = generatedKeys.getInt(1);
+                    for(int i=0; i<=lgacCuerpoAcademico.size()-1;i++)
+                    respuesta = LGACDAO.actualizarLGAC(idCuerpoAcademico, lgacCuerpoAcademico.get(i).getIdLGAC());
+                }
+                conexionBD.close();
+                }catch(SQLException e){
+                    respuesta = Constantes.ERROR_CONSULTA;
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+    }
+    
+    public static int actualizarCuerpoAcademico(CuerpoAcademico cuerpoAcademicoActualizacion, ArrayList <LGAC> lgacCuerpoAcademico){
+            int respuesta;
+            Connection conexionBD = ConexionBD.abrirConexionBD();
+            if(conexionBD!=null){
+                try{
+                String sentencia = "UPDATE cuerpoacademico SET claveCuerpoAcademico = ?, "
+                        + "nombre = ?, descripcion = ?, areaConocimiento = ?, "
+                        + "idConsolidacion = ? WHERE idCuerpoAcademico = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, cuerpoAcademicoActualizacion.getClaveCuerpoAcademico());
+                prepararSentencia.setString(2, cuerpoAcademicoActualizacion.getNombre());
+                prepararSentencia.setString(3, cuerpoAcademicoActualizacion.getDescripcion());
+                prepararSentencia.setString(4, cuerpoAcademicoActualizacion.getAreaConocimiento());
+                prepararSentencia.setInt(5, cuerpoAcademicoActualizacion.getIdConsolidacion());
+                prepararSentencia.setInt(6, cuerpoAcademicoActualizacion.getIdCuerpoAcademico());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                for(int i=0; i<=lgacCuerpoAcademico.size()-1;i++){
+                    respuesta = LGACDAO.actualizarLGAC(cuerpoAcademicoActualizacion.getIdCuerpoAcademico(), lgacCuerpoAcademico.get(i).getIdLGAC());
+                }
+                conexionBD.close();
+                }catch(SQLException e){
+                    respuesta = Constantes.ERROR_CONSULTA;
+                }
+            }else{
+                respuesta = Constantes.ERROR_CONEXION;
+            }
+            return respuesta;
+    }
+    
 }
