@@ -8,27 +8,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="1020.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLLGACElementoController">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="555.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLLGACElementoController">
    <children>
-      <CheckBox fx:id="chcBoxLGAC" layoutX="920.0" layoutY="41.0" mnemonicParsing="false" onAction="#clicSeleccionarLGAC">
+      <CheckBox fx:id="chcBoxLGAC" layoutX="502.0" layoutY="7.0" mnemonicParsing="false" onAction="#clicSeleccionarLGAC">
          <font>
             <Font size="15.0" />
          </font>
       </CheckBox>
-      <Label fx:id="lblNombreLGAC" layoutX="26.0" layoutY="10.0" prefHeight="17.0" prefWidth="354.0" text="Nombre:">
+      <Label fx:id="lblNombreLGAC" layoutX="26.0" layoutY="10.0" prefHeight="17.0" prefWidth="354.0" text="Mucho texto">
          <font>
-            <Font name="SansSerif Bold Italic" size="15.0" />
+            <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblDescripcion" layoutX="26.0" layoutY="37.0" text="Descripción:">
-         <font>
-            <Font name="System Bold Italic" size="15.0" />
-         </font>
-      </Label>
-      <Button layoutX="632.0" layoutY="35.0" mnemonicParsing="false" onAction="#clicModificar" prefHeight="33.0" prefWidth="139.0" style="-fx-background-color: black;" text="Modificar" textFill="WHITE">
-         <font>
-            <Font name="SansSerif Regular" size="18.0" />
-         </font>
-      </Button>
+      <Circle layoutX="14.0" layoutY="18.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </Pane>
