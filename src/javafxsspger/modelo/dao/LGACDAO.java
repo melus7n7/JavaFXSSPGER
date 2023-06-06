@@ -46,5 +46,35 @@ public class LGACDAO {
         }
         return lgacRespuesta;
     }
+    
+    public static LGACRespuesta recuperarPosiblesLGACCreacion(){
+        LGACRespuesta lgacRespuesta = new LGACRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT LGAC.idLGAC, LGAC.nombre FROM LGAC WHERE LGAC.idCuerpoAcademico IS NULL;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList <LGAC> lgacs = new ArrayList();
+                while(resultado.next()){
+                    LGAC lgac = new LGAC();
+                    lgac.setIdLGAC(resultado.getInt("idLGAC"));
+                    lgac.setNombreLGAC(resultado.getString("nombre"));
+                    lgacs.add(lgac);
+                }
+                lgacRespuesta.setLGACs(lgacs);
+                lgacRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                lgacRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            }
+        }else{
+            lgacRespuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return lgacRespuesta;
+    }
+    
+    
 }
 

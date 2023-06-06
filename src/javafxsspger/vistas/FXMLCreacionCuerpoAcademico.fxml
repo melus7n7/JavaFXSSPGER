@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLCreacionCuerpoAcademicoController">
+   <children>
+      <Button layoutX="811.0" layoutY="580.0" mnemonicParsing="false" onAction="#clicGuardarCuerpoAcademico" prefHeight="50.0" prefWidth="234.0" style="-fx-background-color: black;" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="72.0" layoutY="107.0" text="Clave de Cuerpo Académico">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="64.0" layoutY="191.0" text="Descripción:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAreaClaveCuerpoAcademico" layoutX="57.0" layoutY="134.0" prefHeight="44.0" prefWidth="276.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="txtAreaDescripcionCuerpoAcademico" layoutX="54.0" layoutY="221.0" prefHeight="126.0" prefWidth="993.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextArea>
+      <Label fx:id="lblTitulo" layoutX="152.0" layoutY="34.0" text="Creación de Cuerpo Académico">
+         <font>
+            <Font name="Trebuchet MS" size="50.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="69.0" fitWidth="67.0" layoutX="72.0" layoutY="30.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#clicRegresarCuerposAcademicos" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/flecha.png" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="txtAreaNombreCuerpoAcademico" layoutX="373.0" layoutY="134.0" prefHeight="44.0" prefWidth="676.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="388.0" layoutY="107.0" text="Nombre de Cuerpo Académico">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAreaClaveCuerpoAcademico1" layoutX="57.0" layoutY="393.0" prefHeight="44.0" prefWidth="513.0" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="15.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="72.0" layoutY="366.0" text="Area de conocimiento:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbBoxConsolidacion" layoutX="674.0" layoutY="396.0" prefHeight="38.0" prefWidth="335.0" />
+      <Label layoutX="681.0" layoutY="366.0" text="Consolidación:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrPaneCajaLGAC" layoutX="54.0" layoutY="489.0" prefHeight="141.0" prefWidth="676.0">
+         <content>
+            <VBox fx:id="vBoxListaLGAC" prefHeight="135.0" prefWidth="661.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="72.0" layoutY="459.0" text="LGACs:">
+         <font>
+            <Font name="SansSerif Bold Italic" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

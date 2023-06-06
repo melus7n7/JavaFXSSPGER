@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="1020.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLCuerpoAcademicoElementoController">
+   <children>
+      <Label fx:id="lblNombreCuerpoAcademico" layoutX="31.0" layoutY="56.0" prefHeight="17.0" prefWidth="346.0" text="Nombre de Cuerpo Académico">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblClaveCuerpoAcademico" layoutX="31.0" layoutY="24.0" prefHeight="17.0" prefWidth="356.0" text="Clave Cuerpo Académico">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAreaConocimiento" layoutX="387.0" layoutY="24.0" prefHeight="17.0" prefWidth="314.0" text="Area de Conocimiento">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblConsolidacion" layoutX="387.0" layoutY="56.0" prefHeight="17.0" prefWidth="314.0" text="Consolidación">
+         <font>
+            <Font name="SansSerif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="632.0" layoutY="35.0" mnemonicParsing="false" onAction="#clicModificar" prefHeight="33.0" prefWidth="139.0" style="-fx-background-color: black;" text="Modificar" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="791.0" layoutY="35.0" mnemonicParsing="false" onAction="#clicModificarIntegrantesCuerpoAcademico" prefHeight="33.0" prefWidth="215.0" style="-fx-background-color: black;" text="Modificar Integrates" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="SansSerif Regular" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
