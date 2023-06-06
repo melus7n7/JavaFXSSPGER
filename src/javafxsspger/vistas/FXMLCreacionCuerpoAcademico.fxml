@@ -56,7 +56,7 @@
             <Font name="SansSerif Bold Italic" size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="txtAreaClaveCuerpoAcademico1" layoutX="57.0" layoutY="393.0" prefHeight="44.0" prefWidth="513.0" wrapText="true">
+      <TextArea fx:id="txtAreaAreaConocimiento" layoutX="57.0" layoutY="393.0" prefHeight="44.0" prefWidth="513.0" wrapText="true">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>
