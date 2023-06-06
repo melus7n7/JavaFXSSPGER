@@ -8,10 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="555.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLLGACElementoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="661.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLLGACElementoController">
    <children>
-      <CheckBox fx:id="chcBoxLGAC" layoutX="502.0" layoutY="7.0" mnemonicParsing="false" onAction="#clicSeleccionarLGAC">
+      <CheckBox fx:id="chcBoxLGAC" layoutX="602.0" layoutY="7.0" mnemonicParsing="false" onAction="#clicSeleccionarLGAC">
          <font>
             <Font size="15.0" />
          </font>
