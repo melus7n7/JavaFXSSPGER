@@ -181,4 +181,8 @@ public class TrabajoRecepcionalDAO {
         }
         return respuesta;
     }
+    
+    public static void recuperarDetallesTrabajoRecepcional(){
+        
+    }
 }
