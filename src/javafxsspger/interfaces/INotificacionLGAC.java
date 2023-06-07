@@ -8,14 +8,10 @@ package javafxsspger.interfaces;
 
 import javafxsspger.modelo.pojo.LGAC;
 
-/**
- *
- * @author monti
- */
 public interface INotificacionLGAC {
+    
     
     public void notificarAñadirLGAC(LGAC lgac);
     public void notificarEliminarLGAC(LGAC lgac);
-    
     
 }

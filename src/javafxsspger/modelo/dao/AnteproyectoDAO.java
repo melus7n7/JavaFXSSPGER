@@ -2,7 +2,7 @@
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 14/05/2023
 *Fecha de modificación: 23/05/2023
-*Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los anteproyectos
+*Descripción: Clase encargada de la comunicación con la bd, especificamente para manipular la información de los anteproyectos
 */
 
 package javafxsspger.modelo.dao;
@@ -19,6 +19,7 @@ import javafxsspger.modelo.pojo.AnteproyectoRespuesta;
 import javafxsspger.utils.Constantes;
 
 public class AnteproyectoDAO {
+    
     
     public static AnteproyectoRespuesta obtenerAnteproyectosPublicados(){
         AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
@@ -212,20 +213,16 @@ public class AnteproyectoDAO {
                     anteproyectoRespuesta.setNoEstudiantesMaximo(resultado.getInt("noEstudiantesMaximos"));
                     anteproyectoRespuesta.setDocumento(resultado.getBytes("documento"));
                     anteproyectoRespuesta.setNombreDocumento(resultado.getString("nombreDocumento"));
-                    
                     anteproyectoRespuesta.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
                     anteproyectoRespuesta.setIdTipoAnteproyecto(resultado.getInt("idTipoAnteproyecto"));
                     anteproyectoRespuesta.setIdLGAC(resultado.getInt("idLGAC"));
-                    
                     String nombreCompleto = resultado.getString("nombreUsuario") + " " + resultado.getString("apellidoPaterno") + " " + resultado.getString("apellidoMaterno");
                     anteproyectoRespuesta.setNombreDirector(nombreCompleto);
                     anteproyectoRespuesta.setNombreCuerpoAcademico(resultado.getString("nombreCA"));
                     anteproyectoRespuesta.setTipoAnteproyecto(resultado.getString("tipoAnteproyecto"));
                     anteproyectoRespuesta.setNombreLGAC(resultado.getString("nombreLGAC"));
-                    
                     anteproyectoRespuesta.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
                     anteproyectoRespuesta.setIdEstado(resultado.getInt("idEstado"));
-                    
                 }
                 
                 ArrayList <Academico> codirectores = new ArrayList();
@@ -249,7 +246,6 @@ public class AnteproyectoDAO {
                     codirectores.add(codirector);
                 }
                 anteproyectoRespuesta.setCodirectores(codirectores);
-                
                 String consultaDirector = "SELECT idAcademico FROM sspger.encargadosanteproyecto " +
                     "WHERE esDirector = 1 and idAnteproyecto = ?";
                 PreparedStatement prepararSentenciaDirector = conexionBD.prepareStatement(consultaDirector);
@@ -258,7 +254,6 @@ public class AnteproyectoDAO {
                 if(resultadoDirector.next()){
                     anteproyectoRespuesta.setIdDirector(resultadoDirector.getInt("idAcademico"));
                 }
-                
                 anteproyectoRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 conexionBD.close();
             }catch(SQLException ex){
@@ -274,7 +269,7 @@ public class AnteproyectoDAO {
     public static Anteproyecto guardarAnteproyecto (Anteproyecto anteproyectoNuevo){
         Anteproyecto anteproyectoRespuesta = new Anteproyecto();
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String sentencia = "insert into anteproyecto (titulo, descripcion, fechaCreacion, noEstudiantesAsignados, noEstudiantesMaximos, " +
                     "idEstado, idTipoAnteproyecto, idLGAC, documento, nombreDocumento, idCuerpoAcademico) " +
@@ -290,14 +285,12 @@ public class AnteproyectoDAO {
                 prepararSentencia.setInt(8, anteproyectoNuevo.getIdCuerpoAcademico());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 anteproyectoRespuesta.setCodigoRespuesta ((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);
-                
                 String consulta = "SELECT MAX(idanteproyecto) AS idanteproyecto FROM anteproyecto;";
                 PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararConsulta.executeQuery();
                 if(resultado.next()){
                     anteproyectoRespuesta.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
                 }
-                
                 conexionBD.close();
             }catch (SQLException e){
                 anteproyectoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
@@ -370,7 +363,6 @@ public class AnteproyectoDAO {
                 prepararSentencia.setInt (9, anteproyectoModificacion.getIdLGAC());
                 prepararSentencia.setInt (10, anteproyectoModificacion.getIdAnteproyecto());
                 int filasAfectadas = prepararSentencia.executeUpdate();
-                
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
                 conexionBD.close();
             }catch (SQLException e){

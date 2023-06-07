@@ -2,7 +2,7 @@
 *Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
 *Fecha de creación: 06/06/2023
 *Fecha de modificación: 06/06/2023
-*Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los académicos
+*Descripción: Clase encargada de la comunicación con la bd, especificamente para manipular la información de los académicos
 */
 package javafxsspger.modelo.dao;
 
@@ -18,6 +18,7 @@ import javafxsspger.utils.Constantes;
 
 public class AcademicoDAO {
     
+    
     public static Academico obtenerDetallesAcademico (int idUsuario){
         Academico academicoRespuesta = new Academico();
         Connection conexionBD = ConexionBD.abrirConexionBD();
@@ -28,7 +29,6 @@ public class AcademicoDAO {
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idUsuario);
                 ResultSet resultado = prepararSentencia.executeQuery();
-                
                 if(resultado.next()){
                     academicoRespuesta.setIdAcademico(resultado.getInt("idAcademico"));
                     academicoRespuesta.setNoPersonal(resultado.getString("noPersonal"));
@@ -38,8 +38,6 @@ public class AcademicoDAO {
                     }else{
                         academicoRespuesta.setEsResponsableCA(false);
                     }
-                    
-                
                     String consultaEsDirector = "SELECT Anteproyecto.idAnteproyecto, encargadosanteproyecto.idAcademico, anteproyecto.idEstado " +
                         "FROM encargadosanteproyecto INNER JOIN anteproyecto ON anteproyecto.idAnteproyecto = encargadosanteproyecto.idAnteproyecto " +
                         "Where anteproyecto.idEstado = ? and encargadosanteproyecto.idAcademico = ?";
@@ -60,12 +58,9 @@ public class AcademicoDAO {
                     prepararSentenciaEsCoordinador.setInt(1, academicoRespuesta.getIdAcademico());
                     ResultSet resultadoEsCoordinador = prepararSentenciaEsCoordinador.executeQuery();
                     academicoRespuesta.setEsCoordinador(resultadoEsCoordinador.next());
-                    
                 }
-                
                 academicoRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 conexionBD.close();
-                
             }catch(SQLException e){
                 academicoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
                 e.printStackTrace();
@@ -129,7 +124,7 @@ public class AcademicoDAO {
                     Academico academico = new Academico();
                     academico.setIdAcademico(resultado.getInt("idAcademico"));
                     academico.setNombreCompleto(resultado.getString("Nombre completo"));
-                    if(resultado.getInt("idCuerpoAcademico")==idCuerpoAcademico){
+                    if(resultado.getInt("idCuerpoAcademico") == idCuerpoAcademico){
                         academico.setPuesto("Es Responsable de Cuerpo Academico");
                     }else{
                         academico.setPuesto("Es Academico, no pertenece al Cuerpo Academico");
@@ -153,15 +148,14 @@ public class AcademicoDAO {
     public static int eliminarResponsable(int idCuerpoAcademico){
             int respuesta;
             Connection conexionBD = ConexionBD.abrirConexionBD();
-            if(conexionBD!=null){
+            if(conexionBD != null){
                 try{
-                String sentencia = "UPDATE academico SET idCuerpoAcademico = NULL WHERE Academico.idCuerpoAcademico = ?;";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, idCuerpoAcademico);
-                int filasAfectadas = prepararSentencia.executeUpdate();
-                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
-                conexionBD.close();
-                
+                    String sentencia = "UPDATE academico SET idCuerpoAcademico = NULL WHERE Academico.idCuerpoAcademico = ?;";
+                    PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                    prepararSentencia.setInt(1, idCuerpoAcademico);
+                    int filasAfectadas = prepararSentencia.executeUpdate();
+                    respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                    conexionBD.close();
                 }catch(SQLException e){
                     respuesta = Constantes.ERROR_CONSULTA;
                     e.printStackTrace();
@@ -170,13 +164,12 @@ public class AcademicoDAO {
                 respuesta = Constantes.ERROR_CONEXION;
             }
             return respuesta;
-                    
         }
     
     public static int hacerResponsable(int idAcademico, int idCuerpoAcademico){
             int respuesta;
             Connection conexionBD = ConexionBD.abrirConexionBD();
-            if(conexionBD!=null){
+            if(conexionBD != null){
                 try{
                 String sentencia = "UPDATE academico SET idCuerpoAcademico = ? WHERE Academico.idAcademico = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
@@ -185,7 +178,6 @@ public class AcademicoDAO {
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
                 conexionBD.close();
-                
                 }catch(SQLException e){
                     respuesta = Constantes.ERROR_CONSULTA;
                     e.printStackTrace();
@@ -194,9 +186,6 @@ public class AcademicoDAO {
                 respuesta = Constantes.ERROR_CONEXION;
             }
             return respuesta;
-                    
         }
-    
-    
     
 }

@@ -16,17 +16,15 @@ import javafx.stage.Stage;
 
 public class JavaFXSSPGER extends Application {
     
+    
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("vistas/FXMLInicioSesion.fxml"));
-        
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.setTitle("Inicio de Sesión");
         stage.show();
     }
-
     
     public static void main(String[] args) {
         launch(args);

@@ -6,8 +6,8 @@
 */
 package javafxsspger.interfaces;
 
-
 public interface INotificacionAvances {
+    
     
     public void notificarCargarAvances();
     public void cerrarPantalla();

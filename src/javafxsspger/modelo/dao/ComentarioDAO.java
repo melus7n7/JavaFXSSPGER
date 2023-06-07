@@ -2,7 +2,7 @@
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 24/05/2023
 *Fecha de modificación: 24/05/2023
-*Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los comentarios
+*Descripción: Clase encargada de la comunicación con la bd, especificamente para manipular la información de los comentarios
 */
 package javafxsspger.modelo.dao;
 
@@ -19,10 +19,11 @@ import javafxsspger.utils.Constantes;
 
 public class ComentarioDAO {
     
+    
     public static int guardarComentario(Comentario comentarioNuevo){
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String sentencia = "INSERT comentario(texto,fechaCreacion,idAcademico,idAnteproyecto) " +
                     "values(?, curdate(), ?, ?);";
@@ -80,4 +81,5 @@ public class ComentarioDAO {
         }
         return respuesta;
     }
+    
 }

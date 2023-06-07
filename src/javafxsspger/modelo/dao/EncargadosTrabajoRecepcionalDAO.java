@@ -2,7 +2,7 @@
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 01/06/2023
 *Fecha de modificación: 01/06/2023
-*Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los encargados de los trabajos recepcionales
+*Descripción: Clase encargada de la comunicación con la bd, especificamente para manipular la información de los encargados de los trabajos recepcionales
 */
 package javafxsspger.modelo.dao;
 
@@ -15,10 +15,11 @@ import javafxsspger.utils.Constantes;
 
 public class EncargadosTrabajoRecepcionalDAO {
     
+    
     public static int guardarEncargadosTrabajoRecepcional(int idAnteproyecto, int idTrabajoRecepcional){
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String sentencia = "INSERT INTO encargadostrabajorecepcional (idAcademico, idTrabajoRecepcional, esDirector) " +
                     "SELECT idAcademico, ?, esDirector FROM encargadosanteproyecto " +
@@ -38,4 +39,5 @@ public class EncargadosTrabajoRecepcionalDAO {
         }
         return respuesta;
     }
+    
 }
