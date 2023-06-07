@@ -70,7 +70,6 @@ public class FXMLActividadesController implements Initializable {
         respuestaTotal.setTrabajosRecepcionales(new ArrayList());
         if(usuarioAcademico!=null){
             if(usuarioAcademico.isEsDirector() && usuarioAcademico.isEsProfesor()){
-                System.out.println("Es director y profesor");
                 TrabajoRecepcionalRespuesta trabajosRecepcionalesProfesor = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesProfesor(this.usuarioAcademico.getIdAcademico());                                                 
                 TrabajoRecepcionalRespuesta trabajosRecepcionalesDirector = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesDirector(this.usuarioAcademico.getIdAcademico()); 
                 respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesProfesor.getTrabajosRecepcionales());
@@ -105,7 +104,6 @@ public class FXMLActividadesController implements Initializable {
     }
     
     private void cargarComboBox(TrabajoRecepcionalRespuesta respuestaTotal){
-        System.out.println("CODIGO"+respuestaTotal.getCodigoRespuesta());
         switch(respuestaTotal.getCodigoRespuesta()){
                case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
@@ -130,7 +128,6 @@ public class FXMLActividadesController implements Initializable {
     }
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante){
-        System.out.println(usuarioEstudiante.getIdEstudiante());
        this.usuarioEstudiante = usuarioEstudiante;
        cargarInformacionTrabajosRecepcionales();
     }

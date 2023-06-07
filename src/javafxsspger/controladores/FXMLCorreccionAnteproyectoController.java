@@ -174,7 +174,6 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
 
     @Override
     public void notificarEliminarCodirector(Academico codirector) {
-        System.out.println("Se elimina el codirector: "+codirector.getIdAcademico());
         int posicion = obtenerPosicionCodirector(codirector);
         codirectoresAnteproyecto.remove(posicion);
     }

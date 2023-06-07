@@ -65,8 +65,6 @@ public class FXMLCreacionActividadController implements Initializable {
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante, boolean esEdicion, Actividad actividadEdicion){
         this.usuarioEstudiante=usuarioEstudiante;
-        System.out.println(this.usuarioEstudiante.getIdEstudiante());
-        System.out.println(usuarioEstudiante.getIdEstudiante());
         this.esEdicion=esEdicion;
         this.actividad=actividadEdicion;
         dtPickerFechaFin.setEditable(false);
@@ -122,7 +120,6 @@ public class FXMLCreacionActividadController implements Initializable {
             String descripcion = txtAreaDescripcionActividad.getText();
             String fechaInicio = dtPickerFechaInicio.getValue().toString();
             String fechaFinal = dtPickerFechaFin.getValue().toString();
-            System.out.println(fechaInicio+""+fechaFinal);
             int idEstudiante=usuarioEstudiante.getIdEstudiante(); 
             int idTrabajoRecepcional=usuarioEstudiante.getIdTrabajoRecepcional(); 
             
@@ -153,7 +150,6 @@ public class FXMLCreacionActividadController implements Initializable {
     }
     
     private void actualizarActividad(Actividad actividadActualizada){
-        System.out.println(actividadActualizada.getIdActividad());
         int codigoRespuesta = modificarActividad(actividadActualizada);                
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:

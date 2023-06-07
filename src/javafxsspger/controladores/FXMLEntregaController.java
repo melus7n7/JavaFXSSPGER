@@ -105,7 +105,9 @@ public class FXMLEntregaController implements Initializable {
                     lblRetroalimentacion.setText("Pendiente de Calificación");
                     lblCalificacion.setText("Pendiente");
                     lblNivelSatisfaccion.setText("Pendiente de Calificación");
+                    bttCalificarEntrega.setVisible(true);                    
                 }else{
+                    bttCalificarEntrega.setVisible(false);                    
                     recuperarRetroalimentacion();
                     
                 }
@@ -128,7 +130,6 @@ public class FXMLEntregaController implements Initializable {
                 lblRetroalimentacion.setText(entrega.getRetroalimentacion());
                 lblCalificacion.setText(String.valueOf(entrega.getPuntajeSatisfaccion()));
                 lblNivelSatisfaccion.setText(entrega.getNivelSatisfaccion());
-                System.out.println(entrega.getNivelSatisfaccion());
                 break;
             }
     }

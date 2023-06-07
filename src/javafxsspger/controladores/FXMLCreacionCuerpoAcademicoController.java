@@ -167,7 +167,6 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
                 altoVBox += pane.getPrefHeight();
                 vBoxListaLGAC.setPrefHeight(altoVBox);
                 vBoxListaLGAC.getChildren().add(pane);
-                System.out.println(lgac.get(i).getIdCuerpoAcademico());
             }catch(IOException e){
                 e.printStackTrace();
             }

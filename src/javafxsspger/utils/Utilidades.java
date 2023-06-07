@@ -40,7 +40,7 @@ public class Utilidades {
             Parent vista = FXMLLoader.load(JavaFXSSPGER.class.getResource(ruta));
             escena = new Scene (vista);
         } catch (IOException ex) {
-            System.out.println("ERROR: "+ex.getMessage());
+            ex.printStackTrace();
         }
         return escena;
        
