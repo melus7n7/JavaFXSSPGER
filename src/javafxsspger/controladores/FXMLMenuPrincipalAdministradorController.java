@@ -1,5 +1,5 @@
 /*
-*Autor: Martínez Aguilar Sulem
+*Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
 *Fecha de creación: 27/05/2023
 *Fecha de modificación: 05/06/2023
 *Descripción: Controlador de la vista del menú principal del administrador
@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -25,16 +26,21 @@ import javafxsspger.utils.Utilidades;
 
 public class FXMLMenuPrincipalAdministradorController implements Initializable {
 
-    private Usuario usuarioAdmin;
     
+    private Usuario usuarioAdmin;
     @FXML
     private Label lblSaludo;
     @FXML
     private Label lblTitulo;
+    @FXML
+    private Button bttLGAC;
+    @FXML
+    private Button bttExperienciasEducativas;
+    @FXML
+    private Button bttCuentasInstitucionales;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     public void inicializarInformacion(Usuario usuarioAdmin){
@@ -75,19 +81,7 @@ public class FXMLMenuPrincipalAdministradorController implements Initializable {
     }
 
     @FXML
-    private void clicExperienciaEducativa(ActionEvent event) {/*
-        Stage escenarioBase = (Stage)lblSaludo.getScene().getWindow();
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLExperienciasEducativas.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLExperienciasEducativasController expEdu = accesoControlador.getController();
-            expEdu.inicializarInformacionUsuario(usuarioAdmin); 
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Experiencias Educativas Disponibles");
-            escenarioBase.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }*/
+    private void clicExperienciaEducativa(ActionEvent event) {
     }
 
     @FXML

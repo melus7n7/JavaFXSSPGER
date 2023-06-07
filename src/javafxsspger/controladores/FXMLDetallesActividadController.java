@@ -29,17 +29,12 @@ import javafxsspger.modelo.pojo.Actividad;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.utils.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author monti
- */
 public class FXMLDetallesActividadController implements Initializable {
 
+    
     private Academico usuarioAcademico;
     private Estudiante usuarioEstudiante;
     private Actividad actividad;
-    
     @FXML
     private TextArea txtAreaActividad;
     @FXML
@@ -57,32 +52,29 @@ public class FXMLDetallesActividadController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // 
     }    
-
     
     public void inicializarInformacionAcademico(Academico usuarioAcademico, Actividad actividad){
        this.usuarioAcademico = usuarioAcademico;
-       this.actividad=actividad;
+       this.actividad = actividad;
        cargarInformacionActividad();
        bttEditar.setVisible(false);
     }
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante, Actividad actividad){
        this.usuarioEstudiante = usuarioEstudiante;
-       this.actividad=actividad;
+       this.actividad = actividad;
        cargarInformacionActividad();
     }
     
     public void cargarInformacionActividad(){
         lblTituloActividad.setText(actividad.getTitulo());
-        lblNombreEstudiante.setText(actividad.getNombreEstudiante()+" "+actividad.getApellidoPaternoEstudiante()+" "+actividad.getApellidoMaternoEstudiante());
+        lblNombreEstudiante.setText(actividad.getNombreEstudiante() + " " + actividad.getApellidoPaternoEstudiante() + " "+actividad.getApellidoMaternoEstudiante());
         txtAreaActividad.setText(actividad.getDescripcion());
         txtAreaActividad.setEditable(false);
         lblFechaInicio.setText(Utilidades.darFormatofechas(actividad.getFechaInicio()));
         lblFechaFinal.setText(Utilidades.darFormatofechas(actividad.getFechaFinal()));
         lblFechaCreacion.setText(Utilidades.darFormatofechas(actividad.getFechaCreacion()));
-        
     }
 
     @FXML
@@ -92,7 +84,7 @@ public class FXMLDetallesActividadController implements Initializable {
                 FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLEntrega.fxml"));
                 Parent vista = accesoControlador.load();
                 FXMLEntregaController entrega = accesoControlador.getController(); 
-                if(usuarioAcademico!=null){
+                if(usuarioAcademico != null){
                     entrega.inicializarInformacionAcademico(usuarioAcademico, actividad);
                 }else{
                     entrega.inicializarInformacionEstudiante(usuarioEstudiante, actividad);                
@@ -100,7 +92,7 @@ public class FXMLDetallesActividadController implements Initializable {
                 escenarioBase.setScene(new Scene (vista));
                 escenarioBase.setTitle("Entrega de la Actividad");
                 escenarioBase.show();
-            } catch (IOException ex) {
+            }catch (IOException ex) {
                 ex.printStackTrace();
             }
     }
@@ -123,16 +115,15 @@ public class FXMLDetallesActividadController implements Initializable {
                 escenarioBase.setScene(new Scene (vista));
                 escenarioBase.setTitle("Creacion de Actividad");
                 escenarioBase.show();
-            } catch (IOException ex) {
+            }catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-
     @FXML
     private void clicRegresar(MouseEvent event) {
-        if(usuarioAcademico!=null){
+        if(usuarioAcademico != null){
             regresarActividadesAcademico();
         }else{
             regresarActividadesEstudiante();

@@ -39,14 +39,12 @@ import javafxsspger.utils.Utilidades;
  */
 public class FXMLModificarIntegrantesCuerpoAcademicoController implements Initializable {
 
+    
     @FXML
     private TableColumn tblColumnNombreAcademico;
     @FXML
     private TableColumn tblColumnPuestoAcademico;
     private ObservableList<Academico> academicos;
-
-
-    
     private Usuario usuarioAdmin;
     private CuerpoAcademico cuerpoAcademico;
     @FXML
@@ -62,10 +60,10 @@ public class FXMLModificarIntegrantesCuerpoAcademicoController implements Initia
         AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesAcademicosCuerpoAcademico(cuerpoAcademico.getIdCuerpoAcademico());
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
             break;
         case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
+            Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
              break;
         case Constantes.OPERACION_EXITOSA:
             academicos.addAll(respuestaBD.getAcademicos());
@@ -77,25 +75,25 @@ public class FXMLModificarIntegrantesCuerpoAcademicoController implements Initia
     
     private void configurarTabla(){        
         try{
-        tblColumnPuestoAcademico.setCellValueFactory(new PropertyValueFactory("puesto"));
-        tblColumnNombreAcademico.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
+            tblColumnPuestoAcademico.setCellValueFactory(new PropertyValueFactory("puesto"));
+            tblColumnNombreAcademico.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
         }catch(Exception e){
             e.printStackTrace();
         }
     }
     
     public void inicializarInformacion(Usuario usuarioAdmin, CuerpoAcademico cuerpoAcademico){
-        this.usuarioAdmin=usuarioAdmin;
-        this.cuerpoAcademico=cuerpoAcademico;
+        this.usuarioAdmin = usuarioAdmin;
+        this.cuerpoAcademico = cuerpoAcademico;
         cargarInformacionTabla();
     }
     
     
     @FXML
     private void clicEscogerResponsable(ActionEvent event) {
-        Academico AcademicoSeleccionado= tblViewAcademicos.getSelectionModel().getSelectedItem();
-        if(AcademicoSeleccionado!=null){
-            if(cuerpoAcademico.getIdAcademico()==0){
+        Academico AcademicoSeleccionado = tblViewAcademicos.getSelectionModel().getSelectedItem();
+        if(AcademicoSeleccionado != null){
+            if(cuerpoAcademico.getIdAcademico() == 0){
                 hacerResponsable(AcademicoSeleccionado.getIdAcademico());
             }else{
                 Utilidades.mostrarDialogoSimple("Error responsables", "No es posible registrar en un cuerpo académico dos responsables de cuerpo académico", Alert.AlertType.WARNING);                
@@ -109,14 +107,14 @@ public class FXMLModificarIntegrantesCuerpoAcademicoController implements Initia
         int respuestaBD = AcademicoDAO.hacerResponsable(idAcademico, cuerpoAcademico.getIdCuerpoAcademico());
         switch(respuestaBD){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
             break;
         case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Este academico no pertenece al Cuerpo Academico", "No se puede modificar al académico seleccionado", Alert.AlertType.WARNING);
-             break;
+            Utilidades.mostrarDialogoSimple("Este academico no pertenece al Cuerpo Academico", "No se puede modificar al académico seleccionado", Alert.AlertType.WARNING);
+            break;
         case Constantes.OPERACION_EXITOSA:
             Utilidades.mostrarDialogoSimple("Responsable academico actualizado", "Responsable de cuerpo académico actualizado", Alert.AlertType.INFORMATION);
-             cuerpoAcademico.setIdAcademico(idAcademico);
+            cuerpoAcademico.setIdAcademico(idAcademico);
             cargarInformacionTabla();
             break;
         }
@@ -140,9 +138,9 @@ public class FXMLModificarIntegrantesCuerpoAcademicoController implements Initia
 
     @FXML
     private void clicEliminarCuerpoAcademico(ActionEvent event) {
-        Academico AcademicoSeleccionado= tblViewAcademicos.getSelectionModel().getSelectedItem();
-        if(AcademicoSeleccionado!=null){
-            if(cuerpoAcademico.getIdAcademico()==AcademicoSeleccionado.getIdAcademico()){
+        Academico AcademicoSeleccionado = tblViewAcademicos.getSelectionModel().getSelectedItem();
+        if(AcademicoSeleccionado != null){
+            if(cuerpoAcademico.getIdAcademico() == AcademicoSeleccionado.getIdAcademico()){
             eliminarResponsable(cuerpoAcademico.getIdCuerpoAcademico());
             }else{
                 Utilidades.mostrarDialogoSimple("Este academico no pertenece al Cuerpo Academico", "No se puede modificar al académico seleccionado", Alert.AlertType.WARNING);                
@@ -156,11 +154,11 @@ public class FXMLModificarIntegrantesCuerpoAcademicoController implements Initia
         int respuestaBD = AcademicoDAO.eliminarResponsable(idCuerpoAcademico);
         switch(respuestaBD){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
             break;
         case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Este academico no pertenece al Cuerpo Academico", "No se puede modificar al académico seleccionado", Alert.AlertType.WARNING);
-             break;
+            Utilidades.mostrarDialogoSimple("Este academico no pertenece al Cuerpo Academico", "No se puede modificar al académico seleccionado", Alert.AlertType.WARNING);
+            break;
         case Constantes.OPERACION_EXITOSA:
             Utilidades.mostrarDialogoSimple("Responsable academico eliminado", "Se ha actualizado al Responsable de Cuerpo académico", Alert.AlertType.INFORMATION);
             cuerpoAcademico.setIdAcademico(0);

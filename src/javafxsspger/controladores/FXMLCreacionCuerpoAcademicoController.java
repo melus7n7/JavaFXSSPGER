@@ -41,14 +41,11 @@ import javafxsspger.modelo.pojo.Usuario;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author monti
- */
+
 public class FXMLCreacionCuerpoAcademicoController implements Initializable, INotificacionLGAC {
 
-    boolean esEdicion=false;
+    
+    boolean esEdicion = false;
     CuerpoAcademico cuerpoAcademico;
     private ArrayList <LGAC> lgacCuerpoAcademico;
     @FXML
@@ -62,7 +59,6 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
     @FXML
     private ComboBox<Consolidacion> cmbBoxConsolidacion;
     private ObservableList<Consolidacion> consolidaciones;
-
     @FXML
     private ScrollPane scrPaneCajaLGAC;
     @FXML
@@ -77,57 +73,51 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
     }    
 
     public void inicializarInformacionEdicion(Usuario usuarioAdmin, boolean esEdicion,CuerpoAcademico cuerpoAcademicoAnterior){
-        this.usuarioAdmin=usuarioAdmin;
-        this.esEdicion=esEdicion;
-        this.cuerpoAcademico=cuerpoAcademicoAnterior;
+        this.usuarioAdmin = usuarioAdmin;
+        this.esEdicion = esEdicion;
+        this.cuerpoAcademico = cuerpoAcademicoAnterior;
         cargarInformacionConsolidacion();
         lblTitulo.setText("Modificación de Cuerpo Académico");
         txtAreaClaveCuerpoAcademico.setText(cuerpoAcademicoAnterior.getClaveCuerpoAcademico());
         txtAreaNombreCuerpoAcademico.setText(cuerpoAcademicoAnterior.getNombre());
         txtAreaDescripcionCuerpoAcademico.setText(cuerpoAcademicoAnterior.getDescripcion());
         txtAreaAreaConocimiento.setText(cuerpoAcademicoAnterior.getAreaConocimiento());
-        int posicionConsolidacion=obtenerPosicionComboConsolidacion(cuerpoAcademicoAnterior.getIdConsolidacion());
+        int posicionConsolidacion = obtenerPosicionComboConsolidacion(cuerpoAcademicoAnterior.getIdConsolidacion());
         cmbBoxConsolidacion.getSelectionModel().select(posicionConsolidacion);
         inicializarLGAC();
     }
     
     private int obtenerPosicionComboConsolidacion(int idConsolidacion){
         for (int i = 0; i < consolidaciones.size(); i++) {
-            if(consolidaciones.get(i).getIdConsolidacion()==idConsolidacion)
+            if(consolidaciones.get(i).getIdConsolidacion() == idConsolidacion)
                 return i;
         }
         return 0;
     }
     
-    
     public void inicializarInformacion(Usuario usuarioAdmin){
-        this.usuarioAdmin=usuarioAdmin;
-        this.cuerpoAcademico= new CuerpoAcademico();        
+        this.usuarioAdmin = usuarioAdmin;
+        this.cuerpoAcademico = new CuerpoAcademico();        
         inicializarLGAC();
         cargarInformacionConsolidacion();
     }
     
     private void cargarInformacionConsolidacion(){
-        consolidaciones=FXCollections.observableArrayList();
+        consolidaciones = FXCollections.observableArrayList();
         ConsolidacionRespuesta respuestaBD = ConsolidacionDAO.recuperarConsolidacion();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos","Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    consolidaciones.addAll(respuestaBD.getConsolidaciones());
-                    cmbBoxConsolidacion.setItems(consolidaciones);
+                consolidaciones.addAll(respuestaBD.getConsolidaciones());
+                cmbBoxConsolidacion.setItems(consolidaciones);
                 break;
         }
     }
-    
-   
     
     private void inicializarLGAC(){
         LGACRespuesta respuestaBD;
@@ -138,23 +128,20 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
         }
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion","Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cargarLGAC(respuestaBD.getLGACs());
+                cargarLGAC(respuestaBD.getLGACs());
                 break;
         }
     }
     
     private void cargarLGAC(ArrayList<LGAC> lgac){
         int altoVBox = 0;
-        for (int i=0; i<lgac.size(); i++){
+        for (int i = 0; i < lgac.size(); i++){
             FXMLLoader fmxlLoader = new FXMLLoader();
             fmxlLoader.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLLGACElemento.fxml"));
             try{
@@ -183,14 +170,12 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
 
     @FXML
     private void clicGuardarCuerpoAcademico(ActionEvent event) {
-        
         validarCampos();
     }
 
     @Override
     public void notificarAñadirLGAC(LGAC lgac) {
         lgacCuerpoAcademico.add(lgac);
-
     }
 
     @Override
@@ -200,7 +185,7 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
 
     private void validarCampos(){
         if(lgacCuerpoAcademico.isEmpty() || txtAreaClaveCuerpoAcademico.getText().isEmpty() || txtAreaNombreCuerpoAcademico.getText().isEmpty() || txtAreaDescripcionCuerpoAcademico.getText().isEmpty()
-                || txtAreaAreaConocimiento.getText().isEmpty() || cmbBoxConsolidacion.getSelectionModel().getSelectedIndex()==-1){
+                || txtAreaAreaConocimiento.getText().isEmpty() || cmbBoxConsolidacion.getSelectionModel().getSelectedIndex() == -1){
             Utilidades.mostrarDialogoSimple("Seleccionar al menos una LGAC y llenar los demas datos", "Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.WARNING);
         }else{
             cuerpoAcademico.setClaveCuerpoAcademico(txtAreaClaveCuerpoAcademico.getText());
@@ -208,9 +193,8 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
             cuerpoAcademico.setDescripcion(txtAreaDescripcionCuerpoAcademico.getText());
             cuerpoAcademico.setAreaConocimiento(txtAreaAreaConocimiento.getText());
             cuerpoAcademico.setIdConsolidacion(cmbBoxConsolidacion.getSelectionModel().getSelectedItem().getIdConsolidacion());
-             registrarCuerpoAcademico(cuerpoAcademico);
+            registrarCuerpoAcademico(cuerpoAcademico);
         }
-        
     }
     
     private void eliminarLGACCuerpoAcademico(CuerpoAcademico cuerpoAcademico){
@@ -236,7 +220,7 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Cuerpos Academicos");
             escenarioBase.show();
-        } catch (IOException ex) {
+        }catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -266,9 +250,5 @@ public class FXMLCreacionCuerpoAcademicoController implements Initializable, INo
                 break;
         }
     }
-   
-    
-    
-    
-    
+      
 }

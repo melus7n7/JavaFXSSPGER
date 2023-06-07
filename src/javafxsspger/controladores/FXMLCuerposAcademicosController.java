@@ -33,15 +33,13 @@ import javafxsspger.utils.Utilidades;
 
 public class FXMLCuerposAcademicosController implements Initializable {
 
+    
     private Usuario usuarioAdmin;
     @FXML
     private VBox vBoxListaCuerposAcademicos;
     @FXML
     private Label lblTitulo;
-
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarCuerposAcademicos();
@@ -49,23 +47,21 @@ public class FXMLCuerposAcademicosController implements Initializable {
     
     private void cargarCuerposAcademicos(){
         CuerpoAcademicoRespuesta respuestaBD = CuerpoAcademicoDAO.recuperarCuerposAcademicos();
-
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    mostrarCuerposAcademicos(respuestaBD.getCuerposAcademicos());
+                mostrarCuerposAcademicos(respuestaBD.getCuerposAcademicos());
                 break;
         }
     }
     
     private void mostrarCuerposAcademicos(ArrayList <CuerpoAcademico> cuerposAcademicos){
-        for (int i=0; i<cuerposAcademicos.size(); i++){
+        for (int i = 0; i < cuerposAcademicos.size(); i++){
                 FXMLLoader accesoControlador = new FXMLLoader();
                 accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLCuerpoAcademicoElemento.fxml"));
                 try{
@@ -80,7 +76,7 @@ public class FXMLCuerposAcademicosController implements Initializable {
     }
     
     public void inicializarInformacionUsuario(Usuario usuarioAdmin){
-        this.usuarioAdmin=usuarioAdmin;
+        this.usuarioAdmin = usuarioAdmin;
     }
 
     @FXML
@@ -108,7 +104,7 @@ public class FXMLCuerposAcademicosController implements Initializable {
             FXMLMenuPrincipalAdministradorController menuAdmin = accesoControlador.getController();
             menuAdmin.inicializarInformacion(usuarioAdmin);
             escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("");
+            escenarioBase.setTitle("Menú Principal");
             escenarioBase.show();
         }catch(IOException ex){
             ex.printStackTrace();

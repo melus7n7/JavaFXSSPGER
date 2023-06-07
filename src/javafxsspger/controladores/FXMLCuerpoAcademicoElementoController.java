@@ -2,7 +2,7 @@
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 06/06/2023
 *Fecha de modificación: 06/06/2023
-*Descripción: Controlador de la vista de un elemento en la lista de Cuerpos Academicos
+*Descripción: Controlador de la vista de un elemento en la lista de cuerpos academicos
 */
 package javafxsspger.controladores;
 
@@ -23,13 +23,10 @@ import javafxsspger.modelo.pojo.Academico;
 import javafxsspger.modelo.pojo.CuerpoAcademico;
 import javafxsspger.modelo.pojo.Usuario;
 
-/**
- * FXML Controller class
- *
- * @author monti
- */
+
 public class FXMLCuerpoAcademicoElementoController implements Initializable {
 
+    
     @FXML
     private Label lblNombreCuerpoAcademico;
     @FXML
@@ -38,18 +35,16 @@ public class FXMLCuerpoAcademicoElementoController implements Initializable {
     private Label lblAreaConocimiento;
     @FXML
     private Label lblConsolidacion;
-
     private Usuario usuarioAdmin;
     private CuerpoAcademico cuerpoAcademicoElemento;
-    private TableView<Academico> TvAcademicos;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
 
     public void inicializarElementoAcademico(CuerpoAcademico cuerpoAcademicoElemento, Usuario usuarioAdmin){
-        this.cuerpoAcademicoElemento=cuerpoAcademicoElemento;
-        this.usuarioAdmin=usuarioAdmin;
+        this.cuerpoAcademicoElemento = cuerpoAcademicoElemento;
+        this.usuarioAdmin = usuarioAdmin;
         lblNombreCuerpoAcademico.setText(cuerpoAcademicoElemento.getNombre());
         lblClaveCuerpoAcademico.setText(cuerpoAcademicoElemento.getClaveCuerpoAcademico());
         lblConsolidacion.setText(cuerpoAcademicoElemento.getNivelConsolidacion());
@@ -71,7 +66,6 @@ public class FXMLCuerpoAcademicoElementoController implements Initializable {
         }catch(IOException ex){
             ex.printStackTrace();
         }
-        
     }
 
     @FXML
@@ -88,7 +82,6 @@ public class FXMLCuerpoAcademicoElementoController implements Initializable {
         }catch(IOException ex){
             ex.printStackTrace();
         }
-        
     }
     
     
