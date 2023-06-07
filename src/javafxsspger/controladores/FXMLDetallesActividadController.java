@@ -70,7 +70,6 @@ public class FXMLDetallesActividadController implements Initializable {
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante, Actividad actividad){
        this.usuarioEstudiante = usuarioEstudiante;
-       System.out.println("IDESTUDIANTE1: "+usuarioEstudiante.getIdEstudiante());
        this.actividad=actividad;
        cargarInformacionActividad();
     }
@@ -108,7 +107,6 @@ public class FXMLDetallesActividadController implements Initializable {
     
     @FXML
     private void clicEditar(ActionEvent event) {
-        System.out.println("Entra");
         LocalDate fechaActual = LocalDate.now();
         String formatoDeFecha = "yyyy-MM-dd";
         LocalDate fechaCreacion = LocalDate.parse(actividad.getFechaCreacion(), DateTimeFormatter.ofPattern(formatoDeFecha));

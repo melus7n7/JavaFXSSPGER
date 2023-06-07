@@ -15,12 +15,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.dao.AvanceDAO;
 import javafxsspger.modelo.dao.EstudianteDAO;
@@ -56,6 +59,7 @@ public class FXMLTrabajosRecepcionalesController implements Initializable {
 
     @FXML
     private void clicRegresar(MouseEvent event) {
+        regresarMenuPrincipalAcademico();
     }
     
     public void inicializarPantallaAcademico(Academico usuarioAcademico){
@@ -136,5 +140,20 @@ public class FXMLTrabajosRecepcionalesController implements Initializable {
             }
         }
         return false;
+    }
+    
+    private void regresarMenuPrincipalAcademico(){
+        Stage escenarioBase = (Stage)vBoxListaTrabajos.getScene().getWindow();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLMenuPrincipalAcademico.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLMenuPrincipalAcademicoController menuPrincipalAcademico = accesoControlador.getController();
+            menuPrincipalAcademico.inicializarInformacionConAcademico(usuarioAcademico);
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Menú Principal");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

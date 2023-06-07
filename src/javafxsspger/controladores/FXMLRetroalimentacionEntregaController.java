@@ -106,7 +106,6 @@ public class FXMLRetroalimentacionEntregaController implements Initializable {
     
     private void actualizarEntrega(Entrega entrega){
         int respuestaBD = EntregaDAO.modificarEntrega(entrega);
-        System.out.println(entrega.getIdRubrica()+" "+entrega.getRetroalimentacion()+" "+entrega.getIdEntrega());
         switch(respuestaBD){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);

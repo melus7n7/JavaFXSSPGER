@@ -115,7 +115,7 @@ public class AvanceDAO {
                         actividad.setFechaFinal(resultadoActividades.getString("fechaFinal"));
                         actividades.add(actividad);
                         
-                        String consultaEntrega = "SELECT idEntrega FROM sspger.entrega WHERE idActividad = ?";
+                        String consultaEntrega = "SELECT idEntrega FROM sspger.entrega WHERE idActividad = ? AND fechaEntrega is not null";
                         PreparedStatement prepararSentenciaEntrega = conexionBD.prepareStatement(consultaEntrega);
                         prepararSentenciaEntrega.setInt(1, actividad.getIdActividad());
                         ResultSet resultadoEntrega = prepararSentenciaEntrega.executeQuery();
@@ -206,7 +206,6 @@ public class AvanceDAO {
                 String sentencia = "UPDATE actividad SET idAvance = null WHERE idAvance = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, avance.getIdAvance());
-                System.out.println("AAA "+prepararSentencia);
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas >= 0) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
                 conexionBD.close();

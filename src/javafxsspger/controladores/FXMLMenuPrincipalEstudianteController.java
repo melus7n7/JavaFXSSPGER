@@ -66,7 +66,6 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLActividades.fxml"));
             Parent vista = accesoControlador.load();
             FXMLActividadesController actividades = accesoControlador.getController();
-            System.out.println(usuarioEstudiante.getIdEstudiante());
             actividades.inicializarInformacionEstudiante(usuarioEstudiante); 
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Actividades");

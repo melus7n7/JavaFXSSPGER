@@ -76,21 +76,20 @@ public class FXMLActividadElementoController implements Initializable {
     @FXML
     private void clicVerDetallesActividad(ActionEvent event) {
         if(usuarioAcademico!=null){
-            if(usuarioAcademico.isEsDirector()){
-                Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
-                try {
-                    FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
-                    Parent vista = accesoControlador.load();
-                    FXMLDetallesActividadController actividad = accesoControlador.getController();
+            Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
+            try {
+                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
+                Parent vista = accesoControlador.load();
+                FXMLDetallesActividadController actividad = accesoControlador.getController();
             
-                    actividad.inicializarInformacionAcademico(usuarioAcademico, actividadActual);
-                    escenarioBase.setScene(new Scene (vista));
-                    escenarioBase.setTitle("Detalles de Actividad");
-                    escenarioBase.show();
-                }catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                actividad.inicializarInformacionAcademico(usuarioAcademico, actividadActual);
+                escenarioBase.setScene(new Scene (vista));
+                escenarioBase.setTitle("Detalles de Actividad");
+                escenarioBase.show();
+            }catch (IOException ex) {
+                ex.printStackTrace();
             }
+            
         }else{
             Stage escenarioBase = (Stage)lblTituloActividad.getScene().getWindow();
             try {

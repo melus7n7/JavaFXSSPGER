@@ -188,7 +188,7 @@ public class FXMLDetalleAvanceController implements Initializable {
         for(Actividad actividad: avanceDetalle.getActividades()){
             actividadesCumplidas += (actividad.isTieneEntrega()) ? 1 : 0;
         }
-        String porcentaje = actividadesCumplidas/avanceDetalle.getActividades().size() + "";
+        String porcentaje = (actividadesCumplidas/avanceDetalle.getActividades().size())*100 + "";
         lblPorcentaje.setText(porcentaje + "%");
     }
     

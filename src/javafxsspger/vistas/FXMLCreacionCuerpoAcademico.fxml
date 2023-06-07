@@ -8,8 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxsspger.controladores.FXMLCreacionCuerpoAcademicoController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsspger.controladores.FXMLCreacionCuerpoAcademicoController">
    <children>
       <Button layoutX="811.0" layoutY="580.0" mnemonicParsing="false" onAction="#clicGuardarCuerpoAcademico" prefHeight="50.0" prefWidth="234.0" style="-fx-background-color: black;" text="Guardar" textFill="WHITE">
          <font>
@@ -74,7 +73,7 @@
       </Label>
       <ScrollPane fx:id="scrPaneCajaLGAC" layoutX="54.0" layoutY="489.0" prefHeight="141.0" prefWidth="676.0">
          <content>
-            <VBox fx:id="vBoxListaLGAC" prefHeight="135.0" prefWidth="661.0" />
+            <VBox fx:id="vBoxListaLGAC" prefHeight="145.0" prefWidth="661.0" />
          </content>
       </ScrollPane>
       <Label layoutX="72.0" layoutY="459.0" text="LGACs:">

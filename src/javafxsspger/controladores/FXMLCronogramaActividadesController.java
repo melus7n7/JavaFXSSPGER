@@ -80,7 +80,6 @@ public class FXMLCronogramaActividadesController implements Initializable {
         respuestaTotal.setTrabajosRecepcionales(new ArrayList());
         if(usuarioAcademico!=null){
             if(usuarioAcademico.isEsDirector() && usuarioAcademico.isEsProfesor()){
-                System.out.println("Es director y profesor");
                 TrabajoRecepcionalRespuesta trabajosRecepcionalesProfesor = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesProfesor(this.usuarioAcademico.getIdAcademico());                                                 
                 TrabajoRecepcionalRespuesta trabajosRecepcionalesDirector = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesDirector(this.usuarioAcademico.getIdAcademico()); 
                 respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesProfesor.getTrabajosRecepcionales());
@@ -226,7 +225,6 @@ public class FXMLCronogramaActividadesController implements Initializable {
                     Pane pane = accesoControlador.load();
                     FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
                     elementoEnLista.inicializarActividadElementoEstudiante(actividades.get(i), usuarioEstudiante);
-                    System.out.println("ID ESTUDIANTE Actividades: "+this.usuarioEstudiante.getIdEstudiante());
                     vBoxListaActividades.getChildren().add(pane);
                 }catch(IOException e){
                     e.printStackTrace();
