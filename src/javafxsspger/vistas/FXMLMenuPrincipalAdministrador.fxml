@@ -27,12 +27,12 @@
             <Font name="Trebuchet MS Bold" size="73.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="95.0" layoutY="416.0" mnemonicParsing="false" onAction="#clicLGAC" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="LGAC" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttLGAC" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="95.0" layoutY="416.0" mnemonicParsing="false" onAction="#clicLGAC" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="LGAC" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="605.0" layoutY="416.0" mnemonicParsing="false" onAction="#clicExperienciaEducativa" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Experiencias Educativas" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttExperienciasEducativas" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="605.0" layoutY="416.0" mnemonicParsing="false" onAction="#clicExperienciaEducativa" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Experiencias Educativas" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="25.0" />
          </font>
@@ -42,7 +42,7 @@
             <Font name="SansSerif Regular" size="25.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="605.0" layoutY="210.0" mnemonicParsing="false" onAction="#clicCuentaInstitucional" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Cuentas institucionales" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bttCuentasInstitucionales" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="605.0" layoutY="210.0" mnemonicParsing="false" onAction="#clicCuentaInstitucional" prefHeight="50.0" prefWidth="339.0" style="-fx-background-color: #213555;" text="Cuentas institucionales" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="25.0" />
          </font>

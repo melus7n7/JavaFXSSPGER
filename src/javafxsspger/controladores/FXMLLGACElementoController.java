@@ -1,8 +1,8 @@
 /*
-*Autor: Mongeote Tlachy Daniel
+*Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 06/06/2023
 *Fecha de modificación: 06/06/2023
-*Descripción: Controlador de la vista de un elemento en la lista de LGACS
+*Descripción: Controlador de la vista de un elemento en la lista de lgacs
 */
 package javafxsspger.controladores;
 
@@ -23,31 +23,24 @@ import javafxsspger.interfaces.INotificacionLGAC;
 import javafxsspger.modelo.pojo.LGAC;
 import javafxsspger.modelo.pojo.Usuario;
 
-/**
- * FXML Controller class
- *
- * @author danie
- */
 public class FXMLLGACElementoController implements Initializable {
+    
     
     @FXML
     private CheckBox chcBoxLGAC;
     @FXML
     private Label lblNombreLGAC;
-    
     private Usuario usuarioAdmin;
     private LGAC lgacElemento;
     private INotificacionLGAC interfazNotificacion;
-
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     public void inicializarElementoLGAC(LGAC lgacElemento, Usuario usuarioAdmin){
-        this.lgacElemento=lgacElemento;
-        this.usuarioAdmin=usuarioAdmin;
+        this.lgacElemento = lgacElemento;
+        this.usuarioAdmin = usuarioAdmin;
         lblNombreLGAC.setText(lgacElemento.getNombreLGAC());
         
     }

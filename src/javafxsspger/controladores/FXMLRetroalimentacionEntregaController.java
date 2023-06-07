@@ -33,11 +33,12 @@ import javafxsspger.modelo.pojo.Entrega;
 import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
+
 public class FXMLRetroalimentacionEntregaController implements Initializable {
 
+    
     @FXML
     private TextArea txtAreaRetroalimentacion;
-    
     @FXML
     private ComboBox<Calificacion> cmbBoxCalificacion;
     @FXML
@@ -46,7 +47,6 @@ public class FXMLRetroalimentacionEntregaController implements Initializable {
     private Label lblFechaEntrega;
     @FXML
     private Label lblNombreEstudiante;
-
     private Academico usuarioAcademico;
     private Entrega entrega;
     private ObservableList<Calificacion> calificaciones;
@@ -54,26 +54,24 @@ public class FXMLRetroalimentacionEntregaController implements Initializable {
     private Label lblTituloActividad;
     @FXML
     private Label lblTitulo;
-    
     private Actividad actividad;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
 
     public void inicializarInformacionAcademico(Academico usuarioAcademico, Entrega entrega, Actividad actividad){
        this.usuarioAcademico = usuarioAcademico;
-       this.entrega=entrega;
-       this.actividad=actividad;
+       this.entrega = entrega;
+       this.actividad = actividad;
        cargarRubricaCalificaciones();
        cargarInformacionEntrega(); 
     }
     
     private void cargarInformacionEntrega(){
         lblTituloActividad.setText(entrega.getTituloActividad());    
-        lblNombreEstudiante.setText("Estudiante: "+entrega.getNombreEstudiante()+" "+entrega.getApellidoPaternoEstudiante()+" "+entrega.getApellidoMaternoEstudiante());
-        if(entrega.getFechaEntrega()==null){
+        lblNombreEstudiante.setText("Estudiante: "+entrega.getNombreEstudiante() + " " + entrega.getApellidoPaternoEstudiante() + " " + entrega.getApellidoMaternoEstudiante());
+        if(entrega.getFechaEntrega() == null){
             lblFechaEntrega.setText("Fecha Entrega: Pendiente de Entrega");
         }else{
             lblFechaEntrega.setText(Utilidades.darFormatofechas(entrega.getFechaEntrega()));
@@ -93,9 +91,8 @@ public class FXMLRetroalimentacionEntregaController implements Initializable {
     }
     
     private void validarCampos(){
-        if(cmbBoxCalificacion.getSelectionModel().getSelectedItem()==null || txtAreaRetroalimentacion.getText().isEmpty()){
+        if(cmbBoxCalificacion.getSelectionModel().getSelectedItem() == null || txtAreaRetroalimentacion.getText().isEmpty()){
             Utilidades.mostrarDialogoSimple("Campos invalidos","Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.ERROR);        
-            
         }else{
             Calificacion calificacion = cmbBoxCalificacion.getSelectionModel().getSelectedItem();
             entrega.setIdRubrica(calificacion.getIdRubricaCalificacion());
@@ -139,6 +136,5 @@ public class FXMLRetroalimentacionEntregaController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
     
 }

@@ -34,12 +34,8 @@ import javafxsspger.modelo.pojo.Estudiante;
 import javafxsspger.utils.Constantes;
 import javafxsspger.utils.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author monti
- */
 public class FXMLCreacionActividadController implements Initializable {
+    
     
     private boolean esEdicion;
     private Estudiante usuarioEstudiante;
@@ -54,9 +50,7 @@ public class FXMLCreacionActividadController implements Initializable {
     private DatePicker dtPickerFechaInicio;
     @FXML
     private DatePicker dtPickerFechaFin;
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         dtPickerFechaFin.setEditable(false);
@@ -64,9 +58,9 @@ public class FXMLCreacionActividadController implements Initializable {
     }   
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante, boolean esEdicion, Actividad actividadEdicion){
-        this.usuarioEstudiante=usuarioEstudiante;
-        this.esEdicion=esEdicion;
-        this.actividad=actividadEdicion;
+        this.usuarioEstudiante = usuarioEstudiante;
+        this.esEdicion = esEdicion;
+        this.actividad = actividadEdicion;
         dtPickerFechaFin.setEditable(false);
         dtPickerFechaInicio.setEditable(false);
         if(esEdicion){
@@ -113,21 +107,21 @@ public class FXMLCreacionActividadController implements Initializable {
     }
     
     private void validarCamposRegistro(){
-        if(txtAreaTituloActividad.getText().isEmpty() || txtAreaDescripcionActividad.getText().isEmpty() || dtPickerFechaInicio.getValue()==null || dtPickerFechaFin.getValue()==null ){
+        if(txtAreaTituloActividad.getText().isEmpty() || txtAreaDescripcionActividad.getText().isEmpty() || dtPickerFechaInicio.getValue() == null || dtPickerFechaFin.getValue() == null ){
             Utilidades.mostrarDialogoSimple("Campos invalidos","Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.ERROR);
         }else{
             String titulo = txtAreaTituloActividad.getText();
             String descripcion = txtAreaDescripcionActividad.getText();
             String fechaInicio = dtPickerFechaInicio.getValue().toString();
             String fechaFinal = dtPickerFechaFin.getValue().toString();
-            int idEstudiante=usuarioEstudiante.getIdEstudiante(); 
-            int idTrabajoRecepcional=usuarioEstudiante.getIdTrabajoRecepcional(); 
+            int idEstudiante = usuarioEstudiante.getIdEstudiante(); 
+            int idTrabajoRecepcional = usuarioEstudiante.getIdTrabajoRecepcional(); 
             
                 LocalDate fechaI = dtPickerFechaInicio.getValue();
                 LocalDate fechaF = dtPickerFechaFin.getValue();
                 Actividad actividadValidada = new Actividad();
                 if(esEdicion){
-                    actividadValidada=actividad;
+                    actividadValidada = actividad;
                 }
                 actividadValidada.setTitulo(titulo);
                 actividadValidada.setDescripcion(descripcion);
@@ -135,7 +129,6 @@ public class FXMLCreacionActividadController implements Initializable {
                 actividadValidada.setFechaFinal(fechaFinal);
                 actividadValidada.setIdEstudiante(idEstudiante); 
                 actividadValidada.setIdTrabajoRecepcional(idTrabajoRecepcional);
-                
                 if (fechaI.compareTo(fechaF) > 0) {
                     Utilidades.mostrarDialogoSimple("Fechas Invalidas", "La fecha ingresada no es válida. Ingrese una nueva fecha.", Alert.AlertType.WARNING);
                 }else {
@@ -153,15 +146,15 @@ public class FXMLCreacionActividadController implements Initializable {
         int codigoRespuesta = modificarActividad(actividadActualizada);                
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-            Utilidades.mostrarDialogoSimple("Sin conexion", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde.", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin conexion", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde.", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-            Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo despues", Alert.AlertType.WARNING);
-            break;
+                Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo despues", Alert.AlertType.WARNING);
+                break;
             case Constantes.OPERACION_EXITOSA:
-            Utilidades.mostrarDialogoSimple("Actividad actualizada", "La actividad fue actualizada correctamente", Alert.AlertType.INFORMATION);        
-            cerrarVentana();
-            break;
+                Utilidades.mostrarDialogoSimple("Actividad actualizada", "La actividad fue actualizada correctamente", Alert.AlertType.INFORMATION);        
+                cerrarVentana();
+                break;
         }    
     }
     
@@ -169,15 +162,15 @@ public class FXMLCreacionActividadController implements Initializable {
         int codigoRespuesta = guardarActividad(actividadNueva);                
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-            Utilidades.mostrarDialogoSimple("Sin conexion", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde.", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin conexion", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde.", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-            Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
-            break;
+                Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
+                break;
             case Constantes.OPERACION_EXITOSA:
-            Utilidades.mostrarDialogoSimple("Actividad agregada", "La actividad ha sido añadida correctamente", Alert.AlertType.INFORMATION);        
-            cerrarVentana();
-            break;
+                Utilidades.mostrarDialogoSimple("Actividad agregada", "La actividad ha sido añadida correctamente", Alert.AlertType.INFORMATION);        
+                cerrarVentana();
+                break;
         }
     }
     

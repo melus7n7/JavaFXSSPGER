@@ -35,6 +35,7 @@ import javafxsspger.utils.Utilidades;
 
 public class FXMLEntregaController implements Initializable {
 
+    
     private Academico usuarioAcademico;
     private Estudiante usuarioEstudiante;
     private Actividad actividad;
@@ -61,7 +62,6 @@ public class FXMLEntregaController implements Initializable {
     private Label lblRetroalimentacion;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
     
     public void inicializarInformacionAcademico(Academico usuarioAcademico, Actividad actividad){
@@ -76,40 +76,37 @@ public class FXMLEntregaController implements Initializable {
     
     public void inicializarInformacionEstudiante(Estudiante usuarioEstudiante, Actividad actividad){
        this.usuarioEstudiante = usuarioEstudiante;
-       this.actividad=actividad;
+       this.actividad = actividad;
        bttCalificarEntrega.setVisible(false);
+       bttEntregar.setVisible(false);
        cargarInformacionEntrega();
     }
     
     private void cargarInformacionEntrega(){
-        EntregaRespuesta respuestaBD = EntregaDAO.recuperarEntrega(actividad.getIdActividad());
-        
+        EntregaRespuesta respuestaBD = EntregaDAO.recuperarEntrega(actividad.getIdActividad());        
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                this.entrega=respuestaBD.getEntregas().get(0);
-                if(entrega.getFechaEntrega()==null){
+                this.entrega = respuestaBD.getEntregas().get(0);
+                if(entrega.getFechaEntrega() == null){
                     lblFechaEntrega.setText("Pendiente de Entrega");
                     lblDescripcion.setText("Pendiente de Entrega");
                 }else{
                     lblFechaEntrega.setText(Utilidades.darFormatofechas(entrega.getFechaEntrega()));
                     lblDescripcion.setText(entrega.getDescripcion());
                 }
-                if(entrega.getRetroalimentacion()==null){
+                if(entrega.getRetroalimentacion() == null){
                     lblRetroalimentacion.setText("Pendiente de Calificación");
                     lblCalificacion.setText("Pendiente");
-                    lblNivelSatisfaccion.setText("Pendiente de Calificación");
-                    bttCalificarEntrega.setVisible(true);                    
+                    lblNivelSatisfaccion.setText("Pendiente de Calificación");             
                 }else{
                     bttCalificarEntrega.setVisible(false);                    
                     recuperarRetroalimentacion();
-                    
                 }
                 break;
         }
@@ -119,11 +116,10 @@ public class FXMLEntregaController implements Initializable {
         EntregaRespuesta respuestaBDRetroalimentacion = EntregaDAO.recuperarCalificacion(actividad.getIdActividad()); 
         switch(respuestaBDRetroalimentacion.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 this.entrega=respuestaBDRetroalimentacion.getEntregas().get(0);           
@@ -131,7 +127,7 @@ public class FXMLEntregaController implements Initializable {
                 lblCalificacion.setText(String.valueOf(entrega.getPuntajeSatisfaccion()));
                 lblNivelSatisfaccion.setText(entrega.getNivelSatisfaccion());
                 break;
-            }
+        }
     }
 
     @FXML
@@ -141,7 +137,7 @@ public class FXMLEntregaController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
             Parent vista = accesoControlador.load();
             FXMLDetallesActividadController actividadesAcademico = accesoControlador.getController();
-            if(usuarioAcademico!=null){
+            if(usuarioAcademico != null){
                 actividadesAcademico.inicializarInformacionAcademico(usuarioAcademico,actividad);
             }else{
                 actividadesAcademico.inicializarInformacionEstudiante(usuarioEstudiante,actividad);                
@@ -158,7 +154,6 @@ public class FXMLEntregaController implements Initializable {
     
     @FXML
     private void clicEntregar(ActionEvent event) {
-    
     }
 
     @FXML

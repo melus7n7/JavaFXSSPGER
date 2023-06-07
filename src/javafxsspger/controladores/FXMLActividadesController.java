@@ -1,8 +1,8 @@
 /*
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 20/05/2023
-*Fecha de modificación: 05/06/2023
-*Descripción: Controlador de la vista de Actividades
+*Fecha de modificación: 06/06/2023
+*Descripción: Controlador de la vista de actividades
 */
 package javafxsspger.controladores;
 
@@ -42,25 +42,21 @@ import javafxsspger.utils.Utilidades;
 
 public class FXMLActividadesController implements Initializable {
     
+    
     private Academico usuarioAcademico;
     private Estudiante usuarioEstudiante;
-    
     @FXML
     private VBox vBoxListaActividades;
     @FXML
     private Label lblTitulo;
     @FXML
     private ComboBox<TrabajoRecepcional> cmbBoxTrabajosRecepcionales;
-    
     private ObservableList<TrabajoRecepcional> trabajosRecepcionales;
     @FXML
     private Button bttCrearActividad;
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }    
     
     private void cargarInformacionTrabajosRecepcionales(){
@@ -68,13 +64,13 @@ public class FXMLActividadesController implements Initializable {
         TrabajoRecepcionalRespuesta trabajosRecepcionalesBD = new TrabajoRecepcionalRespuesta(); 
         TrabajoRecepcionalRespuesta respuestaTotal = new TrabajoRecepcionalRespuesta();
         respuestaTotal.setTrabajosRecepcionales(new ArrayList());
-        if(usuarioAcademico!=null){
+        if(usuarioAcademico != null){
             if(usuarioAcademico.isEsDirector() && usuarioAcademico.isEsProfesor()){
                 TrabajoRecepcionalRespuesta trabajosRecepcionalesProfesor = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesProfesor(this.usuarioAcademico.getIdAcademico());                                                 
                 TrabajoRecepcionalRespuesta trabajosRecepcionalesDirector = TrabajoRecepcionalDAO.obtenerNombresTrabajosRecepcionalesDirector(this.usuarioAcademico.getIdAcademico()); 
                 respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesProfesor.getTrabajosRecepcionales());
                 respuestaTotal.getTrabajosRecepcionales().addAll(trabajosRecepcionalesDirector.getTrabajosRecepcionales());
-                if(trabajosRecepcionalesProfesor.getCodigoRespuesta()==Constantes.OPERACION_EXITOSA && trabajosRecepcionalesDirector.getCodigoRespuesta()==Constantes.OPERACION_EXITOSA){
+                if(trabajosRecepcionalesProfesor.getCodigoRespuesta() == Constantes.OPERACION_EXITOSA && trabajosRecepcionalesDirector.getCodigoRespuesta() == Constantes.OPERACION_EXITOSA){
                     respuestaTotal.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 }else{
                     respuestaTotal.setCodigoRespuesta(Constantes.ERROR_CONSULTA);                
@@ -106,10 +102,10 @@ public class FXMLActividadesController implements Initializable {
     private void cargarComboBox(TrabajoRecepcionalRespuesta respuestaTotal){
         switch(respuestaTotal.getCodigoRespuesta()){
                case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin conexion", "Por el momento no hay conexion", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error cargar los datos", "Intentelo mas tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 trabajosRecepcionales.addAll(respuestaTotal.getTrabajosRecepcionales());
@@ -120,7 +116,7 @@ public class FXMLActividadesController implements Initializable {
     
     private boolean estaRepetido(TrabajoRecepcional trabajo, ArrayList<TrabajoRecepcional> trabajosrecepcionales){
         for(TrabajoRecepcional trabajoRecepcionalLista: trabajosrecepcionales){
-            if(trabajo.getIdTrabajoRecepcional()== trabajoRecepcionalLista.getIdTrabajoRecepcional()){
+            if(trabajo.getIdTrabajoRecepcional() == trabajoRecepcionalLista.getIdTrabajoRecepcional()){
                 return true;
             }
         }
@@ -177,16 +173,15 @@ public class FXMLActividadesController implements Initializable {
             if(trabajoRecepcional == null){
                 Utilidades.mostrarDialogoSimple("Error cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                                            
             }else{
-               int idTrabajoRecepcional=trabajoRecepcional.getIdTrabajoRecepcional();
-               if(usuarioAcademico!=null){
+               int idTrabajoRecepcional = trabajoRecepcional.getIdTrabajoRecepcional();
+               if(usuarioAcademico != null){
                     cargarActividadesDirector(idTrabajoRecepcional);
                }else{
                    cargarActividadesEstudiante(idTrabajoRecepcional);
                }
-               
             }
         }catch(NullPointerException e){
-                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                            
+            Utilidades.mostrarDialogoSimple("Error al cargar los datos", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);                            
         } 
     }
     
@@ -194,22 +189,19 @@ public class FXMLActividadesController implements Initializable {
         vBoxListaActividades.getChildren().clear();
     }
     
-    
-    
     private void cargarActividadesDirector(int idTrabajoRecepcional){
         trabajosRecepcionales.clear();
         cargarInformacionTrabajosRecepcionales();
         ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalAcademico(idTrabajoRecepcional);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    mostrarActividades(respuestaBD.getActividades());
+                mostrarActividades(respuestaBD.getActividades());
                 break;
         }
     }
@@ -218,42 +210,40 @@ public class FXMLActividadesController implements Initializable {
         trabajosRecepcionales.clear();
         cargarInformacionTrabajosRecepcionales();
         ActividadRespuesta respuestaBD = ActividadDAO.obtenerActividadesPorTrabajoRecepcionalEstudiante(idTrabajoRecepcional, usuarioEstudiante.getIdEstudiante());
-
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error Conexión", "No se pudo conectar con la base de datos. Inténtelo de nuevo o hágalo más tarde", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    mostrarActividades(respuestaBD.getActividades());
+                mostrarActividades(respuestaBD.getActividades());
                 break;
         }
     }
     
     private void mostrarActividades(ArrayList <Actividad> actividades){
-        if(usuarioAcademico!=null){
+        if(usuarioAcademico != null){
             if(usuarioAcademico.isEsDirector() || usuarioAcademico.isEsProfesor()){
+                for (int i=0; i<actividades.size(); i++){
+                    FXMLLoader accesoControlador = new FXMLLoader();
+                    accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLActividadElemento.fxml"));
+                    try{
+                        Pane pane = accesoControlador.load();
+                        FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
+                        elementoEnLista.inicializarActividadElementoAcademico(actividades.get(i), usuarioAcademico);
+                        vBoxListaActividades.getChildren().add(pane);
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }   
+                }
+            }
+        }else{
             for (int i=0; i<actividades.size(); i++){
                 FXMLLoader accesoControlador = new FXMLLoader();
                 accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLActividadElemento.fxml"));
                 try{
-                    Pane pane = accesoControlador.load();
-                    FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
-                    elementoEnLista.inicializarActividadElementoAcademico(actividades.get(i), usuarioAcademico);
-                    vBoxListaActividades.getChildren().add(pane);
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
-            }
-            }
-        }else{
-            for (int i=0; i<actividades.size(); i++){
-            FXMLLoader accesoControlador = new FXMLLoader();
-            accesoControlador.setLocation(JavaFXSSPGER.class.getResource("vistas/FXMLActividadElemento.fxml"));
-            try{
                     Pane pane = accesoControlador.load();
                     FXMLActividadElementoController elementoEnLista = accesoControlador.getController();
                     elementoEnLista.inicializarActividadElementoEstudiante(actividades.get(i), usuarioEstudiante);
@@ -276,20 +266,18 @@ public class FXMLActividadesController implements Initializable {
             escenarioBase.setScene(new Scene (vista));
             escenarioBase.setTitle("Creacion de Actividad");
             escenarioBase.show();
-        } catch (IOException ex) {
+        }catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
     @FXML
     private void clicRegresar(MouseEvent event) {
-        if(usuarioAcademico!=null){
+        if(usuarioAcademico != null){
             regresarMenuAcademico();
         }else{
             regresarMenuEstudiante();
         }        
     }
-
-    
     
 }

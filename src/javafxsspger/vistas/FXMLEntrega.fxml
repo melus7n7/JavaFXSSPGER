@@ -70,7 +70,7 @@
             <Font name="SansSerif Regular" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="bttCalificarEntrega" layoutX="549.0" layoutY="583.0" mnemonicParsing="false" onAction="#clicCalificarEntrega" prefHeight="34.0" prefWidth="161.0" style="-fx-background-color: black;" text="Calificar Entrega" textFill="WHITE">
+      <Button fx:id="bttCalificarEntrega" layoutX="893.0" layoutY="582.0" mnemonicParsing="false" onAction="#clicCalificarEntrega" prefHeight="34.0" prefWidth="161.0" style="-fx-background-color: black;" text="Calificar Entrega" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="15.0" />
          </font>
