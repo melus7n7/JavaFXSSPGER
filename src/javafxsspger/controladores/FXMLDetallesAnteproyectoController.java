@@ -198,13 +198,14 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
                 lblFechaEtiqueta.setText("Fecha creación:");
                 lblFecha.setText(Utilidades.darFormatofechas(anteproyectoRespuesta.getFechaCreacion()));
                 break;
-            default:
             case Constantes.ES_PUBLICADO:
                 if(usuarioAcademico.getIdCuerpoAcademico() == anteproyectoRespuesta.getIdCuerpoAcademico()){
                     bttEliminarPublicados.setVisible(true);
                 }
                 lblFecha.setText(Utilidades.darFormatofechas(anteproyectoRespuesta.getFechaAprobacion()));
                 break;
+            default:
+                lblFecha.setText(Utilidades.darFormatofechas(anteproyectoRespuesta.getFechaAprobacion()));
         }
         if(anteproyectoRespuesta.getIdEstado() == Constantes.APROBADO){
             bttModificar.setVisible(false);
