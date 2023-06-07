@@ -115,8 +115,6 @@ public class Usuario {
         return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
     }
     
-    
-    
 }
 
 

@@ -60,5 +60,4 @@ public class LGAC {
         return nombreLGAC;
     }
     
-    
 }

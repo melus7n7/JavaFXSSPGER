@@ -13,6 +13,11 @@ public class AcademicoRespuesta {
     private ArrayList<Academico> academicos;
     private int codigoRespuesta;
 
+    public AcademicoRespuesta(ArrayList<Academico> academicos, int codigoRespuesta) {
+        this.academicos = academicos;
+        this.codigoRespuesta = codigoRespuesta;
+    }
+
     public AcademicoRespuesta() {
     }
 
@@ -31,6 +36,5 @@ public class AcademicoRespuesta {
     public void setCodigoRespuesta(int codigoRespuesta) {
         this.codigoRespuesta = codigoRespuesta;
     }
-    
-    
+     
 }

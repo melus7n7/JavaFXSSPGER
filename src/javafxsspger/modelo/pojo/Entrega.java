@@ -20,9 +20,6 @@ public class Entrega {
     private String nombreEstudiante;
     private String apellidoPaternoEstudiante;
     private String apellidoMaternoEstudiante;
-    //private byte[] documento; //modificar
-    //private File archivoFoto;
-    //private ArrayList<File> Array;
 
     public Entrega() {
     }
@@ -65,9 +62,7 @@ public class Entrega {
     public void setApellidoMaternoEstudiante(String apellidoMaternoEstudiante) {
         this.apellidoMaternoEstudiante = apellidoMaternoEstudiante;
     }
-
     
-
     public String getTituloActividad() {
         return tituloActividad;
     }
@@ -75,9 +70,7 @@ public class Entrega {
     public void setTituloActividad(String tituloActividad) {
         this.tituloActividad = tituloActividad;
     }
-
     
-
     public int getIdEntrega() {
         return idEntrega;
     }
@@ -141,9 +134,5 @@ public class Entrega {
     public void setPuntajeSatisfaccion(int puntajeSatisfaccion) {
         this.puntajeSatisfaccion = puntajeSatisfaccion;
     }
-    
-    
-    
-    
     
 }

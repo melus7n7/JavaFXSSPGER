@@ -32,5 +32,4 @@ public class EstudianteRespuesta {
         this.codigoRespuesta = codigoRespuesta;
     }
     
-    
 }

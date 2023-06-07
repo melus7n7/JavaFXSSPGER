@@ -8,7 +8,6 @@ package javafxsspger.modelo.pojo;
 
 import java.sql.Date;
 
-
 public class Comentario {
     
     private int idComentario;
@@ -21,6 +20,15 @@ public class Comentario {
     private int idAnteproyecto;
 
     public Comentario() {
+    }
+
+    public Comentario(int idComentario, String texto, Date fechaCreacion, int idAcademico, String nombreAcademico, int idAnteproyecto) {
+        this.idComentario = idComentario;
+        this.texto = texto;
+        this.fechaCreacion = fechaCreacion;
+        this.idAcademico = idAcademico;
+        this.nombreAcademico = nombreAcademico;
+        this.idAnteproyecto = idAnteproyecto;
     }
 
     public int getIdComentario() {
@@ -70,6 +78,5 @@ public class Comentario {
     public void setIdAnteproyecto(int idAnteproyecto) {
         this.idAnteproyecto = idAnteproyecto;
     }
-    
-    
+      
 }

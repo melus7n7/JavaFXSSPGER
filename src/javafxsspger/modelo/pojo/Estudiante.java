@@ -47,5 +47,4 @@ public class Estudiante extends Usuario{
         this.idTrabajoRecepcional = idTrabajoRecepcional;
     }
     
-    
 }

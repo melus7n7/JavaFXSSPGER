@@ -6,12 +6,8 @@
 */
 package javafxsspger.modelo.pojo;
 
-/**
- *
- * @author monti
- */
+
 public class Actividad {
-    
     
     private int idActividad;
     private String titulo;
@@ -147,6 +143,5 @@ public class Actividad {
     public void setIdAvance(int idAvance) {
         this.idAvance = idAvance;
     }
-    
     
 }

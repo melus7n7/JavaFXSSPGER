@@ -36,9 +36,34 @@ public class Anteproyecto {
     private ArrayList<Academico> codirectores;
     private ArrayList<Estudiante> estudiantes;
 
+    public Anteproyecto(int idAnteproyecto, String titulo, String descripcion, String fechaCreacion, String fechaAprobacion, int noEstudiantesMaximo, int noEstudiantesAsignados, byte[] documento, String nombreDocumento, int idTrabajoRecepcional, int idCuerpoAcademico, String nombreCuerpoAcademico, int idTipoAnteproyecto, String tipoAnteproyecto, int idLGAC, String nombreLGAC, int idEstado, String nombreDirector, int idDirector, int codigoRespuesta, ArrayList<Academico> codirectores, ArrayList<Estudiante> estudiantes) {
+        this.idAnteproyecto = idAnteproyecto;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaAprobacion = fechaAprobacion;
+        this.noEstudiantesMaximo = noEstudiantesMaximo;
+        this.noEstudiantesAsignados = noEstudiantesAsignados;
+        this.documento = documento;
+        this.nombreDocumento = nombreDocumento;
+        this.idTrabajoRecepcional = idTrabajoRecepcional;
+        this.idCuerpoAcademico = idCuerpoAcademico;
+        this.nombreCuerpoAcademico = nombreCuerpoAcademico;
+        this.idTipoAnteproyecto = idTipoAnteproyecto;
+        this.tipoAnteproyecto = tipoAnteproyecto;
+        this.idLGAC = idLGAC;
+        this.nombreLGAC = nombreLGAC;
+        this.idEstado = idEstado;
+        this.nombreDirector = nombreDirector;
+        this.idDirector = idDirector;
+        this.codigoRespuesta = codigoRespuesta;
+        this.codirectores = codirectores;
+        this.estudiantes = estudiantes;
+    }
+    
     public Anteproyecto() {
     }
-    //Getters
+    
     public String getTitulo() {
         return titulo;
     }
@@ -217,7 +242,6 @@ public class Anteproyecto {
         this.idTrabajoRecepcional = idTrabajoRecepcional;
     }
 
-    
     public String getNombreCodirectores (){
         String nombres = "";
         for(int i = 0; i < codirectores.size(); i++){

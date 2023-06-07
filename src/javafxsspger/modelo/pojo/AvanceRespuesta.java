@@ -13,13 +13,18 @@ public class AvanceRespuesta {
     ArrayList<Avance> avances;
     int codigoRespuesta;
 
-    public ArrayList<Avance> getAvances() {
-        return avances;
-    }
-
     public AvanceRespuesta() {
     }
 
+    public AvanceRespuesta(ArrayList<Avance> avances, int codigoRespuesta) {
+        this.avances = avances;
+        this.codigoRespuesta = codigoRespuesta;
+    }
+
+    public ArrayList<Avance> getAvances() {
+        return avances;
+    }
+    
     public int getCodigoRespuesta() {
         return codigoRespuesta;
     }
@@ -31,6 +36,5 @@ public class AvanceRespuesta {
     public void setCodigoRespuesta(int codigoRespuesta) {
         this.codigoRespuesta = codigoRespuesta;
     }
-    
     
 }

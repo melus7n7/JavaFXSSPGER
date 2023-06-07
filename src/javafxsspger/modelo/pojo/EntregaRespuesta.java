@@ -38,7 +38,4 @@ public class EntregaRespuesta {
         this.codigoRespuesta = codigoRespuesta;
     }
     
-    
-    
-    
 }

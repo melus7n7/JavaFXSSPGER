@@ -8,10 +8,6 @@ package javafxsspger.modelo.pojo;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author monti
- */
 public class ConsolidacionRespuesta {
     
     private ArrayList <Consolidacion> consolidaciones;
@@ -41,6 +37,4 @@ public class ConsolidacionRespuesta {
         this.codigoRespuesta = codigoRespuesta;
     }
     
-    
-
 }

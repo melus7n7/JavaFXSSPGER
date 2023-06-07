@@ -32,5 +32,4 @@ public class CuerpoAcademicoRespuesta {
         this.codigoRespuesta = codigoRespuesta;
     }
     
-    
 }

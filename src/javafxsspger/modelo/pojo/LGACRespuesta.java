@@ -27,4 +27,5 @@ public class LGACRespuesta {
     public void setCodigoRespuesta(int codigoRespuesta) {
         this.codigoRespuesta = codigoRespuesta;
     }
+    
 }

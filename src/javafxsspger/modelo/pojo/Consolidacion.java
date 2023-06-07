@@ -43,6 +43,5 @@ public class Consolidacion {
     public String toString() {
         return  nivelConsolidacion;
     }
-    
-    
+      
 }

@@ -6,7 +6,6 @@
 */
 package javafxsspger.modelo.pojo;
 
-
 public class Calificacion {
     
     private int idRubricaCalificacion;
@@ -50,6 +49,5 @@ public class Calificacion {
     public String toString() {
         return nivelSatisfaccion;
     }
-    
-    
+     
 }

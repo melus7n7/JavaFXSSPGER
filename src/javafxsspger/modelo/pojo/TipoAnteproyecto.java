@@ -39,5 +39,4 @@ public class TipoAnteproyecto {
         return tipoAnteproyecto;
     }
     
-    
 }

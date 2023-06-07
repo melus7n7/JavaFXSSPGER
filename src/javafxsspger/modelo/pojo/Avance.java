@@ -25,6 +25,23 @@ public class Avance {
     private int idEstudiante;
     private ArrayList <Academico> directores;
 
+    public Avance(int idAvance, String titulo, String descripcion, String retroalimentacion, String fechaCreacion, String fechaInicio, String fechaFin, int idRubrica, String nivelSatisfaccion, int puntajeSatisfaccion, ArrayList<Actividad> actividades, int codigoRespuesta, int idEstudiante, ArrayList<Academico> directores) {
+        this.idAvance = idAvance;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.retroalimentacion = retroalimentacion;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.idRubrica = idRubrica;
+        this.nivelSatisfaccion = nivelSatisfaccion;
+        this.puntajeSatisfaccion = puntajeSatisfaccion;
+        this.actividades = actividades;
+        this.codigoRespuesta = codigoRespuesta;
+        this.idEstudiante = idEstudiante;
+        this.directores = directores;
+    }
+
     public Avance() {
     }
 
@@ -139,6 +156,5 @@ public class Avance {
     public void setDirectores(ArrayList<Academico> directores) {
         this.directores = directores;
     }
-    
     
 }

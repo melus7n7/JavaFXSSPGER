@@ -8,12 +8,7 @@ package javafxsspger.modelo.pojo;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author monti
- */
 public class ActividadRespuesta {
-    
     
     private ArrayList<Actividad> actividades;
     private int codigoRespuesta;

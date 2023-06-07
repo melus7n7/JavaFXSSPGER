@@ -19,8 +19,6 @@ public class Academico extends Usuario{
     private String nombreCompleto;
     private String puesto;
 
-    
-
     public Academico(int idAcademico, String noPersonal, int idCuerpoAcademico, int idAnteproyecto, boolean esDirector, boolean esProfesor, boolean esResponsableCA, boolean esCoordinador, String nombreCompleto, String puesto) {
         this.idAcademico = idAcademico;
         this.noPersonal = noPersonal;
@@ -129,7 +127,6 @@ public class Academico extends Usuario{
         this.contrasena = contrasena;
     }
 
-    
     public int getIdAcademico() {
         return idAcademico;
     }
@@ -162,7 +159,6 @@ public class Academico extends Usuario{
         return esCoordinador;
     }
     
-
     public void setIdAcademico(int idAcademico) {
         this.idAcademico = idAcademico;
     }
@@ -194,7 +190,5 @@ public class Academico extends Usuario{
     public void setEsCoordinador(boolean esCoordinador) {
         this.esCoordinador = esCoordinador;
     }
-
-    
 
 }
