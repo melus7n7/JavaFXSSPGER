@@ -2,7 +2,7 @@
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 14/05/2023
 *Fecha de modificación: 19/05/2023
-*Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los usuarios
+*Descripción: Clase encargada de la comunicación con la bd, especificamente para manipular la información de los usuarios
 */
 
 package javafxsspger.modelo.dao;
@@ -16,6 +16,8 @@ import javafxsspger.modelo.pojo.Usuario;
 import javafxsspger.utils.Constantes;
 
 public class UsuarioDAO {
+    
+    
     public static Usuario verificarSesion (String usuario, String contrasena){
         Usuario usuarioVerificado = new Usuario();
         Connection conexionBD = ConexionBD.abrirConexionBD();
@@ -53,4 +55,5 @@ public class UsuarioDAO {
         }
         return usuarioVerificado;
     }
+    
 }

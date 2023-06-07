@@ -2,7 +2,7 @@
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 06/06/2023
 *Fecha de modificación: 06/06/2023
-*Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de las Consolidaciones
+*Descripción: Clase encargada de la comunicación con la bd, especificamente para manipular la información de las consolidaciones
 */
 package javafxsspger.modelo.dao;
 

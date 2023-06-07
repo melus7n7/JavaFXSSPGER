@@ -1,7 +1,7 @@
 /*
-*Autor: Martínez Aguilar Sulem
+*Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 04/06/2023
+*Fecha de modificación: 05/06/2023
 *Descripción: Clase que contiene métodos simples y reutilizables
 */
 package javafxsspger.utils;
@@ -22,8 +22,8 @@ import javafxsspger.JavaFXSSPGER;
 import javafxsspger.modelo.pojo.Calificacion;
 import javafxsspger.modelo.pojo.TipoAnteproyecto;
 
-
 public class Utilidades {
+    
     
     public static void mostrarDialogoSimple (String titulo, String mensaje, Alert.AlertType tipo){
         Alert alertaSimple = new Alert (tipo);
@@ -54,14 +54,12 @@ public class Utilidades {
        TipoAnteproyecto tipo4 = new TipoAnteproyecto(4, "Reporte técnico");
        TipoAnteproyecto tipo5 = new TipoAnteproyecto(5, "Memoria");
        TipoAnteproyecto tipo6 = new TipoAnteproyecto(6, "Trabajos prácticos");
-       
        tiposAnteproyecto.add(tipo1);
        tiposAnteproyecto.add(tipo2);
        tiposAnteproyecto.add(tipo3);
        tiposAnteproyecto.add(tipo4);
        tiposAnteproyecto.add(tipo5);
        tiposAnteproyecto.add(tipo6);
-       
        return tiposAnteproyecto;
    }
    
@@ -73,14 +71,12 @@ public class Utilidades {
        Calificacion tipo4 = new Calificacion(4, "Muy satisfecho", 8);
        Calificacion tipo5 = new Calificacion(5, "Totalmente", 10);
        Calificacion tipo6 = new Calificacion(6, "Pendiente", 0);
-       
        calificaciones.add(tipo1);
        calificaciones.add(tipo2);
        calificaciones.add(tipo3);
        calificaciones.add(tipo4);
        calificaciones.add(tipo5);
        calificaciones.add(tipo6);
-       
        return calificaciones;
    }
    

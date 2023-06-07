@@ -2,7 +2,7 @@
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 03/06/2023
 *Fecha de modificación: 03/06/2023
-*Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los Avances
+*Descripción: Clase encargada de la comunicación con la bd, especificamente para manipular la información de los avances
 */
 package javafxsspger.modelo.dao;
 
@@ -20,10 +20,11 @@ import javafxsspger.utils.Constantes;
 
 public class AvanceDAO {
     
+    
     public static AvanceRespuesta obtenerAvances (int idEstudiante){
         AvanceRespuesta respuesta = new AvanceRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String consulta = "SELECT idAvance, titulo, fechaCreacion FROM sspger.avance where idEstudiante = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
@@ -53,7 +54,7 @@ public class AvanceDAO {
     public static Avance obtenerAvance (int idAvance){
         Avance respuesta = new Avance();
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String consulta = "SELECT avance.idAvance, avance.titulo, avance.descripcion, avance.fechaCreacion, avance.fechaInicio, " +
                     "avance.fechaFinal, avance.idRubricaCalificacion, rubricacalificacion.nivelSatisfaccion, avance.retroalimentacion, " +
@@ -74,7 +75,6 @@ public class AvanceDAO {
                     respuesta.setNivelSatisfaccion(resultado.getString("nivelSatisfaccion"));
                     respuesta.setPuntajeSatisfaccion(resultado.getInt("puntajeSatisfaccion"));
                     respuesta.setRetroalimentacion(resultado.getString("retroalimentacion"));
-                    
                     String consultaDirectores = "SELECT encargadostrabajorecepcional.idAcademico FROM avance " +
                         "INNER JOIN estudiante ON estudiante.idEstudiante = avance.idEstudiante " +
                         "INNER JOIN trabajorecepcional on trabajorecepcional.idTrabajoRecepcional = estudiante.idTrabajoRecepcional " +
@@ -90,7 +90,6 @@ public class AvanceDAO {
                         academicos.add(academico);
                     }
                     respuesta.setDirectores(academicos);
-                    
                     String consultaActividades = "SELECT actividad.idActividad, actividad.descripcion, actividad.titulo, actividad.fechaCreacion, actividad.idEstudiante, " +
                         "usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno, actividad.fechaCreacion, actividad.fechaFinal, " +
                         "actividad.fechaInicio FROM sspger.actividad " +
@@ -100,7 +99,6 @@ public class AvanceDAO {
                     PreparedStatement prepararSentenciaActividades = conexionBD.prepareStatement(consultaActividades);
                     prepararSentenciaActividades.setInt(1, idAvance);
                     ResultSet resultadoActividades = prepararSentenciaActividades.executeQuery();
-                    
                     ArrayList<Actividad> actividades = new ArrayList();
                     while(resultadoActividades.next()){
                         Actividad actividad = new Actividad();
@@ -114,7 +112,6 @@ public class AvanceDAO {
                         actividad.setFechaInicio(resultadoActividades.getString("fechaInicio"));
                         actividad.setFechaFinal(resultadoActividades.getString("fechaFinal"));
                         actividades.add(actividad);
-                        
                         String consultaEntrega = "SELECT idEntrega FROM sspger.entrega WHERE idActividad = ? AND fechaEntrega is not null";
                         PreparedStatement prepararSentenciaEntrega = conexionBD.prepareStatement(consultaEntrega);
                         prepararSentenciaEntrega.setInt(1, actividad.getIdActividad());
@@ -138,7 +135,7 @@ public class AvanceDAO {
     public static Avance guardarAvance(Avance avance){
         Avance respuesta = new Avance();
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String sentencia = "INSERT INTO Avance(titulo,descripcion,fechaCreacion, fechaInicio, fechaFinal, idEstudiante, idRubricaCalificacion) " +
                     "VALUES (?, ?, curdate(), ?, ?, ?, ?)";
@@ -150,8 +147,7 @@ public class AvanceDAO {
                 prepararSentencia.setInt(5, avance.getIdEstudiante());
                 prepararSentencia.setInt(6, Constantes.ID_CALIFICACION_PENDIENTE);
                 int filasAfectadas = prepararSentencia.executeUpdate();
-                respuesta.setCodigoRespuesta(((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA));
-                
+                respuesta.setCodigoRespuesta(((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA));                
                 if(respuesta.getCodigoRespuesta() == Constantes.OPERACION_EXITOSA){
                     String consulta = "SELECT MAX(idAvance) AS idAvance FROM avance";
                     PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
@@ -175,7 +171,7 @@ public class AvanceDAO {
     public static int guardarModificaciones(Avance avance){
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String sentencia = "UPDATE Avance SET titulo = ?, descripcion = ?, fechaInicio = ?, fechaFinal = ?, idEstudiante = ? WHERE idAvance = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
@@ -201,7 +197,7 @@ public class AvanceDAO {
     public static int borrarAsociacionPreviaActividades(Avance avance){
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String sentencia = "UPDATE actividad SET idAvance = null WHERE idAvance = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
@@ -222,14 +218,14 @@ public class AvanceDAO {
     public static int eliminarAvance(int idAvance){
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
-            String sentencia = "DELETE FROM avance WHERE idAvance =?";
-            PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-            prepararSentencia.setInt(1, idAvance);
-            int filasAfectadas = prepararSentencia.executeUpdate();
-            respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
-            conexionBD.close();
+               String sentencia = "DELETE FROM avance WHERE idAvance =?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAvance);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                conexionBD.close();
             }catch(SQLException e){
                 respuesta = Constantes.ERROR_CONSULTA;
             }
@@ -242,7 +238,7 @@ public class AvanceDAO {
     public static int guardarCalificacion(Avance avance){
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if(conexionBD!=null){
+        if(conexionBD != null){
             try{
                 String sentencia = "UPDATE Avance SET idRubricaCalificacion = ?, retroalimentacion = ? WHERE idAvance = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);

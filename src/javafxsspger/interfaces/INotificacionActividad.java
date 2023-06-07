@@ -10,6 +10,8 @@ import javafxsspger.modelo.pojo.Actividad;
 
 public interface INotificacionActividad {
     
+    
     public void notificarAñadirActividad(Actividad actividad);
     public void notificarEliminarActividad(Actividad actividad);
+    
 }

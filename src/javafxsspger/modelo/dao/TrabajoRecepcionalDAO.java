@@ -2,7 +2,7 @@
 *Autor: Montiel Salas Jesús Jacob
 *Fecha de creación: 21/05/2023
 *Fecha de modificación: 21/05/2023
-*Descripción: Clase encargada de la comunicación con la BD, especificamente para manipular la información de los Trabajos Recepcionales
+*Descripción: Clase encargada de la comunicación con la bd, especificamente para manipular la información de los Trabajos Recepcionales
 */
 package javafxsspger.modelo.dao;
 
@@ -18,10 +18,7 @@ import javafxsspger.modelo.pojo.TrabajoRecepcional;
 import javafxsspger.modelo.pojo.TrabajoRecepcionalRespuesta;
 import javafxsspger.utils.Constantes;
 
-/**
- *
- * @author monti
- */
+
 public class TrabajoRecepcionalDAO {
     
     
@@ -144,8 +141,7 @@ public class TrabajoRecepcionalDAO {
                 prepararSentencia.setInt (1, Constantes.EN_DESARROLLO);
                 prepararSentencia.setInt (2, idAnteproyecto);
                 int filasAfectadas = prepararSentencia.executeUpdate();
-                respuesta.setCodigoRespuesta((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);
-                
+                respuesta.setCodigoRespuesta((filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA);                
                 String consulta = "SELECT MAX(idTrabajoRecepcional) AS idTrabajoRecepcional FROM trabajoRecepcional;";
                 PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararConsulta.executeQuery();
@@ -214,19 +210,14 @@ public class TrabajoRecepcionalDAO {
                     respuesta.setNoEstudiantesMaximos(resultado.getInt("noEstudiantesMaximos"));
                     respuesta.setDocumento(resultado.getBytes("documento"));
                     respuesta.setNombreDocumento(resultado.getString("nombreDocumento"));
-                    
                     respuesta.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
                     respuesta.setIdTipoAnteproyecto(resultado.getInt("idTipoAnteproyecto"));
                     respuesta.setIdLGAC(resultado.getInt("idLGAC"));
-                    
                     String nombreCompleto = resultado.getString("nombreUsuario") + " " + resultado.getString("apellidoPaterno") + " " + resultado.getString("apellidoMaterno");
                     respuesta.setNombreDirector(nombreCompleto);
-                    
                     respuesta.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
                     respuesta.setIdEstado(resultado.getInt("idEstado"));
-                    
                 }
-                
                 ArrayList <Academico> codirectores = new ArrayList();
                 String consultaCodirectores = "SELECT academico.idAcademico, usuario.nombreUsuario, usuario.apellidoPaterno, usuario.apellidoMaterno " +
                     "FROM sspger.academico " +
@@ -248,7 +239,6 @@ public class TrabajoRecepcionalDAO {
                     codirectores.add(codirector);
                 }
                 respuesta.setCodirectores(codirectores);
-                
                 String consultaDirector = "SELECT idAcademico FROM sspger.encargadostrabajorecepcional " +
                     "WHERE esDirector = 1 and idTrabajoRecepcional = ?";
                 PreparedStatement prepararSentenciaDirector = conexionBD.prepareStatement(consultaDirector);
@@ -257,7 +247,6 @@ public class TrabajoRecepcionalDAO {
                 if(resultadoDirector.next()){
                     respuesta.setIdAcademico(resultadoDirector.getInt("idAcademico"));
                 }
-                
                 respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 conexionBD.close();
             }catch(SQLException ex){
@@ -269,4 +258,5 @@ public class TrabajoRecepcionalDAO {
         }
         return respuesta;
     }
+    
 }
