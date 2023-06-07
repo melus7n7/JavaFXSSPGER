@@ -25,10 +25,8 @@ public class FXMLComentarioElementoController implements Initializable {
     @FXML
     private TextArea txtAreaComentario;
 
-    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
+    public void initialize(URL url, ResourceBundle rb) { 
     }
 
     public void setComentario(Comentario comentario){

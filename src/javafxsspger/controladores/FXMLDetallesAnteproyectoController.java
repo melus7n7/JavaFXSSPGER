@@ -38,13 +38,10 @@ import javafxsspger.utils.Utilidades;
 public class FXMLDetallesAnteproyectoController implements Initializable {
     
     private int idAnteproyectoDetalle;
-    //private int idAcademico;
     private Academico usuarioAcademico;
     private Anteproyecto anteproyectoDetalle;
     private int numeroPantalla;
     private INotificacionAnteproyectos interfazNotificacion;
-    private boolean esInvitado;
-    private Estudiante estudiante;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -141,24 +138,13 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
     
     public void inicializarInformacion (int idAnteproyectoDetalles, int numeroPantalla, INotificacionAnteproyectos interfazNotificacion, Academico academico){
         this.usuarioAcademico = academico;
-        this.esInvitado = false;
         this.interfazNotificacion = interfazNotificacion;
         this.idAnteproyectoDetalle = idAnteproyectoDetalles;
         this.numeroPantalla = numeroPantalla;
-        switch(this.numeroPantalla){
-            case Constantes.ES_POR_CORREGIR:
-                bttIniciarProcesoValidacion.setVisible(true);
-                break;
-            case Constantes.ES_PROPIO:
-                bttModificar.setVisible(true);
-                break;
-        }
         cargarElemento();
     }
     
-    public void inicializarInformacionInvitado(int idAnteproyectoDetalle, Estudiante estudiante){
-        this.estudiante = estudiante;
-        this.esInvitado = true;
+    public void inicializarInformacionInvitado(int idAnteproyectoDetalle){
         this.idAnteproyectoDetalle = idAnteproyectoDetalle;
         cargarElemento();
     }
@@ -167,16 +153,13 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         Anteproyecto respuestaBD = AnteproyectoDAO.obtenerAnteproyecto(idAnteproyectoDetalle);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                 Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    mostrarDetalles(respuestaBD);
+                mostrarDetalles(respuestaBD);
                 break;
         }
     }
@@ -194,7 +177,14 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         lblNombreDocumento.setText(anteproyectoRespuesta.getNombreDocumento());
         switch(this.numeroPantalla){
             case Constantes.ES_POR_CORREGIR:
+                bttIniciarProcesoValidacion.setVisible(true);
+                lblFechaEtiqueta.setText("Fecha creación:");
+                lblFecha.setText(Utilidades.darFormatofechas(anteproyectoRespuesta.getFechaCreacion()));
+                break;
             case Constantes.ES_PROPIO:
+                if(anteproyectoRespuesta.getIdEstado() != Constantes.APROBADO){
+                    bttModificar.setVisible(true);
+                }
                 lblFechaEtiqueta.setText("Fecha creación:");
                 lblFecha.setText(Utilidades.darFormatofechas(anteproyectoRespuesta.getFechaCreacion()));
                 break;
@@ -204,15 +194,11 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
                 }
                 lblFecha.setText(Utilidades.darFormatofechas(anteproyectoRespuesta.getFechaAprobacion()));
                 break;
+            /*Caso del estudiante e invitado*/
             default:
+                bttIniciarProcesoValidacion.setVisible(false);
+                bttModificar.setVisible(false);
                 lblFecha.setText(Utilidades.darFormatofechas(anteproyectoRespuesta.getFechaAprobacion()));
-        }
-        if(anteproyectoRespuesta.getIdEstado() == Constantes.APROBADO){
-            bttModificar.setVisible(false);
-        }
-        if(esInvitado){
-            bttIniciarProcesoValidacion.setVisible(false);
-            bttModificar.setVisible(false);
         }
     }
 
@@ -220,18 +206,13 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         int respuesta = AnteproyectoDAO.eliminarAnteproyectoDePublicados(anteproyectoDetalle.getIdAnteproyecto());
         switch(respuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                        "Hubo un error al eliminar el anteproyecto de la lista de publicados por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Hubo un error al eliminar el anteproyecto de la lista de publicados por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Anteproyecto eliminado de la lista", 
-                        "Se eliminó el anteproyecto de la lista de publicados", 
-                        Alert.AlertType.INFORMATION);
+                Utilidades.mostrarDialogoSimple("Anteproyecto eliminado de la lista", "Se eliminó el anteproyecto de la lista de publicados", Alert.AlertType.INFORMATION);
                 interfazNotificacion.notificarCargarAnteproyectos();
                 cerrarVentana();
                 break;
@@ -242,4 +223,5 @@ public class FXMLDetallesAnteproyectoController implements Initializable {
         Stage escenarioBase = (Stage) lblNombreAnteproyecto.getScene().getWindow();
         escenarioBase.close();
     }
+    
 }

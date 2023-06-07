@@ -61,7 +61,6 @@ public class FXMLAvancesController implements Initializable, INotificacionAvance
     @FXML
     private ScrollPane scrPaneContenedorAvances;
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         desdeCreacion = false;
@@ -93,8 +92,7 @@ public class FXMLAvancesController implements Initializable, INotificacionAvance
             recuperarAvances(estudiante);
         }else{
             if(!desdeCreacion){
-                Utilidades.mostrarDialogoSimple("Estudiante no seleccionado", 
-                    "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Estudiante no seleccionado", "No se ha seleccionado ninguna opción de la lista, seleccione uno para continuar", Alert.AlertType.WARNING);
             }
         }
     }
@@ -202,12 +200,10 @@ public class FXMLAvancesController implements Initializable, INotificacionAvance
         }
         switch(respuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 estudiantes.addAll(respuesta.getEstudiantes());
@@ -220,12 +216,10 @@ public class FXMLAvancesController implements Initializable, INotificacionAvance
         AvanceRespuesta avancesBD = AvanceDAO.obtenerAvances(estudiante.getIdEstudiante());
         switch(avancesBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 cargarAvances(avancesBD.getAvances());

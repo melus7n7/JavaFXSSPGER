@@ -156,7 +156,18 @@ public class EstudianteDAO {
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, estudiante.getIdEstudiante());
                 int filasAfectadas = prepararSentencia.executeUpdate();
-                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
+                
+                String sentenciaAvances = "DELETE FROM avance WHERE idEstudiante = ?";
+                PreparedStatement prepararSentenciaAvances = conexionBD.prepareStatement(sentenciaAvances);
+                prepararSentenciaAvances.setInt (1, estudiante.getIdEstudiante());
+                int filasAfectadasAvances = prepararSentenciaAvances.executeUpdate();
+                
+                String sentenciaActividad = "DELETE FROM actividad WHERE idEstudiante = ?";
+                PreparedStatement prepararSentenciaActividades = conexionBD.prepareStatement(sentenciaActividad);
+                prepararSentenciaActividades.setInt (1, estudiante.getIdEstudiante());
+                int filasAfectadasActividades = prepararSentenciaActividades.executeUpdate();
+                
+                respuesta = (filasAfectadas == 1 && filasAfectadasAvances >= 0 && filasAfectadasActividades >=0) ? Constantes.OPERACION_EXITOSA : Constantes.ERROR_CONSULTA;
                 conexionBD.close();
             }catch (SQLException e){
                 respuesta = Constantes.ERROR_CONSULTA;

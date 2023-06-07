@@ -39,7 +39,6 @@ public class FXMLAvanceElementoController implements Initializable {
     @FXML
     private Label lblFechaCreacion;
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    

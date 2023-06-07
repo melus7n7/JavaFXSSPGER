@@ -77,26 +77,21 @@ public class FXMLInicioSesionController implements Initializable {
         Usuario usuarioRespuesta = UsuarioDAO.verificarSesion(usuario, contrasena);
         switch (usuarioRespuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexión", 
-                        "Por el momento no hay conexión, por favor inténtelo más tarde", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Por el momento no hay conexión, por favor inténtelo más tarde", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                        "Por el momento no se puede procesar la solicitud de verificación", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error en la solicitud", "Por el momento no se puede procesar la solicitud de verificación", Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 if(usuarioRespuesta.getIdUsuario() > 0){
-                    Utilidades.mostrarDialogoSimple("Usuario verificado",
-                            "Bienvenido(a) " +usuarioRespuesta.getNombre()+" al sistema ...", Alert.AlertType.INFORMATION);
+                    Utilidades.mostrarDialogoSimple("Usuario verificado", "Bienvenido(a) " +usuarioRespuesta.getNombre()+" al sistema ...", Alert.AlertType.INFORMATION);
                     irPantalla(usuarioRespuesta);
                 }else{
-                    Utilidades.mostrarDialogoSimple("Credenciales incorrectas",
-                            "El usuario y/o constraseña no son correctos, por favor verifica la información", Alert.AlertType.WARNING);
+                    Utilidades.mostrarDialogoSimple("Credenciales incorrectas", "El usuario y/o constraseña no son correctos, por favor verifica la información", Alert.AlertType.WARNING);
                 }
                 break;
             default:
-                Utilidades.mostrarDialogoSimple("Error",
-                            "El sistema no está disponible por el momento", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error", "El sistema no está disponible por el momento", Alert.AlertType.ERROR);
                 
         }
         
@@ -104,17 +99,17 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void irPantalla (Usuario usuarioLogin){
         switch (usuarioLogin.getIdTipoUsuario()){
-                case Constantes.ACADEMICO:
-                    irPantallaAcademico(usuarioLogin);
-                    break;
-                case Constantes.ESTUDIANTE:
-                    irPantallaEstudiante(usuarioLogin);
-                    break;
-                case Constantes.ADMINISTRADOR:
-                    irPantallaAdministrador(usuarioLogin);
-                    break;
-                default:
-                    System.out.print ("ERROR");
+            case Constantes.ACADEMICO:
+                irPantallaAcademico(usuarioLogin);
+                break;
+            case Constantes.ESTUDIANTE:
+                irPantallaEstudiante(usuarioLogin);
+                break;
+            case Constantes.ADMINISTRADOR:
+                irPantallaAdministrador(usuarioLogin);
+                break;
+            default:
+                System.out.print ("ERROR");
         }
     }
     
@@ -165,6 +160,5 @@ public class FXMLInicioSesionController implements Initializable {
             ex.printStackTrace();
         }
     }
-
-    
+  
 }

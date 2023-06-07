@@ -78,7 +78,6 @@ public class FXMLDetalleAvanceController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }
 
     @FXML
@@ -147,12 +146,10 @@ public class FXMLDetalleAvanceController implements Initializable {
         Avance respuesta = AvanceDAO.obtenerAvance(idAvance);
         switch(respuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 this.avanceDetalle = respuesta;
@@ -229,16 +226,13 @@ public class FXMLDetalleAvanceController implements Initializable {
         int respuesta = AvanceDAO.eliminarAvance(avanceDetalle.getIdAvance());
         switch(respuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Avance Eliminado", 
-                            "Se ha eliminado el avance del sistema", Alert.AlertType.INFORMATION);
+                Utilidades.mostrarDialogoSimple("Avance Eliminado", "Se ha eliminado el avance del sistema", Alert.AlertType.INFORMATION);
                 notificacion.notificarCargarAvances();
                 break;
         }
@@ -248,4 +242,5 @@ public class FXMLDetalleAvanceController implements Initializable {
         Stage escenarioBase = (Stage) lblCalificacion.getScene().getWindow();
         escenarioBase.close();
     }
+    
 }

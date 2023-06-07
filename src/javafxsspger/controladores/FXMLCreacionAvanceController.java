@@ -61,7 +61,6 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
     @FXML
     private ScrollPane scrPaneContenedorActividades;
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -116,16 +115,13 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
         ActividadRespuesta respuesta = ActividadDAO.obtenerActividadesPosiblesYDelAvance(avanceEdicion);
         switch(respuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cargarActividadesEdicion(respuesta.getActividades());
+                cargarActividadesEdicion(respuesta.getActividades());
                 break;
         }
     }
@@ -156,16 +152,13 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
         ActividadRespuesta respuesta = ActividadDAO.obtenerActividades(usuarioEstudiante.getIdEstudiante());
         switch(respuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cargarActividades(respuesta.getActividades());
+                cargarActividades(respuesta.getActividades());
                 break;
         }
     }
@@ -230,15 +223,13 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
         Avance avanceGuardado = AvanceDAO.guardarAvance(avanceValidado);
         switch(avanceGuardado.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de registro del avance", 
-                            "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+               Utilidades.mostrarDialogoSimple("Error de registro del avance", "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    registrarActividades(avanceGuardado);
+                registrarActividades(avanceGuardado);
                 break;
         }
     }
@@ -253,23 +244,19 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
         }
         switch(respuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de registro de actividades", 
-                            "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de registro de actividades", "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    if(!esEdicion){
-                        Utilidades.mostrarDialogoSimple("Avance Creado", 
-                            "Se creó correctamente el avance", Alert.AlertType.INFORMATION);
-                    }else{
-                        Utilidades.mostrarDialogoSimple("Avance Modificado", 
-                            "Se ha modificado correctamente el avance", Alert.AlertType.INFORMATION);
-                    }
-                    notificacion.notificarCargarAvances();
-                    cerrarVentana();
+                if(!esEdicion){
+                    Utilidades.mostrarDialogoSimple("Avance Creado", "Se creó correctamente el avance", Alert.AlertType.INFORMATION);
+                }else{
+                    Utilidades.mostrarDialogoSimple("Avance Modificado", "Se ha modificado correctamente el avance", Alert.AlertType.INFORMATION);
+                }
+                notificacion.notificarCargarAvances();
+                cerrarVentana();
                 break;
         }
         
@@ -279,15 +266,13 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
         int respuesta = AvanceDAO.guardarModificaciones(avanceValidado);
         switch(respuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de modificación de cambios", 
-                            "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de modificación de cambios", "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    borrarActividades();
+                borrarActividades();
                 break;
         } 
     }
@@ -297,12 +282,10 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
             int respuesta = AvanceDAO.borrarAsociacionPreviaActividades(avanceEdicion);
             switch(respuesta){
                 case Constantes.ERROR_CONEXION:
-                        Utilidades.mostrarDialogoSimple("Error de conexión", 
-                                "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                    Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                     break;
                 case Constantes.ERROR_CONSULTA:
-                        Utilidades.mostrarDialogoSimple("Error de registro borrar actividades", 
-                                "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                    Utilidades.mostrarDialogoSimple("Error de registro borrar actividades", "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                     break;
                 case Constantes.OPERACION_EXITOSA:
                     break;
@@ -358,4 +341,5 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
         }
         return false;
     }
+    
 }

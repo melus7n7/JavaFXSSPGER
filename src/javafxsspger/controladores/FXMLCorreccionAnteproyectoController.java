@@ -99,7 +99,6 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
     @FXML
     private ScrollPane scrPaneContenedorComentarios;
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         codirectoresAnteproyecto = new ArrayList();
@@ -133,7 +132,6 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
             bttAdjuntarDocumento.setText("Adjuntar Documento");
         }
     }
-
 
     @FXML
     private void clicRegresar(MouseEvent event) {
@@ -213,17 +211,14 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         CuerpoAcademicoRespuesta respuestaBD = CuerpoAcademicoDAO.recuperarCuerposAcademicos();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cuerposAcademicos.addAll(respuestaBD.getCuerposAcademicos());
-                    cmbBoxCuerpoAcademico.setItems(cuerposAcademicos);
+                cuerposAcademicos.addAll(respuestaBD.getCuerposAcademicos());
+                cmbBoxCuerpoAcademico.setItems(cuerposAcademicos);
                 break;
         }
     }
@@ -232,16 +227,13 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         ComentarioRespuesta respuestaBD = ComentarioDAO.recuperarComentarios(anteproyectoModificacion.getIdAnteproyecto());
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cargarComentarios(respuestaBD.getComentarios());
+                cargarComentarios(respuestaBD.getComentarios());
                 break;
         }
     }
@@ -278,12 +270,10 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         LGACRespuesta lgacRespuesta = LGACDAO.recuperarLGAC(idCuerpoAcademico);
         switch(lgacRespuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 lgacs.addAll(lgacRespuesta.getLGACs());
@@ -298,16 +288,13 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesCodirectores(academicoModificacion);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cargarDirectores(respuestaBD.getAcademicos());
+                cargarDirectores(respuestaBD.getAcademicos());
                 break;
         }
     }
@@ -340,7 +327,6 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
                 return true;
             }
         }
-        
         return false;
     }
     
@@ -391,7 +377,7 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         int posicionTipoAnteproyecto = cmbBoxTipoAnteproyecto.getSelectionModel().getSelectedIndex();
         int posicionCuerpoAcademico = cmbBoxCuerpoAcademico.getSelectionModel().getSelectedIndex();
         
-        //Proceso de validación
+        /*Proceso de validación*/
         if(titulo.isEmpty() || titulo.length()>300){
             txtAreaNombreAnteproyecto.setStyle(estiloError);
             camposValidos = false;
@@ -531,7 +517,7 @@ public class FXMLCorreccionAnteproyectoController implements Initializable, INot
         TipoAnteproyecto tipoAnteproyecto = cmbBoxTipoAnteproyecto.getSelectionModel().getSelectedItem();
         CuerpoAcademico cuerpoAcademico = cmbBoxCuerpoAcademico.getSelectionModel().getSelectedItem();
         
-        //Proceso de validación
+        /*Proceso de validación*/
         if(titulo.length()>300){
             txtAreaNombreAnteproyecto.setStyle(estiloError);
             camposValidos = false;

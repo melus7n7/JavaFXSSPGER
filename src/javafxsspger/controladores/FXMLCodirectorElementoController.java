@@ -30,7 +30,6 @@ public class FXMLCodirectorElementoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
     
     public void setElementos (Academico academico, INotificacionCodirector interfazNotificacion, boolean estaSeleccionado){
@@ -47,7 +46,6 @@ public class FXMLCodirectorElementoController implements Initializable {
         }else{
             interfazNotificacion.notificarEliminarCodirector(academicoElemento);
         }
-        
     }
     
 }

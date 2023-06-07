@@ -73,7 +73,6 @@ public class FXMLCalificacionAvanceController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }    
     
     @FXML
@@ -182,8 +181,7 @@ public class FXMLCalificacionAvanceController implements Initializable {
             
             guardarCalificacion(avanceValidado);
         }else{
-            Utilidades.mostrarDialogoSimple("Retroalimentación no especificada", 
-                "El avance no ha sido retroalimentado. Debe retroalimentarlo para continuar", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Retroalimentación no especificada", "El avance no ha sido retroalimentado. Debe retroalimentarlo para continuar", Alert.AlertType.ERROR);
         }
         
     }
@@ -192,16 +190,13 @@ public class FXMLCalificacionAvanceController implements Initializable {
         int respuesta = AvanceDAO.guardarCalificacion(avanceValidado);
         switch(respuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Avance Calificado", 
-                            "Se ha calificado el avance exitosamente", Alert.AlertType.INFORMATION);
+                Utilidades.mostrarDialogoSimple("Avance Calificado", "Se ha calificado el avance exitosamente", Alert.AlertType.INFORMATION);
                 Stage escenarioBase = (Stage) lblCalificacion.getScene().getWindow();
                 escenarioBase.close();
                 break;

@@ -40,7 +40,6 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     private INotificacionAnteproyectos interfazNotificacion;
     private Anteproyecto anteproyectoElemento;
     private int tipoUsuario;
-    private Estudiante usuarioEstudiante;
     
     @FXML
     private Label lblNombreAnteproyecto;
@@ -58,12 +57,10 @@ public class FXMLAnteproyectoElementoController implements Initializable {
     private Button bttAsignar;
     @FXML
     private Label lblEtiquetaNombre;
-    @FXML
     private Button bttMostrarTrabajo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
     
     @FXML
@@ -77,10 +74,9 @@ public class FXMLAnteproyectoElementoController implements Initializable {
                     detallesAnteproyecto.inicializarInformacion(idAnteproyecto, numeroPantalla, interfazNotificacion, usuarioAcademico);
                     break;
                 case Constantes.INVITADO:
-                    detallesAnteproyecto.inicializarInformacionInvitado(idAnteproyecto, usuarioEstudiante);
-                    break;
                 case Constantes.ESTUDIANTE:
-                    
+                    detallesAnteproyecto.inicializarInformacionInvitado(idAnteproyecto);
+                    break;
             }
             Stage escenarioFormulario = new Stage();
             escenarioFormulario.setScene(new Scene (vista));
@@ -90,7 +86,6 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
     }
 
     @FXML
@@ -100,26 +95,6 @@ public class FXMLAnteproyectoElementoController implements Initializable {
             Parent vista = accesoControlador.load();
             FXMLAsignacionEstudiantesController anteproyectos = accesoControlador.getController();
             anteproyectos.inicializarDetalles(anteproyectoElemento);
-            
-            Stage escenarioBase = new Stage();
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Asignación Anteproyectos");
-            escenarioBase.initModality(Modality.APPLICATION_MODAL);
-            escenarioBase.showAndWait();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    @FXML
-    private void clicVerMasTrabajoRecepcional(ActionEvent event) {
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetalleTrabajoRecepcional.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLDetalleTrabajoRecepcionalController trabajo = accesoControlador.getController();
-            Academico academico = new Academico();
-            academico.setIdAcademico(usuarioAcademico.getIdAcademico());
-            trabajo.inicializarPantallaAcademico(idAnteproyecto, academico);
             
             Stage escenarioBase = new Stage();
             escenarioBase.setScene(new Scene (vista));
@@ -167,8 +142,7 @@ public class FXMLAnteproyectoElementoController implements Initializable {
         }
     }
     
-    public void setElementoAnteproyectoPublicados(Anteproyecto anteproyectoElemento, int tipoUsuario, Estudiante estudiante){
-        this.usuarioEstudiante = estudiante;
+    public void setElementoAnteproyectoPublicados(Anteproyecto anteproyectoElemento, int tipoUsuario){
         this.tipoUsuario = tipoUsuario;
         this.anteproyectoElemento = anteproyectoElemento;
         this.idAnteproyecto = anteproyectoElemento.getIdAnteproyecto();

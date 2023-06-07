@@ -56,7 +56,6 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
     
     @FXML
@@ -189,8 +188,8 @@ public class FXMLMenuPrincipalEstudianteController implements Initializable {
             bttAvances.setDisable(false);
             imgViewAvances.setDisable(false);
             bttCronogramaActividades.setDisable(false);
-            bttTrabajoRecepcional.setDisable(false);
             imgViewTrabajoRecepcional.setDisable(false);
         }
     }
+    
 }

@@ -93,7 +93,6 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
     @FXML
     private Button bttAdjuntarDocumento;
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         codirectoresAnteproyecto = new ArrayList();
@@ -159,17 +158,14 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         CuerpoAcademicoRespuesta respuestaBD = CuerpoAcademicoDAO.recuperarCuerposAcademicos();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cuerposAcademicos.addAll(respuestaBD.getCuerposAcademicos());
-                    cmbBoxCuerpoAcademico.setItems(cuerposAcademicos);
+                cuerposAcademicos.addAll(respuestaBD.getCuerposAcademicos());
+                cmbBoxCuerpoAcademico.setItems(cuerposAcademicos);
                 break;
         }
     }
@@ -178,16 +174,13 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         AcademicoRespuesta respuestaBD = AcademicoDAO.obtenerPosiblesCodirectores(academicoCreacion);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    cargarDirectores(respuestaBD.getAcademicos());
+                cargarDirectores(respuestaBD.getAcademicos());
                 break;
         }
     }
@@ -224,12 +217,10 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         LGACRespuesta lgacRespuesta = LGACDAO.recuperarLGAC(idCuerpoAcademico);
         switch(lgacRespuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede obtener información de la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 lgacs.addAll(lgacRespuesta.getLGACs());
@@ -249,7 +240,7 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         int posicionTipoAnteproyecto = cmbBoxTipoAnteproyecto.getSelectionModel().getSelectedIndex();
         int posicionCuerpoAcademico = cmbBoxCuerpoAcademico.getSelectionModel().getSelectedIndex();
         
-        //Proceso de validación
+        /*Proceso de validación*/
         if(titulo.isEmpty() || titulo.length()>300){
             txtAreaNombreAnteproyecto.setStyle(estiloError);
             camposValidos = false;
@@ -312,15 +303,13 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         Anteproyecto anteproyectoRespuesta = AnteproyectoDAO.guardarAnteproyecto(anteproyectoNuevo);
         switch(anteproyectoRespuesta.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    registrarDirectores(anteproyectoRespuesta);
+                registrarDirectores(anteproyectoRespuesta);
                 break;
         }
     }
@@ -330,18 +319,15 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         int codigoRespuesta = EncargadosAnteproyectoDAO.guardarEncargados(academicoCreacion, codirectoresAnteproyecto);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede guardar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    Utilidades.mostrarDialogoSimple("Anteproyecto Registrado", 
-                            "Se envió correctamente el anteproyecto", Alert.AlertType.INFORMATION);
-                    notificacion.notificarCargarAnteproyectos();
-                    cerrarVentana();
+                Utilidades.mostrarDialogoSimple("Anteproyecto Registrado", "Se envió correctamente el anteproyecto", Alert.AlertType.INFORMATION);
+                notificacion.notificarCargarAnteproyectos();
+                cerrarVentana();
                 break;
         }
     }

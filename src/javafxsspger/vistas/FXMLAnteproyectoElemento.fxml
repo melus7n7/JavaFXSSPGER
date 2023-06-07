@@ -49,10 +49,5 @@
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="bttMostrarTrabajo" alignment="CENTER" contentDisplay="CENTER" layoutX="862.0" layoutY="28.0" mnemonicParsing="false" onAction="#clicVerMasTrabajoRecepcional" prefHeight="33.0" prefWidth="131.0" style="-fx-background-color: black;" text="Mostrar" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
-         <font>
-            <Font name="SansSerif Regular" size="18.0" />
-         </font>
-      </Button>
    </children>
 </Pane>

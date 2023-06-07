@@ -169,16 +169,13 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
         AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPublicados();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    mostrarElementos(respuestaBD.getAnteproyectos());
+                mostrarElementos(respuestaBD.getAnteproyectos());
                 break;
         }
     }
@@ -188,16 +185,13 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
         AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPorCorregir(usuarioAcademico);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    mostrarElementos(respuestaBD.getAnteproyectos());
+                mostrarElementos(respuestaBD.getAnteproyectos());
                 break;
         }
     }
@@ -207,16 +201,13 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
         AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerAnteproyectosPropios(usuarioAcademico.getIdAcademico());
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    mostrarElementos(respuestaBD.getAnteproyectos());
+                mostrarElementos(respuestaBD.getAnteproyectos());
                 break;
         }
     }
@@ -234,10 +225,8 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
                         elementoEnLista.setElementoAnteproyecto(anteproyectos.get(i), numeroPantalla, this, usuarioAcademico);
                         break;
                     case Constantes.INVITADO:
-                        elementoEnLista.setElementoAnteproyectoPublicados(anteproyectos.get(i), tipoUsuario, null);
-                        break;
                     case Constantes.ESTUDIANTE:
-                        elementoEnLista.setElementoAnteproyectoPublicados(anteproyectos.get(i), tipoUsuario, usuarioEstudiante);
+                        elementoEnLista.setElementoAnteproyectoPublicados(anteproyectos.get(i), tipoUsuario);
                         break;
                 }
                 altoVBox += pane.getPrefHeight();
@@ -269,15 +258,15 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
     
     private void regresarInicioSesion(){
         Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
-            try {
-                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
-                Parent vista = accesoControlador.load();
-                escenarioBase.setScene(new Scene (vista));
-                escenarioBase.setTitle("Inicio Sesión");
-                escenarioBase.show();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
+            Parent vista = accesoControlador.load();
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Inicio Sesión");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     private void regresarMenuPrincipalEstudiante(){
@@ -294,4 +283,5 @@ public class FXMLAnteproyectosController implements Initializable, INotificacion
             ex.printStackTrace();
         }
     }
+    
 }

@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem
 *Fecha de creación: 31/05/2023
-*Fecha de modificación: 31/05/2023
+*Fecha de modificación: 05/05/2023
 *Descripción: Controlador de la vista de la lista de los anteproyectos que se le pueden asignar estudiantes
 */
 package javafxsspger.controladores;
@@ -42,10 +42,8 @@ public class FXMLAnteproyectosParaAsignarController implements Initializable {
     @FXML
     private ScrollPane scrPaneContenedorAnteproyectos;
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }    
 
     @FXML
@@ -74,16 +72,13 @@ public class FXMLAnteproyectosParaAsignarController implements Initializable {
         AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.recuperarAnteproyectosEnDesarrolloPublicados(usuarioAcademico.getIdAcademico());
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin Conexion", 
-                        "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin Conexion", "Lo sentimos por el momento no tiene conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información por favor inténtelo más tarde", 
-                        Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", "Hubo un error al cargar la información por favor inténtelo más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    mostrarElementos(respuestaBD.getAnteproyectos());
+                mostrarElementos(respuestaBD.getAnteproyectos());
                 break;
         }
     }

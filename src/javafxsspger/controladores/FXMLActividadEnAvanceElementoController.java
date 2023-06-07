@@ -50,27 +50,26 @@ public class FXMLActividadEnAvanceElementoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
 
     @FXML
     private void clicVerMasActividad(ActionEvent event) {
-            try {
-                FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
-                Parent vista = accesoControlador.load();
-                FXMLDetallesActividadController actividad = accesoControlador.getController();
-                if(esAcademico){
-                    actividad.inicializarInformacionAcademico(usuarioAcademico, actividadActual);
-                }else{
-                    actividad.inicializarInformacionEstudiante(usuarioEstudiante, actividadActual);
-                }
-                Stage escenarioBase = (Stage)lblFechaCreacion.getScene().getWindow();
-                escenarioBase.setScene(new Scene (vista));
-                escenarioBase.setTitle("Actividades");
-                escenarioBase.show();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLDetallesActividad.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLDetallesActividadController actividad = accesoControlador.getController();
+            if(esAcademico){
+                actividad.inicializarInformacionAcademico(usuarioAcademico, actividadActual);
+            }else{
+                actividad.inicializarInformacionEstudiante(usuarioEstudiante, actividadActual);
             }
+            Stage escenarioBase = (Stage)lblFechaCreacion.getScene().getWindow();
+            escenarioBase.setScene(new Scene (vista));
+            escenarioBase.setTitle("Actividades");
+            escenarioBase.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         notificacionAvances.cerrarPantalla();
     }
     

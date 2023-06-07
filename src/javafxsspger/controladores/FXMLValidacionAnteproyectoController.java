@@ -69,7 +69,6 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
 
         @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
 
     @FXML
@@ -145,18 +144,15 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
         int codigoRespuesta = AnteproyectoDAO.publicarAnteproyecto(anteproyectoValidacion.getIdAnteproyecto());
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+               Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    Utilidades.mostrarDialogoSimple("Anteproyecto Validado", 
-                            "Se publicó el anteproyecto correctamente", Alert.AlertType.INFORMATION);
-                    interfazNotificacion.notificarCargarAnteproyectos();
-                    cerrarVentana();
+                Utilidades.mostrarDialogoSimple("Anteproyecto Validado", "Se publicó el anteproyecto correctamente", Alert.AlertType.INFORMATION);
+                interfazNotificacion.notificarCargarAnteproyectos();
+                cerrarVentana();
                 break;
         }
     }
@@ -165,15 +161,13 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
         int codigoRespuesta = AnteproyectoDAO.devolderAnteproyecto(anteproyectoValidacion.getIdAnteproyecto());
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    validarCampos();
+                validarCampos();
                 break;
         }
     }
@@ -197,8 +191,7 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
             
             guardarComentario(comentarioNuevo);
         }else{
-            Utilidades.mostrarDialogoSimple("Complete todos los campos", 
-                "Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.WARNING);
+            Utilidades.mostrarDialogoSimple("Complete todos los campos", "Error. Hay campos inválidos. Complételos o cámbielos para continuar", Alert.AlertType.WARNING);
         }
     }
     
@@ -206,19 +199,17 @@ public class FXMLValidacionAnteproyectoController implements Initializable {
         int codigoRespuesta = ComentarioDAO.guardarComentario(comentarioValidado);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error de conexión", "Error en la conexión con la base de datos", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error de consulta", 
-                            "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se puede actualizar la información en la base de datos", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                    Utilidades.mostrarDialogoSimple("Anteproyecto Corregido", 
-                            "Se regresó el anteproyecto para su corrección correctamente", Alert.AlertType.INFORMATION);
-                    interfazNotificacion.notificarCargarAnteproyectos();
-                    cerrarVentana();
+                Utilidades.mostrarDialogoSimple("Anteproyecto Corregido", "Se regresó el anteproyecto para su corrección correctamente", Alert.AlertType.INFORMATION);
+                interfazNotificacion.notificarCargarAnteproyectos();
+                cerrarVentana();
                 break;
         } 
     }
+    
 }

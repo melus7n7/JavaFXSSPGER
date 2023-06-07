@@ -1,7 +1,7 @@
 /*
 *Autor: Martínez Aguilar Sulem, Montiel Salas Jesús Jacob
 *Fecha de creación: 01/05/2023
-*Fecha de modificación: 27/05/2023
+*Fecha de modificación: 06/05/2023
 *Descripción: Controlador de la vista del menú principal de los academicos
 */
 package javafxsspger.controladores;
@@ -62,7 +62,6 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }    
 
-
     @FXML
     private void clicActividades(ActionEvent event) {
         Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
@@ -115,19 +114,6 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     
     @FXML
     private void clicTrabajosRecepcionales(ActionEvent event) {
-        Stage escenarioBase = (Stage)lblTitulo.getScene().getWindow();
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(JavaFXSSPGER.class.getResource("vistas/FXMLTrabajosRecepcionales.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLTrabajosRecepcionalesController trabajos = accesoControlador.getController();
-            trabajos.inicializarPantallaAcademico(usuarioAcademico);
-            
-            escenarioBase.setScene(new Scene (vista));
-            escenarioBase.setTitle("Trabajos Recepcionales");
-            escenarioBase.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
     @FXML
@@ -192,17 +178,11 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
             imgViewAvances.setDisable(false);
             bttActividades.setDisable(false);
             imgViewActividades.setDisable(false);
-            bttGenerarReporte.setDisable(false);
-            bttTrabajosRecepcionales.setDisable(false);
             imgViewTrabajoRecepcional.setDisable(false);
             bttCronograma.setDisable(false);
         }
         if(usuarioAcademico.isEsDirector()){
             bttAsignar.setDisable(false);
-        }
-        if(usuarioAcademico.isEsCoordinador()){
-            bttTrabajosRecepcionales.setDisable(false);
-            bttGenerarReporte.setDisable(false);
         }
     }
 
@@ -241,6 +221,5 @@ public class FXMLMenuPrincipalAcademicoController implements Initializable {
     private void clicAvancesImage(MouseEvent event) {
         clicAvances(new ActionEvent());
     }
-
-    
+ 
 }
