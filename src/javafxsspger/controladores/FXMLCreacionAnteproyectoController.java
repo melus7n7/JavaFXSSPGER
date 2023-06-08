@@ -241,11 +241,11 @@ public class FXMLCreacionAnteproyectoController implements Initializable, INotif
         int posicionCuerpoAcademico = cmbBoxCuerpoAcademico.getSelectionModel().getSelectedIndex();
         
         /*Proceso de validación*/
-        if(titulo.isEmpty() || titulo.length()>300){
+        if(titulo.isEmpty()){
             txtAreaNombreAnteproyecto.setStyle(estiloError);
             camposValidos = false;
         }
-        if(descripcion.isEmpty() || descripcion.length()>20000){
+        if(descripcion.isEmpty()){
             txtAreaDescripcionAnteproyecto.setStyle(estiloError);
             camposValidos = false;
         }

@@ -189,11 +189,11 @@ public class FXMLCreacionAvanceController implements Initializable, INotificacio
         String titulo = txtAreaTitulo.getText().replaceAll("\n", System.getProperty("line.separator"));
         String descripcion = txtAreaDescripcion.getText().replaceAll("\n", System.getProperty("line.separator"));
         
-        if(titulo.isEmpty() || titulo.length() > 300){
+        if(titulo.isEmpty()){
             txtAreaTitulo.setStyle(estiloError);
             camposValidos = false;
         }
-        if(descripcion.isEmpty() || descripcion.length() > 2000){
+        if(descripcion.isEmpty()){
             txtAreaDescripcion.setStyle(estiloError);
             camposValidos = false;
         }
